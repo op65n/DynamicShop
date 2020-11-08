@@ -1,0 +1,67 @@
+package com.sebbaindustries.dynamicshop.global;
+
+import com.sebbaindustries.dynamicshop.Core;
+import com.sebbaindustries.dynamicshop.commands.CommandManager;
+
+import java.util.logging.Level;
+
+/**
+ * @author SebbaIndustries
+ * @version 1.0
+ */
+public class GlobalCore {
+
+    public final Core core;
+
+    //public FileManager fileManager;
+    //public Settings settings;
+    //public Messages messages;
+    public CommandManager commandManager;
+
+    public GlobalCore(Core core) {
+        this.core = core;
+
+        //this.fileManager = new FileManager(core);
+
+        //this.messages = new Messages();
+        //this.settings = new Settings();
+        this.commandManager = new CommandManager(core);
+    }
+
+    /**
+     * Logs normal #INFO style message to the console
+     * @param message String message, color will be default
+     */
+    @SuppressWarnings("unused")
+    public void log(String message) {
+        core.getLogger().log(Level.INFO, message);
+    }
+
+    /**
+     * Logs normal #ERROR style message to the console
+     * @param message String message, color will be red
+     */
+    @SuppressWarnings("unused")
+    public void logSevere(String message) {
+        core.getLogger().log(Level.SEVERE, message);
+    }
+
+    /**
+     * Logs normal #WARN style message to the console
+     * @param message String message, color will be yellow
+     */
+    @SuppressWarnings("unused")
+    public void logWarn(String message) {
+        core.getLogger().log(Level.WARNING, message);
+    }
+
+    /**
+     * Terminates AdvancedAFK detection engine
+     */
+    public void terminate() {
+        log("Terminating plugin, please wait!");
+
+        log("Plugin was successfully terminated!");
+    }
+
+}
