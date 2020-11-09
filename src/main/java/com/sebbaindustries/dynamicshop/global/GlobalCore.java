@@ -2,6 +2,9 @@ package com.sebbaindustries.dynamicshop.global;
 
 import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.commands.CommandManager;
+import com.sebbaindustries.dynamicshop.messages.Message;
+import com.sebbaindustries.dynamicshop.settings.Configuration;
+import com.sebbaindustries.dynamicshop.utils.FileManager;
 
 import java.util.logging.Level;
 
@@ -13,18 +16,18 @@ public class GlobalCore {
 
     public final Core core;
 
-    //public FileManager fileManager;
-    //public Settings settings;
-    //public Messages messages;
+    public FileManager fileManager;
+    public Configuration config;
+    public Message message;
     public CommandManager commandManager;
 
     public GlobalCore(Core core) {
         this.core = core;
 
-        //this.fileManager = new FileManager(core);
+        this.fileManager = new FileManager(core);
 
-        //this.messages = new Messages();
-        //this.settings = new Settings();
+        this.message = new Message();
+        this.config = new Configuration();
         this.commandManager = new CommandManager(core);
     }
 

@@ -8,3 +8,7 @@ author: 'SebbaIndustries'
 description: ${project.description}
 database: true
 website: 'https://sebbaindustries.com'
+
+commands:
+  tmpaction:
+    description: "/"

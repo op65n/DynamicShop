@@ -2,6 +2,7 @@ package com.sebbaindustries.dynamicshop;
 
 import com.sebbaindustries.dynamicshop.global.GlobalCore;
 import com.sebbaindustries.dynamicshop.global.ServerPlugin;
+import com.sebbaindustries.dynamicshop.messages.Message;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -68,6 +69,7 @@ public final class Core extends JavaPlugin {
     public void onEnable() {
         super.onEnable();
         plugin.initialize();
+        gCore().logWarn(Message.get("test.msg"));
     }
 
     @Override
