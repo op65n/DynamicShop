@@ -1,7 +1,10 @@
 package com.sebbaindustries.dynamicshop.commands;
 
 import com.sebbaindustries.dynamicshop.Core;
-import com.sebbaindustries.dynamicshop.commands.actions.TmpAction;
+import com.sebbaindustries.dynamicshop.commands.actions.Buy;
+import com.sebbaindustries.dynamicshop.commands.actions.Price;
+import com.sebbaindustries.dynamicshop.commands.actions.Sell;
+import com.sebbaindustries.dynamicshop.commands.actions.Shop;
 import com.sebbaindustries.dynamicshop.commands.components.CommandFactory;
 import com.sebbaindustries.dynamicshop.commands.components.ICmd;
 import com.sebbaindustries.dynamicshop.commands.components.ITab;
@@ -14,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,15 +27,20 @@ import java.util.Objects;
  */
 public class CommandManager implements CommandExecutor, TabCompleter {
 
+    private final Core core;
     private final List<CommandFactory> commands = new ArrayList<>();
 
+    private void registerCommands(CommandFactory... newCommands) {
+        Arrays.stream(newCommands).forEach(command -> {
+            Objects.requireNonNull(core.getCommand(command.command())).setExecutor(this);
+            Objects.requireNonNull(core.getCommand(command.command())).setTabCompleter(this);
+            commands.add(command);
+        });
+    }
+
     public CommandManager(Core core) {
-
-        CommandFactory tmpAction = new TmpAction();
-        Objects.requireNonNull(core.getCommand(tmpAction.command())).setExecutor(this);
-        Objects.requireNonNull(core.getCommand(tmpAction.command())).setTabCompleter(this);
-        commands.add(tmpAction);
-
+        this.core = core;
+        registerCommands(new Shop(), new Buy(), new Sell(), new Price());
     }
 
     /**

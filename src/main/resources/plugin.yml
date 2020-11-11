@@ -10,5 +10,11 @@ database: true
 website: 'https://sebbaindustries.com'
 
 commands:
-  tmpaction:
-    description: "/"
+  shop:
+    description: "N/A"
+  buy:
+    description: "N/A"
+  sell:
+    description: "N/A"
+  price:
+    description: "N/A"
