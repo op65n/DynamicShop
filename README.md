@@ -35,6 +35,36 @@ Download DynamicShop here: <a href="#">TODO setup download site</a>
 
 ## Features
 
-Todo: Features here
+Directory structure:
+- DynamicShop
+  * `README.md`
+  * `configuration.properties`
+  * `messages.properties`
+  - shop
+    * `shop_configuration.json`
+    - items
+      * `%item_name%.json`
+    - statistics
+      * `%item_name%_stat.json`
+    - gui
+      * `main.json`
+      * `store_page.json`
+      * `transaction_page.json`
 
 ## Commands & permissions
+
+`/shop`
+ - permission: `N/A`
+ - description: Opens GUI for the shop, players can browse/sell/buy items from it. /shop is primary command for the plugin.
+
+`/buy <amount> <item>`
+ - permission: `N/A`
+ - description: Buy items directly from the shop without the GUI.
+ 
+`/sell <amount> <item>`
+ - permission: `N/A`
+ - description: Sell items directly to the shop without the GUI.
+ 
+`/price <amount> <item>`
+ - permission: `N/A`
+ - description: Check price of items directly from the shop without the GUI. 

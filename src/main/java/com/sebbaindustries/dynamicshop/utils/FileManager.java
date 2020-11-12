@@ -8,7 +8,7 @@ import java.io.File;
  * @author SebbaIndustries
  * @version 1.0
  */
-public class FileManager {
+public final class FileManager {
 
     /*
     configuration.properties
