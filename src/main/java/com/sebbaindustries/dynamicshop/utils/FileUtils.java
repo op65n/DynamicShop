@@ -4,6 +4,7 @@ import com.sebbaindustries.dynamicshop.Core;
 
 import java.io.File;
 
+@SuppressWarnings("unused")
 public class FileUtils {
 
     public boolean checkIfExists(String fileName) {
