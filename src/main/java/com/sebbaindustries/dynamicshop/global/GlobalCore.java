@@ -2,6 +2,7 @@ package com.sebbaindustries.dynamicshop.global;
 
 import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.commands.CommandManager;
+import com.sebbaindustries.dynamicshop.engine.DynEngine;
 import com.sebbaindustries.dynamicshop.messages.Message;
 import com.sebbaindustries.dynamicshop.settings.Configuration;
 import com.sebbaindustries.dynamicshop.utils.FileManager;
@@ -20,6 +21,8 @@ public class GlobalCore {
     public Configuration config;
     public Message message;
     public CommandManager commandManager;
+    public DynEngine dynEngine;
+
 
     public GlobalCore(Core core) {
         this.core = core;

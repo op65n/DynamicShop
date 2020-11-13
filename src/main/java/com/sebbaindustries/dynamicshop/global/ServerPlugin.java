@@ -1,6 +1,7 @@
 package com.sebbaindustries.dynamicshop.global;
 
 import com.sebbaindustries.dynamicshop.Core;
+import com.sebbaindustries.dynamicshop.engine.DynEngine;
 
 import java.util.logging.Level;
 
@@ -38,6 +39,9 @@ public class ServerPlugin {
             return;
         }
         Core.globalCore = new GlobalCore(core);
+
+        Core.gCore().dynEngine = new DynEngine(core);
+        Core.gCore().dynEngine.initialize();
     }
 
     /**
