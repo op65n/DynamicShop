@@ -2,7 +2,6 @@ package com.sebbaindustries.dynamicshop;
 
 import com.sebbaindustries.dynamicshop.global.GlobalCore;
 import com.sebbaindustries.dynamicshop.global.ServerPlugin;
-import com.sebbaindustries.dynamicshop.messages.Message;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
