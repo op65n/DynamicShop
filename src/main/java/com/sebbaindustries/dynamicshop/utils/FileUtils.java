@@ -12,7 +12,7 @@ public class FileUtils {
         return f.isFile() && !f.isDirectory();
     }
 
-    public static Directory cdItems() {
+    public static Directory cdCat() {
         return new Directory("categories");
     }
 

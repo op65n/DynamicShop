@@ -44,11 +44,12 @@ public final class FileManager {
     }
 
     public void generateCatDirs(Core core) {
-        List<?> categories = ObjectUtils.getGsonFile("shop_configuration", List.class);
+        List<?> categories = ObjectUtils.getGsonFile("shop/shop_configuration", List.class);
         if (categories == null) return;
 
         categories.forEach(cat -> {
             ShopCategory category = ObjectUtils.getClassFromGson(cat, ShopCategory.class);
+            Core.gCore().dynEngine.categories.add(category);
             if (!checkIfDirExists(core,category.getName())) {
                 try {
                     Files.createDirectory(Paths.get(core.getDataFolder() + "/shop/categories/" + category.getName() + "/"));
@@ -104,10 +105,10 @@ public final class FileManager {
      */
     public final void generateShopConfig(Core core) {
         if (shopConfig == null) {
-            shopConfig = new File(core.getDataFolder(), "shop_configuration.json");
+            shopConfig = new File(core.getDataFolder(), "shop/shop_configuration.json");
         }
         if (!shopConfig.exists()) {
-            core.saveResource("shop_configuration.json", false);
+            core.saveResource("shop/shop_configuration.json", false);
         }
     }
 
