@@ -35,12 +35,16 @@ public final class ObjectUtils {
     public static void saveGsonFile(String fileName, Object object) {
         try {
             Writer writer = new FileWriter(Core.gCore().core.getDataFolder() + "/" + fileName + ".json");
-            normalGson.toJson(object, writer);
+            GSON.toJson(object, writer);
             writer.flush();
             writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static <T> T getClassFromGson(Object object, Class<T> cl) {
+        return normalGson.fromJson(normalGson.toJson(object), cl);
     }
 
     public static <T> T getGsonFile(String fileName, Class<T> cl) {
