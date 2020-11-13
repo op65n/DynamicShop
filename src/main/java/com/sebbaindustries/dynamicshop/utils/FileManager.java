@@ -1,11 +1,16 @@
 package com.sebbaindustries.dynamicshop.utils;
 
+import com.google.gson.reflect.TypeToken;
 import com.sebbaindustries.dynamicshop.Core;
+import com.sebbaindustries.dynamicshop.engine.components.ShopCategory;
+import org.objectweb.asm.TypeReference;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author SebbaIndustries
@@ -21,11 +26,16 @@ public final class FileManager {
     messages.properties
     */
     public File messages;
+    /*
+    shop_configuration.json
+    */
+    public File shopConfig;
 
     public FileManager(Core core) {
         generateConfiguration(core);
         generateMessages(core);
-        generateDirs(core);
+        generateBaseDirs(core);
+        generateShopConfig(core);
         //generateREADME(core);
     }
 
@@ -33,13 +43,29 @@ public final class FileManager {
         return new File(core.getDataFolder() + "/" + dirName + "/").isDirectory();
     }
 
-    public void generateDirs(Core core) {
+    public void generateCatDirs(Core core) {
+        List<?> categories = ObjectUtils.getGsonFile("shop_configuration", List.class);
+        if (categories == null) return;
+
+        categories.forEach(cat -> {
+            ShopCategory category = ObjectUtils.getClassFromGson(cat, ShopCategory.class);
+            if (!checkIfDirExists(core,category.getName())) {
+                try {
+                    Files.createDirectory(Paths.get(core.getDataFolder() + "/shop/categories/" + category.getName() + "/"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void generateBaseDirs(Core core) {
         try {
             if (!checkIfDirExists(core,"shop")) {
                 Files.createDirectory(Paths.get(core.getDataFolder() + "/shop/"));
             }
-            if (!checkIfDirExists(core,"shop/items")) {
-                Files.createDirectory(Paths.get(core.getDataFolder() + "/shop/items/"));
+            if (!checkIfDirExists(core,"shop/categories")) {
+                Files.createDirectory(Paths.get(core.getDataFolder() + "/shop/categories/"));
             }
             if (!checkIfDirExists(core,"shop/statistics")) {
                 Files.createDirectory(Paths.get(core.getDataFolder() + "/shop/statistics/"));
@@ -70,6 +96,18 @@ public final class FileManager {
         }
         if (!messages.exists()) {
             core.saveResource("messages.properties", false);
+        }
+    }
+
+    /**
+     * Generates shop_configuration.json File
+     */
+    public final void generateShopConfig(Core core) {
+        if (shopConfig == null) {
+            shopConfig = new File(core.getDataFolder(), "shop_configuration.json");
+        }
+        if (!shopConfig.exists()) {
+            core.saveResource("shop_configuration.json", false);
         }
     }
 

@@ -13,7 +13,7 @@ public class FileUtils {
     }
 
     public static Directory cdItems() {
-        return new Directory("items");
+        return new Directory("categories");
     }
 
     public static Directory cdStatistics() {
