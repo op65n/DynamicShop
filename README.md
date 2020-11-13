@@ -42,7 +42,7 @@ Directory structure:
   * `messages.properties`
   - shop
     * `shop_configuration.json`
-    - items
+    - categories
       * `%item_name%.json`
     - statistics
       * `%item_name%_stat.json`
