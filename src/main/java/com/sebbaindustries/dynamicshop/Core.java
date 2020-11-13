@@ -69,7 +69,6 @@ public final class Core extends JavaPlugin {
     public void onEnable() {
         super.onEnable();
         plugin.initialize();
-        gCore().logWarn(Message.get("test.msg"));
     }
 
     @Override

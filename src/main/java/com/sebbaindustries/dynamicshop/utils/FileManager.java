@@ -3,6 +3,9 @@ package com.sebbaindustries.dynamicshop.utils;
 import com.sebbaindustries.dynamicshop.Core;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 /**
  * @author SebbaIndustries
@@ -22,7 +25,31 @@ public final class FileManager {
     public FileManager(Core core) {
         generateConfiguration(core);
         generateMessages(core);
+        generateDirs(core);
         //generateREADME(core);
+    }
+
+    private boolean checkIfDirExists(Core core, String dirName) {
+        return new File(core.getDataFolder() + "/" + dirName + "/").isDirectory();
+    }
+
+    public void generateDirs(Core core) {
+        try {
+            if (!checkIfDirExists(core,"shop")) {
+                Files.createDirectory(Paths.get(core.getDataFolder() + "/shop/"));
+            }
+            if (!checkIfDirExists(core,"shop/items")) {
+                Files.createDirectory(Paths.get(core.getDataFolder() + "/shop/items/"));
+            }
+            if (!checkIfDirExists(core,"shop/statistics")) {
+                Files.createDirectory(Paths.get(core.getDataFolder() + "/shop/statistics/"));
+            }
+            if (!checkIfDirExists(core,"shop/gui")) {
+                Files.createDirectory(Paths.get(core.getDataFolder() + "/shop/gui/"));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void generateConfiguration(Core core) {
