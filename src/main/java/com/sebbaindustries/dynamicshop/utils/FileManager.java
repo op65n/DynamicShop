@@ -1,15 +1,14 @@
 package com.sebbaindustries.dynamicshop.utils;
 
-import com.google.gson.reflect.TypeToken;
 import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.engine.components.ShopCategory;
-import org.objectweb.asm.TypeReference;
+import com.sebbaindustries.dynamicshop.engine.components.ShopItem;
+import org.bukkit.Material;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -37,6 +36,7 @@ public final class FileManager {
         generateBaseDirs(core);
         generateShopConfig(core);
         //generateREADME(core);
+        generateGUIJson(core);
     }
 
     private boolean checkIfDirExists(Core core, String dirName) {
@@ -53,6 +53,7 @@ public final class FileManager {
             if (!checkIfDirExists(core,category.getName())) {
                 try {
                     Files.createDirectory(Paths.get(core.getDataFolder() + "/shop/categories/" + category.getName() + "/"));
+                    ObjectUtils.saveGsonFile("shop/categories/" + category.getName() + "/dirt", new ShopItem(0.9, 0.4, Material.DIRT, "&6Dirt"));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -109,6 +110,25 @@ public final class FileManager {
         }
         if (!shopConfig.exists()) {
             core.saveResource("shop/shop_configuration.json", false);
+        }
+    }
+
+    /**
+     * Generates main.json File
+     */
+    public final void generateGUIJson(Core core) {
+        File main = new File(core.getDataFolder(), "shop/gui/main.json");
+        File store = new File(core.getDataFolder(), "shop/gui/store_page.json");
+        File transaction = new File(core.getDataFolder(), "shop/gui/transaction_page.json");
+
+        if (!main.exists()) {
+            core.saveResource("shop/gui/main.json", false);
+        }
+        if (!store.exists()) {
+            core.saveResource("shop/gui/store_page.json", false);
+        }
+        if (!transaction.exists()) {
+            core.saveResource("shop/gui/transaction_page.json", false);
         }
     }
 

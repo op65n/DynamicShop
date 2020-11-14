@@ -5,7 +5,7 @@ import com.sebbaindustries.dynamicshop.Core;
 import java.io.File;
 
 @SuppressWarnings("unused")
-public class FileUtils {
+public final class FileUtils {
 
     public static boolean checkIfExists(String fileName) {
         File f = new File(Core.gCore().core.getDataFolder() + "/" + fileName);

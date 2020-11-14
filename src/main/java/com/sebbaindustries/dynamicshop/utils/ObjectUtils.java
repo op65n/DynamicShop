@@ -14,8 +14,7 @@ import java.io.*;
 @SuppressWarnings("unused")
 public final class ObjectUtils {
 
-    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-    private static final Gson normalGson = new Gson();
+    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     private ObjectUtils() {
         throw new UnsupportedOperationException("Instantiation of this class is not permitted in case you are using reflection.");
@@ -23,19 +22,18 @@ public final class ObjectUtils {
 
     /**
      * This method is responsible for de-serializing the Java Object into Json String.
-     *
      * @param object Object to be de-serialized.
      * @return String
      */
     public static String deserializeObjectToString(final Object object) {
-        return GSON.toJson(object);
+        return gson.toJson(object);
     }
 
 
     public static void saveGsonFile(String fileName, Object object) {
         try {
             Writer writer = new FileWriter(Core.gCore().core.getDataFolder() + "/" + fileName + ".json");
-            GSON.toJson(object, writer);
+            gson.toJson(object, writer);
             writer.flush();
             writer.close();
         } catch (IOException e) {
@@ -44,7 +42,7 @@ public final class ObjectUtils {
     }
 
     public static <T> T getClassFromGson(Object object, Class<T> cl) {
-        return normalGson.fromJson(normalGson.toJson(object), cl);
+        return gson.fromJson(gson.toJson(object), cl);
     }
 
     public static <T> T getGsonFile(String fileName, Class<T> cl) {
@@ -55,6 +53,6 @@ public final class ObjectUtils {
             e.printStackTrace();
             return null;
         }
-        return normalGson.fromJson(reader, cl);
+        return gson.fromJson(reader, cl);
     }
 }
