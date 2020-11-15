@@ -6,6 +6,7 @@ import com.google.gson.stream.JsonReader;
 import com.sebbaindustries.dynamicshop.Core;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author SebbaIndustries
@@ -14,7 +15,7 @@ import java.io.*;
 @SuppressWarnings("unused")
 public final class ObjectUtils {
 
-    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private static final Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 
     private ObjectUtils() {
         throw new UnsupportedOperationException("Instantiation of this class is not permitted in case you are using reflection.");
@@ -32,7 +33,7 @@ public final class ObjectUtils {
 
     public static void saveGsonFile(String fileName, Object object) {
         try {
-            Writer writer = new FileWriter(Core.gCore().core.getDataFolder() + "/" + fileName + ".js");
+            Writer writer = new FileWriter(Core.gCore().core.getDataFolder() + "/" + fileName + ".js", StandardCharsets.UTF_8);
             gson.toJson(object, writer);
             writer.flush();
             writer.close();
@@ -48,8 +49,8 @@ public final class ObjectUtils {
     public static <T> T getGsonFile(String fileName, Class<T> cl) {
         JsonReader reader;
         try {
-            reader = new JsonReader(new FileReader(Core.gCore().core.getDataFolder() + "/" + fileName + ".js"));
-        } catch (FileNotFoundException e) {
+            reader = new JsonReader(new FileReader(Core.gCore().core.getDataFolder() + "/" + fileName + ".js", StandardCharsets.UTF_8));
+        } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
