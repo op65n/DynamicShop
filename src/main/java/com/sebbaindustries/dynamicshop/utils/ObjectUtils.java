@@ -32,7 +32,7 @@ public final class ObjectUtils {
 
     public static void saveGsonFile(String fileName, Object object) {
         try {
-            Writer writer = new FileWriter(Core.gCore().core.getDataFolder() + "/" + fileName + ".json");
+            Writer writer = new FileWriter(Core.gCore().core.getDataFolder() + "/" + fileName + ".js");
             gson.toJson(object, writer);
             writer.flush();
             writer.close();
@@ -48,7 +48,7 @@ public final class ObjectUtils {
     public static <T> T getGsonFile(String fileName, Class<T> cl) {
         JsonReader reader;
         try {
-            reader = new JsonReader(new FileReader(Core.gCore().core.getDataFolder() + "/" + fileName + ".json"));
+            reader = new JsonReader(new FileReader(Core.gCore().core.getDataFolder() + "/" + fileName + ".js"));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return null;

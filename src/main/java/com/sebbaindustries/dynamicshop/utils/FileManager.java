@@ -26,7 +26,7 @@ public final class FileManager {
     */
     public File messages;
     /*
-    shop_configuration.json
+    shop_configuration.js
     */
     public File shopConfig;
 
@@ -102,33 +102,33 @@ public final class FileManager {
     }
 
     /**
-     * Generates shop_configuration.json File
+     * Generates shop_configuration.js File
      */
     public final void generateShopConfig(Core core) {
         if (shopConfig == null) {
-            shopConfig = new File(core.getDataFolder(), "shop/shop_configuration.json");
+            shopConfig = new File(core.getDataFolder(), "shop/shop_configuration.js");
         }
         if (!shopConfig.exists()) {
-            core.saveResource("shop/shop_configuration.json", false);
+            core.saveResource("shop/shop_configuration.js", false);
         }
     }
 
     /**
-     * Generates main.json File
+     * Generates main_page.js File
      */
     public final void generateGUIJson(Core core) {
-        File main = new File(core.getDataFolder(), "shop/gui/main.json");
-        File store = new File(core.getDataFolder(), "shop/gui/store_page.json");
-        File transaction = new File(core.getDataFolder(), "shop/gui/transaction_page.json");
+        File main = new File(core.getDataFolder(), "shop/gui/main_page.js");
+        File store = new File(core.getDataFolder(), "shop/gui/store_page.js");
+        File transaction = new File(core.getDataFolder(), "shop/gui/transaction_page.js");
 
         if (!main.exists()) {
-            core.saveResource("shop/gui/main.json", false);
+            core.saveResource("shop/gui/main_page.js", false);
         }
         if (!store.exists()) {
-            core.saveResource("shop/gui/store_page.json", false);
+            core.saveResource("shop/gui/store_page.js", false);
         }
         if (!transaction.exists()) {
-            core.saveResource("shop/gui/transaction_page.json", false);
+            core.saveResource("shop/gui/transaction_page.js", false);
         }
     }
 
