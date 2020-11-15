@@ -3,7 +3,6 @@ package com.sebbaindustries.dynamicshop.engine;
 import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.engine.components.ShopCategory;
 import com.sebbaindustries.dynamicshop.messages.Message;
-import com.sebbaindustries.dynamicshop.utils.Color;
 import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 
 import java.util.ArrayList;
