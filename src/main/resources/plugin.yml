@@ -18,3 +18,5 @@ commands:
     description: "N/A"
   price:
     description: "N/A"
+  adminshop:
+    description: "N/A"
