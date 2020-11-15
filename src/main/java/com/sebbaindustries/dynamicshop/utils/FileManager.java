@@ -18,11 +18,11 @@ import java.util.List;
 public final class FileManager {
 
     /*
-    configuration.properties
+    configuration.js
      */
     public File configuration;
     /*
-    messages.properties
+    messages.js
     */
     public File messages;
     /*
@@ -50,7 +50,7 @@ public final class FileManager {
         categories.forEach(cat -> {
             ShopCategory category = ObjectUtils.getClassFromGson(cat, ShopCategory.class);
             Core.gCore().dynEngine.categories.add(category);
-            if (!checkIfDirExists(core,category.getName())) {
+            if (!checkIfDirExists(core, "shop/categories/" + category.getName())) {
                 try {
                     Files.createDirectory(Paths.get(core.getDataFolder() + "/shop/categories/" + category.getName() + "/"));
                     ObjectUtils.saveGsonFile("shop/categories/" + category.getName() + "/dirt", new ShopItem(0.9, 0.4, Material.DIRT, "&6Dirt"));
@@ -82,22 +82,22 @@ public final class FileManager {
 
     public void generateConfiguration(Core core) {
         if (configuration == null) {
-            configuration = new File(core.getDataFolder(), "configuration.properties");
+            configuration = new File(core.getDataFolder(), "configuration.js");
         }
         if (!configuration.exists()) {
-            core.saveResource("configuration.properties", false);
+            core.saveResource("configuration.js", false);
         }
     }
 
     /**
-     * Generates messages.properties File
+     * Generates messages.js File
      */
     public final void generateMessages(Core core) {
         if (messages == null) {
-            messages = new File(core.getDataFolder(), "messages.properties");
+            messages = new File(core.getDataFolder(), "messages.js");
         }
         if (!messages.exists()) {
-            core.saveResource("messages.properties", false);
+            core.saveResource("messages.js", false);
         }
     }
 
