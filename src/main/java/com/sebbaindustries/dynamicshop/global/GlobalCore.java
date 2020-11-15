@@ -28,8 +28,6 @@ public class GlobalCore {
         this.core = core;
 
         this.fileManager = new FileManager(core);
-
-        this.message = new Message();
         this.config = new Configuration();
         this.commandManager = new CommandManager(core);
     }
