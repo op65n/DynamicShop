@@ -63,16 +63,16 @@ public final class FileManager {
 
     public void generateBaseDirs(Core core) {
         try {
-            if (!checkIfDirExists(core,"shop")) {
+            if (!checkIfDirExists(core, "shop")) {
                 Files.createDirectory(Paths.get(core.getDataFolder() + "/shop/"));
             }
-            if (!checkIfDirExists(core,"shop/categories")) {
+            if (!checkIfDirExists(core, "shop/categories")) {
                 Files.createDirectory(Paths.get(core.getDataFolder() + "/shop/categories/"));
             }
-            if (!checkIfDirExists(core,"shop/statistics")) {
+            if (!checkIfDirExists(core, "shop/statistics")) {
                 Files.createDirectory(Paths.get(core.getDataFolder() + "/shop/statistics/"));
             }
-            if (!checkIfDirExists(core,"shop/gui")) {
+            if (!checkIfDirExists(core, "shop/gui")) {
                 Files.createDirectory(Paths.get(core.getDataFolder() + "/shop/gui/"));
             }
         } catch (IOException e) {

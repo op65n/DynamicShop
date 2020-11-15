@@ -34,6 +34,7 @@ public class GlobalCore {
 
     /**
      * Logs normal #INFO style message to the console
+     *
      * @param message String message, color will be default
      */
     @SuppressWarnings("unused")
@@ -43,6 +44,7 @@ public class GlobalCore {
 
     /**
      * Logs normal #ERROR style message to the console
+     *
      * @param message String message, color will be red
      */
     @SuppressWarnings("unused")
@@ -52,6 +54,7 @@ public class GlobalCore {
 
     /**
      * Logs normal #WARN style message to the console
+     *
      * @param message String message, color will be yellow
      */
     @SuppressWarnings("unused")

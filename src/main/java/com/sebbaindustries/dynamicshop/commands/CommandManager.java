@@ -30,6 +30,11 @@ public class CommandManager implements CommandExecutor, TabCompleter {
     private final Core core;
     private final List<CommandFactory> commands = new ArrayList<>();
 
+    public CommandManager(Core core) {
+        this.core = core;
+        registerCommands(new Shop(), new Buy(), new Sell(), new Price());
+    }
+
     private void registerCommands(CommandFactory... newCommands) {
         Arrays.stream(newCommands).forEach(command -> {
             Objects.requireNonNull(core.getCommand(command.command())).setExecutor(this);
@@ -38,17 +43,13 @@ public class CommandManager implements CommandExecutor, TabCompleter {
         });
     }
 
-    public CommandManager(Core core) {
-        this.core = core;
-        registerCommands(new Shop(), new Buy(), new Sell(), new Price());
-    }
-
     /**
      * All afk commands execute here
-     * @param sender Player/console instance
+     *
+     * @param sender  Player/console instance
      * @param command No idea
-     * @param label alias
-     * @param args the good stuff
+     * @param label   alias
+     * @param args    the good stuff
      * @return true
      */
     @Override
@@ -73,10 +74,11 @@ public class CommandManager implements CommandExecutor, TabCompleter {
 
     /**
      * Tab complete for all commands
-     * @param sender player/console instance
+     *
+     * @param sender  player/console instance
      * @param command no idea
-     * @param label alias
-     * @param args the good stuff
+     * @param label   alias
+     * @param args    the good stuff
      * @return list of completions or null->list of all online players
      */
     @Override

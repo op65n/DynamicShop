@@ -24,6 +24,7 @@ public class ServerPlugin {
 
     /**
      * Loads Core.class instance
+     *
      * @param core Manin plugin class
      */
     public final void load(Core core) {

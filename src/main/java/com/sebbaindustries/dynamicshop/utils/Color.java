@@ -16,6 +16,7 @@ public final class Color {
 
     /**
      * Formats hex and '&' codes
+     *
      * @param s Un-Formatted string
      * @return Formatted string
      */

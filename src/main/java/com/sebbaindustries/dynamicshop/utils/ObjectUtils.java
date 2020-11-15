@@ -5,7 +5,10 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import com.sebbaindustries.dynamicshop.Core;
 
-import java.io.*;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -23,6 +26,7 @@ public final class ObjectUtils {
 
     /**
      * This method is responsible for de-serializing the Java Object into Json String.
+     *
      * @param object Object to be de-serialized.
      * @return String
      */

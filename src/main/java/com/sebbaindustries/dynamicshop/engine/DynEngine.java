@@ -11,12 +11,11 @@ import java.util.List;
 public class DynEngine {
 
     private final Core core;
+    public List<ShopCategory> categories = new ArrayList<>();
 
     public DynEngine(Core core) {
         this.core = core;
     }
-
-    public List<ShopCategory> categories = new ArrayList<>();
 
     public void initialize() {
         Core.gCore().fileManager.generateCatDirs(core);
