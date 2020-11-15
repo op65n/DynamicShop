@@ -1,1 +1,0 @@
-test.msg = Hello There Buddy! č š ž
