@@ -18,7 +18,7 @@ public class GlobalCore {
     public final Core core;
 
     public FileManager fileManager;
-    public Configuration config;
+    public Configuration configuration;
     public Message message;
     public CommandManager commandManager;
     public DynEngine dynEngine;
@@ -28,7 +28,6 @@ public class GlobalCore {
         this.core = core;
 
         this.fileManager = new FileManager(core);
-        this.config = new Configuration();
         this.commandManager = new CommandManager(core);
     }
 

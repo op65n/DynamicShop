@@ -32,7 +32,7 @@ public final class FileManager {
 
     public FileManager(Core core) {
         generateConfiguration(core);
-        generateMessages(core);
+        //generateMessages(core);
         generateBaseDirs(core);
         generateShopConfig(core);
         //generateREADME(core);
