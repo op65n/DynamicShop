@@ -1,10 +1,7 @@
 package com.sebbaindustries.dynamicshop.commands;
 
 import com.sebbaindustries.dynamicshop.Core;
-import com.sebbaindustries.dynamicshop.commands.actions.Buy;
-import com.sebbaindustries.dynamicshop.commands.actions.Price;
-import com.sebbaindustries.dynamicshop.commands.actions.Sell;
-import com.sebbaindustries.dynamicshop.commands.actions.Shop;
+import com.sebbaindustries.dynamicshop.commands.actions.*;
 import com.sebbaindustries.dynamicshop.commands.components.CommandFactory;
 import com.sebbaindustries.dynamicshop.commands.components.ICmd;
 import com.sebbaindustries.dynamicshop.commands.components.ITab;
@@ -32,7 +29,13 @@ public class CommandManager implements CommandExecutor, TabCompleter {
 
     public CommandManager(Core core) {
         this.core = core;
-        registerCommands(new Shop(), new Buy(), new Sell(), new Price());
+        registerCommands(
+                new Shop(),
+                new Buy(),
+                new Sell(),
+                new Price(),
+                new AdminShop()
+        );
     }
 
     private void registerCommands(CommandFactory... newCommands) {

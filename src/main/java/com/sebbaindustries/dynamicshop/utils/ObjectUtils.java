@@ -2,6 +2,7 @@ package com.sebbaindustries.dynamicshop.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonReader;
 import com.sebbaindustries.dynamicshop.Core;
 
@@ -59,5 +60,16 @@ public final class ObjectUtils {
             return null;
         }
         return gson.fromJson(reader, cl);
+    }
+
+    public static JsonObject getJsonFromFile(String fileName) {
+        JsonReader reader;
+        try {
+            reader = new JsonReader(new FileReader(Core.gCore().core.getDataFolder() + "/" + fileName + ".js", StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        return gson.toJsonTree(reader).getAsJsonObject();
     }
 }

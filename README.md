@@ -9,8 +9,7 @@ Developer: `SebbaIndustries` <br>
 
 
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/mit-license.php)
-![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/SebbaIndustries/DynamicShop/Java%20CI%20with%20Maven/master)
-![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/SebbaIndustries/DynamicShop/CodeQL/master?label=codeQL)
+![Java CI with Maven](https://github.com/SebbaIndustries/DynamicShop/workflows/Java%20CI%20with%20Maven/badge.svg)
 [![GitHub issues](https://img.shields.io/github/issues/SebbaIndustries/DynamicShop)](https://github.com/SebbaIndustries/DynamicShop/issues)
 
 How To (Server Owners)
