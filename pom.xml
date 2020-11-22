@@ -110,6 +110,11 @@ SOFTWARE.
             <version>1.16.4-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.owlike</groupId>
+            <artifactId>genson</artifactId>
+            <version>1.6</version>
+        </dependency>
     </dependencies>
 
 </project>

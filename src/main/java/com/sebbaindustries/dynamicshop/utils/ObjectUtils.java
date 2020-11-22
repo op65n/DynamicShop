@@ -1,15 +1,16 @@
 package com.sebbaindustries.dynamicshop.utils;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 import com.sebbaindustries.dynamicshop.Core;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -19,6 +20,7 @@ import java.nio.charset.StandardCharsets;
 @SuppressWarnings("unused")
 public final class ObjectUtils {
 
+    //private static final Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 
     private ObjectUtils() {
@@ -62,7 +64,7 @@ public final class ObjectUtils {
         return gson.fromJson(reader, cl);
     }
 
-    public static JsonObject getJsonFromFile(String fileName) {
+    public static <T> T getGsonFile(String fileName, Type type) {
         JsonReader reader;
         try {
             reader = new JsonReader(new FileReader(Core.gCore().core.getDataFolder() + "/" + fileName + ".js", StandardCharsets.UTF_8));
@@ -70,6 +72,18 @@ public final class ObjectUtils {
             e.printStackTrace();
             return null;
         }
-        return gson.toJsonTree(reader).getAsJsonObject();
+        return gson.fromJson(reader, type);
+    }
+
+    public static JsonObject getJson(String fileName) {
+        JsonReader reader;
+        try {
+            reader = new JsonReader(new FileReader(Core.gCore().core.getDataFolder() + "/" + fileName + ".js", StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+        JsonElement jsonElement = new JsonParser().parse(reader);
+        return jsonElement.getAsJsonObject();
     }
 }
