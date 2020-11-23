@@ -1,17 +1,15 @@
 package com.sebbaindustries.dynamicshop.commands.actions;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.sebbaindustries.dynamicshop.commands.components.CommandFactory;
 import com.sebbaindustries.dynamicshop.commands.components.ICmd;
 import com.sebbaindustries.dynamicshop.commands.components.ITab;
+import com.sebbaindustries.dynamicshop.engine.components.MockItemStack;
+import com.sebbaindustries.dynamicshop.tasks.Tasks;
 import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -29,26 +27,32 @@ public class AdminShop extends CommandFactory implements ICmd, ITab {
 
     @Override
     public void execute(@NotNull CommandSender sender, @NotNull String[] args) {
+        Tasks.async(task -> {
+            System.out.println("test");
+            try {
+                Thread.sleep(40000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("test1");
+        });
         if (!(sender instanceof Player)) {
             // TODO: Add no console message
             return;
         }
+
         Player player = (Player) sender;
+
+        // Serialization
         ItemStack iStack = new ItemStack(player.getInventory().getItemInOffHand());
-        String name = iStack.getType().toString();
-        ObjectUtils.saveGsonFile(name, iStack);
+        MockItemStack itemStack = new MockItemStack(iStack);
+        ObjectUtils.saveGsonFile("test", itemStack);
 
-        ItemMeta itemMeta;
-        JsonObject jObject = ObjectUtils.getJsonFromFile(name);
-        if (jObject == null) {
-            return;
-        }
-        JsonElement jElement = jObject.get("meta");
-        itemMeta = ObjectUtils.getClassFromGson(jElement, ItemMeta.class);
-        ObjectUtils.deserializeObjectToString(itemMeta);
+        MockItemStack genItemStack = ObjectUtils.getGsonFile("test", MockItemStack.class);
 
-        //ItemStack itemStack = new ItemStack(ObjectUtils.getGsonFile(name, ItemStack.class));
-        //player.getInventory().setItemInMainHand(itemStack);
+        ItemStack cItemStack = genItemStack.getItemStack();
+        player.getInventory().setItemInMainHand(cItemStack);
+
     }
 
     @Override
