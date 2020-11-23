@@ -1,4 +1,4 @@
-# DynamicShop
+# DynamicShop (Coming soon!)
 Dynamic shop Minecraft 1.16.x plugin with advanced capabilities, based on the real economy.
 <br>
 Version: `1.0-SNAPSHOT`<br>
@@ -22,14 +22,14 @@ Download DynamicShop here: <a href="#">TODO setup download site</a>
 - Place DynamicShop-VERSION.jar (`DynamicShop-v0.1.6.jar`) file into plugins folder
 - Start the server, plugin will generate `DynamicShop` directory with files:
   * `README.md`
-  * `configuration.properties`
-  * `messages.properties`
+  * `configuration.js`
+  * `messages.js`
 - Stop the server after everything has been loaded
 - Open and configure the plugin to your needs.
 - Start the server and enjoy the plugin!
 
 <b>Message configuration:</b>
-<br>All messages are stored in `messages.properites`, you can change them to your liking.
+<br>All messages are stored in `messages.js`, you can change them to your liking.
 
 
 ## Features
@@ -37,18 +37,18 @@ Download DynamicShop here: <a href="#">TODO setup download site</a>
 Directory structure:
 - DynamicShop
   * `README.md`
-  * `configuration.properties`
-  * `messages.properties`
+  * `configuration.js`
+  * `messages.js`
   - shop
-    * `shop_configuration.json`
+    * `shop_configuration.js`
     - categories
-      * `%item_name%.json`
+      * `%item_name%.js`
     - statistics
-      * `%item_name%_stat.json`
+      * `%item_name%_stat.js`
     - gui
-      * `main.json`
-      * `store_page.json`
-      * `transaction_page.json`
+      * `main.js`
+      * `store_page.js`
+      * `transaction_page.js`
 
 ## Commands & permissions
 
