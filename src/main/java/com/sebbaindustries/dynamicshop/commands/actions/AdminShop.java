@@ -4,7 +4,7 @@ import com.sebbaindustries.dynamicshop.commands.components.CommandFactory;
 import com.sebbaindustries.dynamicshop.commands.components.ICmd;
 import com.sebbaindustries.dynamicshop.commands.components.ITab;
 import com.sebbaindustries.dynamicshop.engine.components.MockItemStack;
-import com.sebbaindustries.dynamicshop.tasks.Tasks;
+import com.sebbaindustries.dynamicshop.utils.CPlayer;
 import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -27,21 +27,16 @@ public class AdminShop extends CommandFactory implements ICmd, ITab {
 
     @Override
     public void execute(@NotNull CommandSender sender, @NotNull String[] args) {
-        Tasks.async(task -> {
-            System.out.println("test");
-            try {
-                Thread.sleep(40000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            System.out.println("test1");
-        });
         if (!(sender instanceof Player)) {
             // TODO: Add no console message
             return;
         }
 
         Player player = (Player) sender;
+        player.sendMessage("&6fklhsdfi");
+
+        CPlayer cPlayer = (CPlayer) player;
+        cPlayer.sendMessage("&6gfgfgdgd");
 
         // Serialization
         ItemStack iStack = new ItemStack(player.getInventory().getItemInOffHand());
