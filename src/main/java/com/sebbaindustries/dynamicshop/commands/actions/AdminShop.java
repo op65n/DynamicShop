@@ -4,7 +4,8 @@ import com.sebbaindustries.dynamicshop.commands.components.CommandFactory;
 import com.sebbaindustries.dynamicshop.commands.components.ICmd;
 import com.sebbaindustries.dynamicshop.commands.components.ITab;
 import com.sebbaindustries.dynamicshop.engine.components.MockItemStack;
-import com.sebbaindustries.dynamicshop.utils.CPlayer;
+import com.sebbaindustries.dynamicshop.engine.extensions.ExtItemStack;
+import com.sebbaindustries.dynamicshop.engine.extensions.ExtPlayer;
 import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -32,21 +33,21 @@ public class AdminShop extends CommandFactory implements ICmd, ITab {
             return;
         }
 
-        Player player = (Player) sender;
-        player.sendMessage("&6fklhsdfi");
-
-        CPlayer cPlayer = (CPlayer) player;
-        cPlayer.sendMessage("&6gfgfgdgd");
+        ExtPlayer extPlayer = new ExtPlayer(sender);
 
         // Serialization
-        ItemStack iStack = new ItemStack(player.getInventory().getItemInOffHand());
-        MockItemStack itemStack = new MockItemStack(iStack);
-        ObjectUtils.saveGsonFile("test", itemStack);
+        ItemStack iStack = new ItemStack(extPlayer.player.getInventory().getItemInOffHand());
+        ExtItemStack itemStack = new ExtItemStack(iStack);
+        itemStack.serialize();
+        String name = iStack.getType().name();
+        itemStack.dump();
+        extPlayer.sendMessage("&6Done!");
 
-        MockItemStack genItemStack = ObjectUtils.getGsonFile("test", MockItemStack.class);
+        ExtItemStack newItemStack = new ExtItemStack();
+        newItemStack.deserialize(name);
+        newItemStack.dump();
 
-        ItemStack cItemStack = genItemStack.getItemStack();
-        player.getInventory().setItemInMainHand(cItemStack);
+
 
     }
 
