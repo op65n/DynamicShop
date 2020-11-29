@@ -44,6 +44,7 @@ public final class Core extends JavaPlugin {
      *
      * @return GlobalCore class instance
      */
+    @NotNull
     public static GlobalCore gCore() {
         if (globalCore == null) {
             throw new IllegalAccessError("Plugin core dumped due to illegal access of GlobalCore class!");
