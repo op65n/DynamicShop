@@ -1,6 +1,7 @@
 package com.sebbaindustries.dynamicshop.utils;
 
 import com.sebbaindustries.dynamicshop.Core;
+import com.sebbaindustries.dynamicshop.log.PluginLogger;
 import org.apache.commons.io.FileUtils;
 
 import java.io.*;
@@ -41,7 +42,7 @@ public final class FileManager {
 
             // the stream holding the file content
             if (inputStream == null) {
-                core.getLogger().log(Level.WARNING, "File " + file.fileName + " not found inside plugin jar!");
+                PluginLogger.logWarn("File " + file.fileName + " not found inside plugin jar!");
                 return;
             }
 

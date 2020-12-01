@@ -1,6 +1,7 @@
 package com.sebbaindustries.dynamicshop.engine.extensions;
 
 import com.sebbaindustries.dynamicshop.Core;
+import com.sebbaindustries.dynamicshop.log.PluginLogger;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -16,7 +17,7 @@ public class ExtPlayer {
 
     public ExtPlayer(CommandSender sender) {
         if (!(sender instanceof Player)) {
-            Core.gCore().logWarn("Sender is not instance of player!");
+            PluginLogger.log("Sender is not instance of player!");
             return;
         }
         this.player = (Player) sender;
@@ -26,7 +27,7 @@ public class ExtPlayer {
     public void sendMessage(String message) {
         try {
             if (player == null || !player.isOnline()) {
-                Core.gCore().logWarn("Null player in ExtPlayer class. Player IGN: " + debugPlayerName);
+                PluginLogger.log("Null player in ExtPlayer class. Player IGN: " + debugPlayerName);
                 return;
             }
         } catch (Exception ex) {
