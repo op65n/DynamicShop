@@ -10,11 +10,11 @@ import java.nio.file.Paths;
 public class DirectoryStructure {
 
     enum Directory {
-        BASE(Core.gCore().core.getDataFolder() + "/"),
-        SHOP(Core.gCore().core.getDataFolder() + "/shop/"),
-        GUI(Core.gCore().core.getDataFolder() + "/shop/gui/"),
-        STATISTICS(Core.gCore().core.getDataFolder() + "/shop/statistics/"),
-        CATEGORIES(Core.gCore().core.getDataFolder() + "/shop/categories/"),
+        BASE("plugins/DynamicShop/"),
+        SHOP("plugins/DynamicShop/shop/"),
+        GUI("plugins/DynamicShop/shop/gui/"),
+        STATISTICS("plugins/DynamicShop/shop/statistics/"),
+        CATEGORIES("plugins/DynamicShop/shop/categories/"),
         ;
 
         public String path;
@@ -22,6 +22,10 @@ public class DirectoryStructure {
         Directory(String path) {
             this.path = path;
         }
+    }
+
+    public DirectoryStructure() {
+        generateDirectoryStructure();
     }
 
     public void generateDirectoryStructure() {

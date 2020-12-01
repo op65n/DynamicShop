@@ -22,13 +22,9 @@ public class DynEngine {
 
     public DynEngine() {
         Core.gCore().commandManager = new CommandManager(Core.gCore().core);
-        this.directoryStructure = new DirectoryStructure();
     }
 
-    public DirectoryStructure directoryStructure;
-
     public void initialize() {
-        directoryStructure.generateDirectoryStructure();
 
         /*
         messages.js
