@@ -29,18 +29,18 @@ public class ServerPlugin {
      */
     public final void load(Core core) {
         this.core = core;
+        Core.globalCore = new GlobalCore(core);
+        core.getLogger().log(Level.INFO, "GlobalCore class instance created, initializing plugin modules!");
     }
 
     /**
      * Initializes global core and setups static link
      */
     public final void initialize() {
-        if (core == null) {
+        if (Core.globalCore == null) {
             coreDump();
             return;
         }
-        Core.globalCore = new GlobalCore(core);
-
         Core.gCore().dynEngine = new DynEngine(core);
         Core.gCore().dynEngine.initialize();
     }
