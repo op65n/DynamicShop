@@ -1,15 +1,11 @@
 package com.sebbaindustries.dynamicshop.utils;
 
 import com.sebbaindustries.dynamicshop.Core;
-import com.sebbaindustries.dynamicshop.engine.components.ShopCategory;
-import com.sebbaindustries.dynamicshop.engine.components.ShopItem;
-import org.bukkit.Material;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.List;
 
 /**
  * @author SebbaIndustries
@@ -41,24 +37,6 @@ public final class FileManager {
 
     private boolean checkIfDirExists(Core core, String dirName) {
         return new File(core.getDataFolder() + "/" + dirName + "/").isDirectory();
-    }
-
-    public void generateCatDirs(Core core) {
-        List<?> categories = ObjectUtils.getGsonFile("shop/shop_configuration", List.class);
-        if (categories == null) return;
-
-        categories.forEach(cat -> {
-            ShopCategory category = ObjectUtils.getClassFromGson(cat, ShopCategory.class);
-            Core.gCore().dynEngine.categories.add(category);
-            if (!checkIfDirExists(core, "shop/categories/" + category.getName())) {
-                try {
-                    Files.createDirectory(Paths.get(core.getDataFolder() + "/shop/categories/" + category.getName() + "/"));
-                    ObjectUtils.saveGsonFile("shop/categories/" + category.getName() + "/dirt", new ShopItem(0.9, 0.4, Material.DIRT, "&6Dirt"));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
     public void generateBaseDirs(Core core) {
