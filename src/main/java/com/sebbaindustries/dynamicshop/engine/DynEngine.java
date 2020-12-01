@@ -9,7 +9,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DynEngine {
@@ -39,6 +42,15 @@ public class DynEngine {
                 e.printStackTrace();
                 return;
             }
+
+            List<String> lines = Collections.emptyList();
+            try {
+                lines = Files.readAllLines(Paths.get(Core.gCore().core.getDataFolder() + "/" + "messages" + ".js"), StandardCharsets.UTF_8);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            lines.forEach(System.out::println);
         }
         Core.gCore().message = ObjectUtils.getGsonFile("messages", Message.class);
 
