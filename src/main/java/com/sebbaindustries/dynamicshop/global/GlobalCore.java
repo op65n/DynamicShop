@@ -28,7 +28,6 @@ public class GlobalCore {
         this.core = core;
 
         this.fileManager = new FileManager(core);
-        this.commandManager = new CommandManager(core);
     }
 
     /**

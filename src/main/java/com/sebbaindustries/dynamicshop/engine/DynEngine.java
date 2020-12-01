@@ -1,6 +1,7 @@
 package com.sebbaindustries.dynamicshop.engine;
 
 import com.sebbaindustries.dynamicshop.Core;
+import com.sebbaindustries.dynamicshop.commands.CommandManager;
 import com.sebbaindustries.dynamicshop.messages.Message;
 import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 
@@ -10,23 +11,17 @@ import java.util.List;
 
 public class DynEngine {
 
-    private final Core core;
-
-    public DynEngine(Core core) {
-        this.core = core;
-    }
-
     public void initialize() {
-
+        Core.gCore().commandManager = new CommandManager(Core.gCore().core);
 
         /*
         messages.js
          */
-        //File messages = new File(core.getDataFolder(), "messages.js");
-        //if (!messages.exists()) {
-        //    ObjectUtils.saveGsonFile("messages", new Message());
-        //}
-        //Core.gCore().message = ObjectUtils.getGsonFile("messages", Message.class);
+        File messages = new File(Core.gCore().core.getDataFolder(), "messages.js");
+        if (!messages.exists()) {
+            ObjectUtils.saveGsonFile("messages", new Message());
+        }
+        Core.gCore().message = ObjectUtils.getGsonFile("messages", Message.class);
 
         /*
         configuration.js
