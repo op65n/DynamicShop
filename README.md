@@ -22,7 +22,7 @@ Download DynamicShop here: <a href="#">TODO setup download site</a>
 - Place DynamicShop-VERSION.jar (`DynamicShop-v0.1.6.jar`) file into plugins folder
 - Start the server, plugin will generate `DynamicShop` directory with files:
   * `README.md`
-  * `configuration.js`
+  * `configuration.toml`
   * `messages.js`
 - Stop the server after everything has been loaded
 - Open and configure the plugin to your needs.
@@ -37,18 +37,18 @@ Download DynamicShop here: <a href="#">TODO setup download site</a>
 Directory structure:
 - DynamicShop
   * `README.md`
-  * `configuration.js`
+  * `configuration.toml`
   * `messages.js`
   - shop
-    * `shop_configuration.js`
+    * `shop_configuration.toml`
     - categories
       * `%item_name%.js`
     - statistics
       * `%item_name%_stat.js`
     - gui
       * `main.js`
-      * `store_page.js`
-      * `transaction_page.js`
+      * `store_page.toml`
+      * `transaction_page.toml`
 
 ## Commands & permissions
 
@@ -67,3 +67,7 @@ Directory structure:
 `/price <amount> <item>`
  - permission: `N/A`
  - description: Check price of items directly from the shop without the GUI. 
+ 
+`/adminshop`
+ - permission: `N/A`
+ - description: TODO: add description.

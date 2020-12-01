@@ -41,7 +41,7 @@ public class ServerPlugin {
             coreDump();
             return;
         }
-        Core.gCore().dynEngine = new DynEngine(core);
+        Core.gCore().dynEngine = new DynEngine();
         Core.gCore().dynEngine.initialize();
     }
 

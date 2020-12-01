@@ -2,6 +2,7 @@ package com.sebbaindustries.dynamicshop.engine.extensions;
 
 import com.google.gson.JsonObject;
 import com.sebbaindustries.dynamicshop.Core;
+import com.sebbaindustries.dynamicshop.log.PluginLogger;
 import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -34,7 +35,7 @@ public class ExtItemStack {
         JsonObject jsonObject = ObjectUtils.getJson(fileName);
 
         if (jsonObject == null) {
-            Core.gCore().logSevere("Error encountered null json object (filename: " + fileName + ")!");
+            PluginLogger.log("Error encountered null json object (filename: " + fileName + ")!");
             return null;
         }
 
@@ -45,7 +46,7 @@ public class ExtItemStack {
 
         String itemStackName = jsonObject.getAsJsonObject("iStack").get("type").getAsString();
         if (itemStackName == null || itemStackName.equals("") || itemStackName.equals(" ")) {
-            Core.gCore().logSevere("Error encountered null json object for material name (filename: " + fileName + ")!");
+            PluginLogger.log("Error encountered null json object for material name (filename: " + fileName + ")!");
             return null;
         }
         this.iStack = new ItemStack(Objects.requireNonNull(Material.matchMaterial(itemStackName)));

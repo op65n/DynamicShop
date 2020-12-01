@@ -2,6 +2,7 @@ package com.sebbaindustries.dynamicshop;
 
 import com.sebbaindustries.dynamicshop.global.GlobalCore;
 import com.sebbaindustries.dynamicshop.global.ServerPlugin;
+import com.sebbaindustries.dynamicshop.log.PluginLogger;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -69,10 +70,6 @@ public final class Core extends JavaPlugin {
     public void onEnable() {
         super.onEnable();
         plugin.initialize();
-    }
-
-    @Override
-    public @NotNull Logger getLogger() {
-        return super.getLogger();
+        PluginLogger.log("Plugin initialization complete!");
     }
 }

@@ -1,11 +1,12 @@
 package com.sebbaindustries.dynamicshop.utils;
 
 import com.sebbaindustries.dynamicshop.Core;
+import com.sebbaindustries.dynamicshop.log.PluginLogger;
+import org.apache.commons.io.FileUtils;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.*;
+import java.util.Arrays;
+import java.util.logging.Level;
 
 /**
  * @author SebbaIndustries
@@ -13,112 +14,50 @@ import java.nio.file.Paths;
  */
 public final class FileManager {
 
-    /*
-    configuration.js
-     */
-    public File configuration;
-    /*
-    messages.js
-    */
-    public File messages;
-    /*
-    shop_configuration.js
-    */
-    public File shopConfig;
+    enum PluginFiles {
+        CONFIGURATION("configuration.toml"),
+        MESSAGES("messages.toml"),
+        README("README.md"),
+
+        SHOP_CONFIGURATION("shop/shop_configuration.toml"),
+
+        GUI_MAIN_PAGE("shop/gui/main_page.toml"),
+        GUI_STORE_PAGE("shop/gui/store_page.toml"),
+        GUI_TRANSACTION_PAGE("shop/gui/transaction_page.toml"),
+        ;
+
+        public String fileName;
+
+        PluginFiles(String fileName) {
+            this.fileName = fileName;
+        }
+    }
 
     public FileManager(Core core) {
-        generateConfiguration(core);
-        //generateMessages(core);
-        generateBaseDirs(core);
-        generateShopConfig(core);
-        //generateREADME(core);
-        generateGUIJson(core);
+        generateMissingFiles(core);
     }
 
-    private boolean checkIfDirExists(Core core, String dirName) {
-        return new File(core.getDataFolder() + "/" + dirName + "/").isDirectory();
-    }
+    public void generateMissingFiles(Core core) {
+        Arrays.stream(PluginFiles.values()).forEach(file -> {
 
-    public void generateBaseDirs(Core core) {
-        try {
-            if (!checkIfDirExists(core, "shop")) {
-                Files.createDirectory(Paths.get(core.getDataFolder() + "/shop/"));
+            File pluginFile = new File(core.getDataFolder(), file.fileName);
+            if (pluginFile.exists()) return;
+
+            ClassLoader classLoader = getClass().getClassLoader();
+            InputStream inputStream = classLoader.getResourceAsStream(file.fileName);
+
+            // the stream holding the file content
+            if (inputStream == null) {
+                PluginLogger.logWarn("File " + file.fileName + " not found inside plugin jar!");
+                return;
             }
-            if (!checkIfDirExists(core, "shop/categories")) {
-                Files.createDirectory(Paths.get(core.getDataFolder() + "/shop/categories/"));
+
+            try {
+                FileUtils.copyInputStreamToFile(inputStream, pluginFile);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            if (!checkIfDirExists(core, "shop/statistics")) {
-                Files.createDirectory(Paths.get(core.getDataFolder() + "/shop/statistics/"));
-            }
-            if (!checkIfDirExists(core, "shop/gui")) {
-                Files.createDirectory(Paths.get(core.getDataFolder() + "/shop/gui/"));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void generateConfiguration(Core core) {
-        if (configuration == null) {
-            configuration = new File(core.getDataFolder(), "configuration.js");
-        }
-        if (!configuration.exists()) {
-            core.saveResource("configuration.js", false);
-        }
-    }
-
-    /**
-     * Generates messages.js File
-     */
-    public final void generateMessages(Core core) {
-        if (messages == null) {
-            messages = new File(core.getDataFolder(), "messages.js");
-        }
-        if (!messages.exists()) {
-            core.saveResource("messages.js", false);
-        }
-    }
-
-    /**
-     * Generates shop_configuration.js File
-     */
-    public final void generateShopConfig(Core core) {
-        if (shopConfig == null) {
-            shopConfig = new File(core.getDataFolder(), "shop/shop_configuration.js");
-        }
-        if (!shopConfig.exists()) {
-            core.saveResource("shop/shop_configuration.js", false);
-        }
-    }
-
-    /**
-     * Generates main_page.js File
-     */
-    public final void generateGUIJson(Core core) {
-        File main = new File(core.getDataFolder(), "shop/gui/main_page.js");
-        File store = new File(core.getDataFolder(), "shop/gui/store_page.js");
-        File transaction = new File(core.getDataFolder(), "shop/gui/transaction_page.js");
-
-        if (!main.exists()) {
-            core.saveResource("shop/gui/main_page.js", false);
-        }
-        if (!store.exists()) {
-            core.saveResource("shop/gui/store_page.js", false);
-        }
-        if (!transaction.exists()) {
-            core.saveResource("shop/gui/transaction_page.js", false);
-        }
-    }
-
-    /**
-     * Generates README.md File
-     */
-    public final void generateREADME(Core core) {
-        File README = new File(core.getDataFolder(), "README.md");
-
-        if (!README.exists()) {
-            core.saveResource("README.md", false);
-        }
+        });
     }
 
 }
