@@ -5,7 +5,10 @@ import com.sebbaindustries.dynamicshop.commands.CommandManager;
 import com.sebbaindustries.dynamicshop.messages.Message;
 import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +23,22 @@ public class DynEngine {
         File messages = new File(Core.gCore().core.getDataFolder(), "messages.js");
         if (!messages.exists()) {
             ObjectUtils.saveGsonFile("messages", new Message());
+            BufferedWriter out = null;
+            try {
+                out = new BufferedWriter(new java.io.FileWriter(Core.gCore().core.getDataFolder() + "/" + messages + ".js", StandardCharsets.UTF_8, true));
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
+            try {
+                out.newLine();
+                out.write("// Hello!");
+                out.flush();
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return;
+            }
         }
         Core.gCore().message = ObjectUtils.getGsonFile("messages", Message.class);
 
