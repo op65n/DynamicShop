@@ -3,7 +3,6 @@ package com.sebbaindustries.dynamicshop.global;
 import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.commands.CommandManager;
 import com.sebbaindustries.dynamicshop.engine.DynEngine;
-import com.sebbaindustries.dynamicshop.engine.structure.DirectoryStructure;
 import com.sebbaindustries.dynamicshop.messages.Message;
 import com.sebbaindustries.dynamicshop.settings.Configuration;
 import com.sebbaindustries.dynamicshop.utils.FileManager;
@@ -18,7 +17,7 @@ public class GlobalCore {
 
     public final Core core;
 
-    //public FileManager fileManager;
+    public FileManager fileManager;
     //public Configuration configuration;
     public Message message;
     public CommandManager commandManager;
@@ -28,7 +27,7 @@ public class GlobalCore {
     public GlobalCore(Core core) {
         this.core = core;
 
-        //this.fileManager = new FileManager(core);
+        this.fileManager = new FileManager(core);
     }
 
     /**
