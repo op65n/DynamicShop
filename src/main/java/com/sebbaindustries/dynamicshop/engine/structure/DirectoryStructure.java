@@ -11,7 +11,7 @@ public class DirectoryStructure {
 
     enum Directories {
         BASE(Core.gCore().core.getDataFolder() + "/"),
-        SHOP(Core.gCore().core.getDataFolder()+ "/shop/"),
+        SHOP(Core.gCore().core.getDataFolder() + "/shop/"),
         GUI(Core.gCore().core.getDataFolder() + "/shop/gui/"),
         STATISTICS(Core.gCore().core.getDataFolder() + "/shop/statistics/"),
         CATEGORIES(Core.gCore().core.getDataFolder() + "/shop/categories/"),
@@ -25,6 +25,8 @@ public class DirectoryStructure {
     }
 
     public void generateDirectoryStructure() {
+        System.out.println(Core.gCore().core.getDataFolder() + "/shop/");
+        System.out.println(Directories.SHOP.path);
         createIfMissing(Directories.SHOP.path);
         createIfMissing(Directories.GUI.path);
         createIfMissing(Directories.STATISTICS.path);
