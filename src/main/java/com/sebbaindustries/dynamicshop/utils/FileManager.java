@@ -27,12 +27,12 @@ public final class FileManager {
     public File shopConfig;
 
     public FileManager(Core core) {
-        generateConfiguration(core);
+        //generateConfiguration(core);
         //generateMessages(core);
-        generateBaseDirs(core);
-        generateShopConfig(core);
+        //generateBaseDirs(core);
+        //generateShopConfig(core);
         //generateREADME(core);
-        generateGUIJson(core);
+        //generateGUIJson(core);
     }
 
     private boolean checkIfDirExists(Core core, String dirName) {
