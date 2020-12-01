@@ -50,7 +50,17 @@ public class DynEngine {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            lines.forEach(System.out::println);
+            List<String> commentedFile = new ArrayList<>();
+            //"noPermission":
+            for (String line : lines) {
+                if (line.contains("\"noPermission\":")) {
+                    commentedFile.add("// Well hello there!");
+                    commentedFile.add("// haven't seen ya in a while");
+                }
+                commentedFile.add(line);
+            }
+
+            commentedFile.forEach(System.out::println);
         }
         Core.gCore().message = ObjectUtils.getGsonFile("messages", Message.class);
 
