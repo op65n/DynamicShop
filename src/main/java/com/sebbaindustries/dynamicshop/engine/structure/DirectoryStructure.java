@@ -27,6 +27,7 @@ public class DirectoryStructure {
     public void generateDirectoryStructure() {
         System.out.println(Core.gCore().core.getDataFolder() + "/shop/");
         System.out.println(Directories.SHOP.path);
+        createIfMissing(Directories.BASE.path);
         createIfMissing(Directories.SHOP.path);
         createIfMissing(Directories.GUI.path);
         createIfMissing(Directories.STATISTICS.path);
