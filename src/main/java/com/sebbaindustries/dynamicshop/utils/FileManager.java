@@ -18,6 +18,12 @@ public final class FileManager {
         CONFIGURATION("configuration.toml"),
         MESSAGES("messages.toml"),
         README("README.md"),
+
+        SHOP_CONFIGURATION("shop/shop_configuration.toml"),
+
+        GUI_MAIN_PAGE("shop/gui/main_page.toml"),
+        GUI_STORE_PAGE("shop/gui/store_page.toml"),
+        GUI_TRANSACTION_PAGE("shop/gui/transaction_page.toml"),
         ;
 
         public String fileName;
