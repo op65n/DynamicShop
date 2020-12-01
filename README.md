@@ -67,3 +67,7 @@ Directory structure:
 `/price <amount> <item>`
  - permission: `N/A`
  - description: Check price of items directly from the shop without the GUI. 
+ 
+`/adminshop`
+ - permission: `N/A`
+ - description: TODO: add description.
