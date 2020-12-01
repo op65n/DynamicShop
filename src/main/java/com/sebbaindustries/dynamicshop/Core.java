@@ -69,6 +69,7 @@ public final class Core extends JavaPlugin {
     public void onEnable() {
         super.onEnable();
         plugin.initialize();
+        Core.gCore().log("Plugin initialization complete!");
     }
 
     @Override
