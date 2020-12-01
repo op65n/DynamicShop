@@ -25,7 +25,7 @@ public class DynEngine {
             ObjectUtils.saveGsonFile("messages", new Message());
             BufferedWriter out = null;
             try {
-                out = new BufferedWriter(new java.io.FileWriter(Core.gCore().core.getDataFolder() + "/" + messages + ".js", StandardCharsets.UTF_8, true));
+                out = new BufferedWriter(new java.io.FileWriter(Core.gCore().core.getDataFolder() + "/" + "messages" + ".js", StandardCharsets.UTF_8, true));
             } catch (IOException e) {
                 e.printStackTrace();
                 return;
