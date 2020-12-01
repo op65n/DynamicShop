@@ -23,7 +23,6 @@ public class GlobalCore {
     public Message message;
     public CommandManager commandManager;
     public DynEngine dynEngine;
-    public DirectoryStructure directoryStructure;
 
 
     public GlobalCore(Core core) {

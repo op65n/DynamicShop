@@ -20,11 +20,15 @@ import java.util.List;
 
 public class DynEngine {
 
-    public void initialize() {
+    public DynEngine() {
         Core.gCore().commandManager = new CommandManager(Core.gCore().core);
-        Core.gCore().directoryStructure = new DirectoryStructure();
+        this.directoryStructure = new DirectoryStructure();
+    }
 
-        Core.gCore().directoryStructure.generateDirectoryStructure();
+    public DirectoryStructure directoryStructure;
+
+    public void initialize() {
+        directoryStructure.generateDirectoryStructure();
 
         /*
         messages.js

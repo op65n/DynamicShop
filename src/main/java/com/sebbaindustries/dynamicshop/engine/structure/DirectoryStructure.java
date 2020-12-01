@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 
 public class DirectoryStructure {
 
-    enum Directories {
+    enum Directory {
         BASE(Core.gCore().core.getDataFolder() + "/"),
         SHOP(Core.gCore().core.getDataFolder() + "/shop/"),
         GUI(Core.gCore().core.getDataFolder() + "/shop/gui/"),
@@ -19,26 +19,24 @@ public class DirectoryStructure {
 
         public String path;
 
-        Directories(String path) {
+        Directory(String path) {
             this.path = path;
         }
     }
 
     public void generateDirectoryStructure() {
-        System.out.println(Core.gCore().core.getDataFolder() + "/shop/");
-        System.out.println(Directories.SHOP.path);
-        createIfMissing(Directories.BASE.path);
-        createIfMissing(Directories.SHOP.path);
-        createIfMissing(Directories.GUI.path);
-        createIfMissing(Directories.STATISTICS.path);
-        createIfMissing(Directories.CATEGORIES.path);
+        createMissing(Directory.BASE);
+        createMissing(Directory.SHOP);
+        createMissing(Directory.GUI);
+        createMissing(Directory.STATISTICS);
+        createMissing(Directory.CATEGORIES);
     }
 
-    private void createIfMissing(String directory) {
-        if (new File(directory).isDirectory()) return;
+    private void createMissing(Directory directory) {
+        if (new File(directory.path).isDirectory()) return;
         try {
-            Files.createDirectory(Paths.get(directory));
-            Core.gCore().log("Created " + directory + " directory!");
+            Files.createDirectory(Paths.get(directory.path));
+            Core.gCore().log("Created " + directory.path + " directory!");
         } catch (IOException e) {
             e.printStackTrace();
         }
