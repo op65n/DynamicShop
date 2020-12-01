@@ -1,8 +1,12 @@
 package com.sebbaindustries.dynamicshop.engine.extensions;
 
+import com.google.gson.JsonObject;
+import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Objects;
 
 public class ExtItemStack {
 
@@ -27,18 +31,30 @@ public class ExtItemStack {
     }
 
     public ExtItemStack deserialize(String fileName) {
-        var o = ObjectUtils.getJson(fileName);
-        assert o != null;
-        this.buyPrice = o.get("buyPrice").getAsDouble();
-        this.sellPrice = o.get("sellPrice").getAsDouble();
-        this.staticPrice = o.get("staticPrice").getAsBoolean();
-        this.tax = o.get("tax").getAsDouble();
+        JsonObject jsonObject = ObjectUtils.getJson(fileName);
 
-        this.iStack = new ItemStack(Material.matchMaterial(o.getAsJsonObject("iStack").get("type").getAsString()));
+        if (jsonObject == null) {
+            Core.gCore().logSevere("Error encountered null json object (filename: " + fileName + ")!");
+            return null;
+        }
+
+        this.buyPrice = jsonObject.get("buyPrice").getAsDouble();
+        this.sellPrice = jsonObject.get("sellPrice").getAsDouble();
+        this.staticPrice = jsonObject.get("staticPrice").getAsBoolean();
+        this.tax = jsonObject.get("tax").getAsDouble();
+
+        String itemStackName = jsonObject.getAsJsonObject("iStack").get("type").getAsString();
+        if (itemStackName == null || itemStackName.equals("") || itemStackName.equals(" ")) {
+            Core.gCore().logSevere("Error encountered null json object for material name (filename: " + fileName + ")!");
+            return null;
+        }
+        this.iStack = new ItemStack(Objects.requireNonNull(Material.matchMaterial(itemStackName)));
+
+        // TODO: Add enchant support
         return this;
     }
 
-    public void dump() {
+    public void dataDump() {
         System.out.println(ObjectUtils.deserializeObjectToString(this));
     }
 

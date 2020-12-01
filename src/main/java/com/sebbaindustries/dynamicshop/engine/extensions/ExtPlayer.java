@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 public class ExtPlayer {
 
     public Player player;
-    String debugPlayerName = ":?";
+    private String debugPlayerName = ":?";
 
     public ExtPlayer(Player player) {
         this.player = player;
