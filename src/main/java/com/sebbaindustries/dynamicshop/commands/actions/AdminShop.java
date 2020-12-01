@@ -53,7 +53,7 @@ public class AdminShop extends CommandFactory implements ICmd, ITab {
 
         TomlWriter writer = new TomlWriter();
         try {
-            writer.write(iStack, new File(Core.gCore().core.getDataFolder() + "/" + iStack.getType().name() + ".toml"));
+            writer.write(iStack.serialize(), new File(Core.gCore().core.getDataFolder() + "/" + iStack.getType().name() + ".toml"));
         } catch (IOException e) {
             e.printStackTrace();
         }

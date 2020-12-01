@@ -39,9 +39,9 @@ public class DynEngine {
         Core.gCore().message = ObjectUtils.getGsonFile("messages", Message.class);
 
         /*
-        configuration.js
+        configuration.toml
          */
-        //File configuration = new File(core.getDataFolder(), "configuration.js");
+        //File configuration = new File(core.getDataFolder(), "configuration.toml");
         //if (!configuration.exists()) {
         //    ObjectUtils.saveGsonFile("configuration", new Configuration());
         //}

@@ -14,15 +14,15 @@ import java.nio.file.Paths;
 public final class FileManager {
 
     /*
-    configuration.js
+    configuration.toml
      */
     public File configuration;
     /*
-    messages.js
+    messages.toml
     */
     public File messages;
     /*
-    shop_configuration.js
+    shop_configuration.toml
     */
     public File shopConfig;
 
@@ -60,53 +60,53 @@ public final class FileManager {
 
     public void generateConfiguration(Core core) {
         if (configuration == null) {
-            configuration = new File(core.getDataFolder(), "configuration.js");
+            configuration = new File(core.getDataFolder(), "configuration.toml");
         }
         if (!configuration.exists()) {
-            core.saveResource("configuration.js", false);
+            core.saveResource("configuration.toml", false);
         }
     }
 
     /**
-     * Generates messages.js File
+     * Generates messages.toml File
      */
     public final void generateMessages(Core core) {
         if (messages == null) {
-            messages = new File(core.getDataFolder(), "messages.js");
+            messages = new File(core.getDataFolder(), "messages.toml");
         }
         if (!messages.exists()) {
-            core.saveResource("messages.js", false);
+            core.saveResource("messages.toml", false);
         }
     }
 
     /**
-     * Generates shop_configuration.js File
+     * Generates shop_configuration.toml File
      */
     public final void generateShopConfig(Core core) {
         if (shopConfig == null) {
-            shopConfig = new File(core.getDataFolder(), "shop/shop_configuration.js");
+            shopConfig = new File(core.getDataFolder(), "shop/shop_configuration.toml");
         }
         if (!shopConfig.exists()) {
-            core.saveResource("shop/shop_configuration.js", false);
+            core.saveResource("shop/shop_configuration.toml", false);
         }
     }
 
     /**
-     * Generates main_page.js File
+     * Generates main_page.toml File
      */
     public final void generateGUIJson(Core core) {
-        File main = new File(core.getDataFolder(), "shop/gui/main_page.js");
-        File store = new File(core.getDataFolder(), "shop/gui/store_page.js");
-        File transaction = new File(core.getDataFolder(), "shop/gui/transaction_page.js");
+        File main = new File(core.getDataFolder(), "shop/gui/main_page.toml");
+        File store = new File(core.getDataFolder(), "shop/gui/store_page.toml");
+        File transaction = new File(core.getDataFolder(), "shop/gui/transaction_page.toml");
 
         if (!main.exists()) {
-            core.saveResource("shop/gui/main_page.js", false);
+            core.saveResource("shop/gui/main_page.toml", false);
         }
         if (!store.exists()) {
-            core.saveResource("shop/gui/store_page.js", false);
+            core.saveResource("shop/gui/store_page.toml", false);
         }
         if (!transaction.exists()) {
-            core.saveResource("shop/gui/transaction_page.js", false);
+            core.saveResource("shop/gui/transaction_page.toml", false);
         }
     }
 
