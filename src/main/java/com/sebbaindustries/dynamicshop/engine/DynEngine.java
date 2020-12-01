@@ -1,5 +1,7 @@
 package com.sebbaindustries.dynamicshop.engine;
 
+import com.moandjiezana.toml.Toml;
+import com.moandjiezana.toml.TomlWriter;
 import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.commands.CommandManager;
 import com.sebbaindustries.dynamicshop.messages.Message;
@@ -26,18 +28,9 @@ public class DynEngine {
         File messages = new File(Core.gCore().core.getDataFolder(), "messages.js");
         if (!messages.exists()) {
             ObjectUtils.saveGsonFile("messages", new Message());
-            BufferedWriter out = null;
+            TomlWriter tomlWriter = new TomlWriter();
             try {
-                out = new BufferedWriter(new java.io.FileWriter(Core.gCore().core.getDataFolder() + "/" + "messages" + ".js", StandardCharsets.UTF_8, true));
-            } catch (IOException e) {
-                e.printStackTrace();
-                return;
-            }
-            try {
-                out.newLine();
-                out.write("// Hello!");
-                out.flush();
-                out.close();
+                tomlWriter.write(new Message(), new File(Core.gCore().core.getDataFolder() + "/msg.toml"));
             } catch (IOException e) {
                 e.printStackTrace();
                 return;
