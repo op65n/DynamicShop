@@ -3,10 +3,8 @@ package com.sebbaindustries.dynamicshop.commands.actions;
 import com.sebbaindustries.dynamicshop.commands.components.CommandFactory;
 import com.sebbaindustries.dynamicshop.commands.components.ICmd;
 import com.sebbaindustries.dynamicshop.commands.components.ITab;
-import com.sebbaindustries.dynamicshop.engine.components.MockItemStack;
 import com.sebbaindustries.dynamicshop.engine.extensions.ExtItemStack;
 import com.sebbaindustries.dynamicshop.engine.extensions.ExtPlayer;
-import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -40,12 +38,12 @@ public class AdminShop extends CommandFactory implements ICmd, ITab {
         ExtItemStack itemStack = new ExtItemStack(iStack);
         itemStack.serialize();
         String name = iStack.getType().name();
-        itemStack.dump();
+        itemStack.dataDump();
         extPlayer.sendMessage("&6Done!");
 
         ExtItemStack newItemStack = new ExtItemStack();
         newItemStack.deserialize(name);
-        newItemStack.dump();
+        newItemStack.dataDump();
 
 
 
