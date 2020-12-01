@@ -35,25 +35,6 @@ public class DynEngine {
                 e.printStackTrace();
                 return;
             }
-
-            List<String> lines = Collections.emptyList();
-            try {
-                lines = Files.readAllLines(Paths.get(Core.gCore().core.getDataFolder() + "/" + "messages" + ".js"), StandardCharsets.UTF_8);
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            List<String> commentedFile = new ArrayList<>();
-            //"noPermission":
-            for (String line : lines) {
-                if (line.contains("\"noPermission\":")) {
-                    commentedFile.add("// Well hello there!");
-                    commentedFile.add("// haven't seen ya in a while");
-                }
-                commentedFile.add(line);
-            }
-
-            commentedFile.forEach(System.out::println);
         }
         Core.gCore().message = ObjectUtils.getGsonFile("messages", Message.class);
 
