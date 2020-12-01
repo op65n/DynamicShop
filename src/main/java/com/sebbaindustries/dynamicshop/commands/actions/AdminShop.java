@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 public class AdminShop extends CommandFactory implements ICmd, ITab {
 
@@ -41,7 +42,7 @@ public class AdminShop extends CommandFactory implements ICmd, ITab {
 
         // Serialization
         ItemStack iStack = new ItemStack(extPlayer.player.getInventory().getItemInOffHand());
-        ExtItemStack itemStack = new ExtItemStack(iStack);
+        Map<String, Object> map = iStack.serialize();
         //itemStack.serialize();
         //String name = iStack.getType().name();
         //itemStack.dataDump();
@@ -52,11 +53,7 @@ public class AdminShop extends CommandFactory implements ICmd, ITab {
         //newItemStack.dataDump();
 
         TomlWriter writer = new TomlWriter();
-        try {
-            writer.write(iStack.serialize(), new File(Core.gCore().core.getDataFolder() + "/" + iStack.getType().name() + ".toml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        System.out.println(writer.write(map));
 
 
     }
