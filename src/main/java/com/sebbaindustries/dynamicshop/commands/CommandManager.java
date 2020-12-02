@@ -40,7 +40,6 @@ public class CommandManager implements CommandExecutor, TabCompleter {
 
     private void registerCommands(CommandFactory... newCommands) {
         Arrays.stream(newCommands).forEach(command -> {
-            System.out.println(command.command());
             Objects.requireNonNull(core.getCommand(command.command())).setExecutor(this);
             Objects.requireNonNull(core.getCommand(command.command())).setTabCompleter(this);
             commands.add(command);

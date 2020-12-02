@@ -35,11 +35,11 @@ public class AdminShop extends CommandFactory implements ICmd, ITab {
             return;
         }
 
-        //Player player = (Player) sender;
-        //int amount = 7;
-        //String material = "some shit";
-        //double buyPrice = 4.0;
-        //double sellPrice = 4.0;
+        Player player = (Player) sender;
+        int amount = 7;
+        String material = "some shit";
+        double buyPrice = 4.0;
+        double sellPrice = 4.0;
         //MessageBuilder.sendTo(player).text(Message.get().shopSuccessfulTransaction)
         //        .placeholder(MessageBuilder.Placeholder.MATERIAL_NAME, material)
         //        .placeholder(MessageBuilder.Placeholder.AMOUNT, amount)
@@ -49,22 +49,22 @@ public class AdminShop extends CommandFactory implements ICmd, ITab {
         //        .format()
         //        .build()
         //        .send();
-        //MessageBuilder.sendTo(player).text(Message.get().multiLineMessage)
-        //        .placeholder(MessageBuilder.Placeholder.MATERIAL_NAME, material)
-        //        .placeholder(MessageBuilder.Placeholder.AMOUNT, amount)
-        //        .placeholder(MessageBuilder.Placeholder.PRICE_BUY, buyPrice)
-        //        .placeholder(MessageBuilder.Placeholder.PRICE_SELL, sellPrice)
-        //        .applyCommonPlaceholders()
-        //        .format()
-        //        .build()
-        //        .send();
+        MessageBuilder.sendTo(player).text(Message.get().multiLineMessage)
+                .placeholder(MessageBuilder.Placeholder.MATERIAL_NAME, material)
+                .placeholder(MessageBuilder.Placeholder.AMOUNT, amount)
+                .placeholder(MessageBuilder.Placeholder.PRICE_BUY, buyPrice)
+                .placeholder(MessageBuilder.Placeholder.PRICE_SELL, sellPrice)
+                .applyCommonPlaceholders()
+                .format()
+                .build()
+                .send();
 
-        TomlWriter writer = new TomlWriter();
-        try {
-            writer.write(Core.gCore().message, new File(Core.gCore().core.getDataFolder() + "/gen_messages.toml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //TomlWriter writer = new TomlWriter();
+        //try {
+        //    writer.write(Core.gCore().message, new File(Core.gCore().core.getDataFolder() + "/gen_messages.toml"));
+        //} catch (IOException e) {
+        //    e.printStackTrace();
+        //}
     }
 
     @Override

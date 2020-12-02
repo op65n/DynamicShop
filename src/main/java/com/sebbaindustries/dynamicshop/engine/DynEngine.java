@@ -6,6 +6,7 @@ import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.commands.CommandManager;
 import com.sebbaindustries.dynamicshop.engine.structure.DirectoryStructure;
 import com.sebbaindustries.dynamicshop.messages.Message;
+import com.sebbaindustries.dynamicshop.utils.FileManager;
 import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 
 import java.io.BufferedWriter;
@@ -25,7 +26,8 @@ public class DynEngine {
     }
 
     public void initialize() {
-
+        Core.gCore().message = new Toml().read(Core.gCore().fileManager.getFile(FileManager.PluginFiles.MESSAGES)).to(Message.class);
+        System.out.println(ObjectUtils.deserializeObjectToString(Core.gCore().message));
         /*
         messages.js
          */

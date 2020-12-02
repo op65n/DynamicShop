@@ -13,7 +13,7 @@ import java.util.Arrays;
  */
 public final class FileManager {
 
-    enum PluginFiles {
+    public enum PluginFiles {
         CONFIGURATION("configuration.toml"),
         MESSAGES("messages.toml"),
         README("README.md"),
