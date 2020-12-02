@@ -59,4 +59,13 @@ public final class FileManager {
         });
     }
 
+    public File getFile(PluginFiles file) {
+        File pluginFile = new File(Core.gCore().core.getDataFolder(), file.fileName);
+        if (!pluginFile.exists()) {
+            PluginLogger.logSevere("File " + file.fileName + " not found!");
+            return null;
+        }
+        return pluginFile;
+    }
+
 }
