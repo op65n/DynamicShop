@@ -6,7 +6,6 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.*;
 import java.util.Arrays;
-import java.util.logging.Level;
 
 /**
  * @author SebbaIndustries
@@ -14,7 +13,7 @@ import java.util.logging.Level;
  */
 public final class FileManager {
 
-    enum PluginFiles {
+    public enum PluginFiles {
         CONFIGURATION("configuration.toml"),
         MESSAGES("messages.toml"),
         README("README.md"),
@@ -58,6 +57,15 @@ public final class FileManager {
                 e.printStackTrace();
             }
         });
+    }
+
+    public File getFile(PluginFiles file) {
+        File pluginFile = new File(Core.gCore().core.getDataFolder(), file.fileName);
+        if (!pluginFile.exists()) {
+            PluginLogger.logSevere("File " + file.fileName + " not found!");
+            return null;
+        }
+        return pluginFile;
     }
 
 }

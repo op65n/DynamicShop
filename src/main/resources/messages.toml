@@ -1,0 +1,5 @@
+# By SebbaIndustries, this file is incompleete!
+
+noPermission = "&cYou lack security clearance! This incident will be reported to the general."
+shopSuccessfulTransaction = "#<3ee524>%player% #<F8B4FF>%amount% #<580062>%material% #<9E9C46>%price_buy% #<00ccff>%price_sell%"
+multiLineMessage = ["#<3ee524>Test line 0", "#<3ee524>%player% is the best", "#<F8B4FF>%amount% euros", "line 3 sucks", "#<9E9C46>%price_buy% - #<00ccff>%price_sell%"]

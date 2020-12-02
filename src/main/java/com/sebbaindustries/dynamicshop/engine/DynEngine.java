@@ -6,6 +6,7 @@ import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.commands.CommandManager;
 import com.sebbaindustries.dynamicshop.engine.structure.DirectoryStructure;
 import com.sebbaindustries.dynamicshop.messages.Message;
+import com.sebbaindustries.dynamicshop.utils.FileManager;
 import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 
 import java.io.BufferedWriter;
@@ -20,35 +21,8 @@ import java.util.List;
 
 public class DynEngine {
 
-    public DynEngine() {
-        Core.gCore().commandManager = new CommandManager(Core.gCore().core);
-    }
-
     public void initialize() {
-
-        /*
-        messages.js
-         */
-        //File messages = new File(Core.gCore().core.getDataFolder(), "messages.js");
-        //if (!messages.exists()) {
-        //    ObjectUtils.saveGsonFile("messages", new Message());
-        //    TomlWriter tomlWriter = new TomlWriter();
-        //    try {
-        //        tomlWriter.write(new Message(), new File(Core.gCore().core.getDataFolder() + "/msg.toml"));
-        //    } catch (IOException e) {
-        //        e.printStackTrace();
-        //        return;
-        //    }
-        //}
-        //Core.gCore().message = ObjectUtils.getGsonFile("messages", Message.class);
-
-        /*
-        configuration.toml
-         */
-        //File configuration = new File(core.getDataFolder(), "configuration.toml");
-        //if (!configuration.exists()) {
-        //    ObjectUtils.saveGsonFile("configuration", new Configuration());
-        //}
-        //Core.gCore().configuration = ObjectUtils.getGsonFile("configuration", Configuration.class);
+        Core.gCore().commandManager = new CommandManager(Core.gCore().core);
+        Core.gCore().message = new Toml().read(Core.gCore().fileManager.getFile(FileManager.PluginFiles.MESSAGES)).to(Message.class);
     }
 }
