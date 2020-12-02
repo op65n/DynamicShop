@@ -8,6 +8,7 @@ import com.sebbaindustries.dynamicshop.commands.components.ITab;
 import com.sebbaindustries.dynamicshop.engine.extensions.ExtItemStack;
 import com.sebbaindustries.dynamicshop.engine.extensions.ExtPlayer;
 import com.sebbaindustries.dynamicshop.messages.Message;
+import com.sebbaindustries.dynamicshop.messages.MessageBuilder;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -38,24 +39,19 @@ public class AdminShop extends CommandFactory implements ICmd, ITab {
             return;
         }
 
-        ExtPlayer extPlayer = new ExtPlayer(sender);
+        Player player = (Player) sender;
+        int amount = 7;
+        String material = "some shit";
+        double buyPrice = 4.0;
+        double sellPrice = 4.0;
 
-        // Serialization
-        ItemStack iStack = new ItemStack(extPlayer.player.getInventory().getItemInOffHand());
-        Map<String, Object> map = iStack.serialize();
-        //itemStack.serialize();
-        //String name = iStack.getType().name();
-        //itemStack.dataDump();
-        //extPlayer.sendMessage("&6Done!");
-//
-        //ExtItemStack newItemStack = new ExtItemStack();
-        //newItemStack.deserialize(name);
-        //newItemStack.dataDump();
-
-        TomlWriter writer = new TomlWriter();
-        System.out.println(writer.write(map));
-
-
+        MessageBuilder.to(player).text(Message.get().shopSuccessfulTransaction)
+                .placeholder(material, MessageBuilder.Placeholder.MATERIAL_NAME)
+                .placeholder(amount, MessageBuilder.Placeholder.AMOUNT)
+                .placeholder(buyPrice, MessageBuilder.Placeholder.PRICE_BUY)
+                .placeholder(sellPrice, MessageBuilder.Placeholder.PRICE_SELL)
+                .applyCommonPlaceholders().format().build()
+                .send();
     }
 
     @Override

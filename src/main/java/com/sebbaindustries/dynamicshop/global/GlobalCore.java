@@ -31,6 +31,7 @@ public class GlobalCore {
         this.core = core;
         this.directoryStructure = new DirectoryStructure();
         this.fileManager = new FileManager(core);
+        this.message = new Message();
     }
 
     /**
