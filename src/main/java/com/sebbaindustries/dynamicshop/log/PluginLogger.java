@@ -18,7 +18,7 @@ public class PluginLogger {
     }
 
     /**
-     * Logs normal #ERROR style message to the console
+     * Logs severe #ERROR style message to the console
      *
      * @param message String message, color will be red
      */
@@ -28,7 +28,7 @@ public class PluginLogger {
     }
 
     /**
-     * Logs normal #WARN style message to the console
+     * Logs warning #WARN style message to the console
      *
      * @param message String message, color will be yellow
      */
