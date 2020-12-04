@@ -5,16 +5,17 @@ import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.commands.components.CommandFactory;
 import com.sebbaindustries.dynamicshop.commands.components.ICmd;
 import com.sebbaindustries.dynamicshop.commands.components.ITab;
-import com.sebbaindustries.dynamicshop.engine.extensions.ExtItemStack;
-import com.sebbaindustries.dynamicshop.messages.Message;
-import com.sebbaindustries.dynamicshop.messages.MessageBuilder;
+import com.sebbaindustries.dynamicshop.engine.components.ShopItem;
+import com.sebbaindustries.dynamicshop.engine.extensions.ItemStackImpl;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -38,10 +39,22 @@ public class AdminShop extends CommandFactory implements ICmd, ITab {
         }
 
         Player player = (Player) sender;
-        ExtItemStack itemStack = new ExtItemStack(new ItemStack(player.getInventory().getItemInOffHand()));
+        ItemStack iStack = new ItemStack(player.getInventory().getItemInOffHand());
+        ItemMeta iMeta = iStack.getItemMeta();
+        List<String> lore = new ArrayList<>();
+        lore.add("line 0");
+        lore.add("line 1");
+        lore.add("line 2");
+        lore.add("line 3");
+        iMeta.setLore(lore);
+        iStack.setItemMeta(iMeta);
+
+        ShopItem shopItem = new ShopItem(iStack, 4.03, 2.66);
+
+
         TomlWriter writer = new TomlWriter();
         try {
-            writer.write(itemStack, new File(Core.gCore().core.getDataFolder() + "/item.toml"));
+            writer.write(shopItem, new File(Core.gCore().core.getDataFolder() + "/item.toml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
