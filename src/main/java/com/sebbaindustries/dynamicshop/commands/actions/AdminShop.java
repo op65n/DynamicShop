@@ -1,5 +1,6 @@
 package com.sebbaindustries.dynamicshop.commands.actions;
 
+import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;
 import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.commands.components.CommandFactory;
@@ -7,6 +8,9 @@ import com.sebbaindustries.dynamicshop.commands.components.ICmd;
 import com.sebbaindustries.dynamicshop.commands.components.ITab;
 import com.sebbaindustries.dynamicshop.engine.components.ShopItem;
 import com.sebbaindustries.dynamicshop.engine.extensions.ItemStackImpl;
+import com.sebbaindustries.dynamicshop.messages.Message;
+import com.sebbaindustries.dynamicshop.utils.FileManager;
+import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -58,6 +62,12 @@ public class AdminShop extends CommandFactory implements ICmd, ITab {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        ShopItem desShopItem = new Toml().read(Core.gCore().core.getDataFolder() + "/item.toml").to(ShopItem.class);
+        System.out.println(ObjectUtils.deserializeObjectToString(desShopItem));
+
+        ItemStack desItemStack = desShopItem.getItemStack().getBukkitItemStack();
+        player.getInventory().setItemInMainHand(desItemStack);
     }
 
     @Override
