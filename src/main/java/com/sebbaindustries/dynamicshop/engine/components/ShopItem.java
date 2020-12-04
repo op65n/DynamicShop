@@ -1,10 +1,12 @@
 package com.sebbaindustries.dynamicshop.engine.components;
 
+import com.moandjiezana.toml.TomlWriter;
 import com.sebbaindustries.dynamicshop.engine.extensions.ItemStackImpl;
 import com.sebbaindustries.dynamicshop.engine.extensions.ShopMeta;
+import com.sebbaindustries.dynamicshop.engine.structure.Serializable;
 import org.bukkit.inventory.ItemStack;
 
-public class ShopItem {
+public class ShopItem implements Serializable<ShopItem> {
 
     public ShopItem(ItemStackImpl itemStack, ShopMeta shopMeta) {
         this.itemStack = itemStack;
@@ -33,5 +35,20 @@ public class ShopItem {
 
     public void setShopMeta(ShopMeta shopMeta) {
         this.shopMeta = shopMeta;
+    }
+
+    @Override
+    public void serialize(String fileName) {
+        TomlWriter tomlWriter = new TomlWriter.Builder()
+                .indentValuesBy(2)
+                .indentTablesBy(4)
+                .padArrayDelimitersBy(3)
+                .build();
+
+    }
+
+    @Override
+    public ShopItem deserialize() {
+        return null;
     }
 }
