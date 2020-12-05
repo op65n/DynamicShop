@@ -133,8 +133,8 @@ public class ShopItemImpl implements ShopItem {
             Map<String, Object> enchantObjects = toml.getTable("enchants").toMap();
             if (enchantObjects == null) return;
             HashMap<String, Integer> enchants = new HashMap<>();
-            //enchantObjects.forEach((enchant, object) -> enchants.put(enchant, object));
-            enchantObjects.forEach((e, o) -> System.out.println(o + " -> " + Math.toIntExact((Long) o)));
+            // Don't even dare to ask why this is here..
+            enchantObjects.forEach((enchant, object) -> enchants.put(enchant, Math.toIntExact((Long) object)));
             item.enchants = enchants;
         }
 
