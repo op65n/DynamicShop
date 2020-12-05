@@ -1,4 +1,4 @@
-package com.sebbaindustries.dynamicshop.engine.components;
+package com.sebbaindustries.dynamicshop.engine.structure;
 
 import com.destroystokyo.paper.Namespaced;
 import com.google.common.collect.Multimap;
