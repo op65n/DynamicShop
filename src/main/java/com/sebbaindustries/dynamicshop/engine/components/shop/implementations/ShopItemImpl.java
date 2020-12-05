@@ -130,7 +130,12 @@ public class ShopItemImpl implements ShopItem {
         }
 
         private void setEnchants() {
-            Map<String, Object> enchantObjects = toml.getTable("enchants").toMap();
+            Map<String, Object> enchantObjects;
+            try {
+                enchantObjects = toml.getTable("enchants").toMap();
+            } catch (NullPointerException e) {
+                return;
+            }
             if (enchantObjects == null) return;
             HashMap<String, Integer> enchants = new HashMap<>();
             // Don't even dare to ask why this is here..
