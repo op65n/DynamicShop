@@ -1,5 +1,6 @@
 package com.sebbaindustries.dynamicshop.commands.actions;
 
+import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.commands.components.CommandFactory;
 import com.sebbaindustries.dynamicshop.commands.components.ICmd;
 import com.sebbaindustries.dynamicshop.commands.components.ITab;
@@ -37,7 +38,7 @@ public class AdminShop extends CommandFactory implements ICmd, ITab {
         Player player = (Player) sender;
         ItemStack iStack = new ItemStack(player.getInventory().getItemInMainHand());
         ShopItemImpl item = new ShopItemImpl(iStack, new ShopMeta(4.44, 3.33));
-        DynEngine.item.add((ShopItem) item);
+        Core.gCore().dynEngine.container.items.add((ShopItem) item);
     }
 
     @Override
