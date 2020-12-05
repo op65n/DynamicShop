@@ -46,7 +46,7 @@ public class ShopItemImpl implements ShopItem {
         ItemMeta iMeta = iStack.getItemMeta();
         if (lore != null) iMeta.setLore(lore);
         if (displayName != null) iMeta.setDisplayName(displayName);
-        if (enchants.size() > 0) enchants.forEach((enchant, val) -> iMeta.addEnchant(new EnchantmentWrapper(enchant), val, true));
+        if (enchants != null) enchants.forEach((enchant, val) -> iMeta.addEnchant(new EnchantmentWrapper(enchant), val, true));
 
         iStack.setItemMeta(iMeta);
         return iStack;
