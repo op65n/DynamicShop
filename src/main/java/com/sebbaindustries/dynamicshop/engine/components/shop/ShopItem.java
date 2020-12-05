@@ -6,6 +6,8 @@ import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.engine.components.shop.implementations.ShopItemImpl;
 import org.bukkit.inventory.ItemStack;
 
+import java.io.File;
+
 public interface ShopItem extends com.sebbaindustries.dynamicshop.engine.structure.Serializable {
 
     ItemStack getBukkitItemStack();
@@ -14,7 +16,7 @@ public interface ShopItem extends com.sebbaindustries.dynamicshop.engine.structu
     void setShopMeta(ShopMeta meta);
 
     static ShopItem deserialize(String file) {
-        Toml toml = new Toml().read(Core.gCore().core.getDataFolder() + "/" + file + ".toml");
+        Toml toml = new Toml().read(new File(Core.gCore().core.getDataFolder() + "/" + file + ".toml"));
 
         return new ShopItemImpl.UnsafeComponentBuilder().build(toml, file + ".toml");
     }
