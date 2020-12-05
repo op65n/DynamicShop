@@ -97,7 +97,7 @@ public class ShopItemImpl implements ShopItem {
             item.material = getMaterial();
             setLore();
             setDisplayName();
-            //setEnchants();
+            setEnchants();
             setMeta();
 
             return item;
@@ -130,7 +130,7 @@ public class ShopItemImpl implements ShopItem {
         }
 
         private void setEnchants() {
-            Map<String, Object> enchantObjects = toml.getTable("enchant").toMap();
+            Map<String, Object> enchantObjects = toml.getTable("enchants").toMap();
             if (enchantObjects == null) return;
             HashMap<String, Integer> enchants = new HashMap<>();
             enchantObjects.forEach((enchant, object) -> enchants.put(enchant, (Integer) object));
