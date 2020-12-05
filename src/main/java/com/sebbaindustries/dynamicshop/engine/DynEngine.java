@@ -1,6 +1,5 @@
 package com.sebbaindustries.dynamicshop.engine;
 
-import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;
@@ -25,7 +24,9 @@ import java.util.List;
 
 public class DynEngine {
 
-    public static Multimap<String, ShopItem> items = ArrayListMultimap.create();
+    public static List<ShopItem> item = new ArrayList<>();
+
+    public static ShopItem[] items = new ShopItem[10];
 
     public void initialize() {
         Core.gCore().commandManager = new CommandManager(Core.gCore().core);

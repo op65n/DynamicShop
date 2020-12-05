@@ -6,6 +6,7 @@ import com.sebbaindustries.dynamicshop.commands.components.CommandFactory;
 import com.sebbaindustries.dynamicshop.commands.components.ICmd;
 import com.sebbaindustries.dynamicshop.commands.components.ITab;
 import com.sebbaindustries.dynamicshop.engine.DynEngine;
+import com.sebbaindustries.dynamicshop.engine.components.shop.ShopItem;
 import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
@@ -32,11 +33,13 @@ public class Buy extends CommandFactory implements ICmd, ITab {
         TomlWriter writer = new TomlWriter.Builder()
                 .build();
 
-        System.out.println(ObjectUtils.deserializeObjectToString(DynEngine.items));
-        System.out.println(" ");
-        System.out.println(ObjectUtils.deserializeObjectToString(DynEngine.items.get("Item")));
+        int i = 0;
+        for (ShopItem item : DynEngine.item) {
+            DynEngine.items[i] = item;
+            i++;
+        }
         try {
-            writer.write(DynEngine.items.get("Item"), new File(Core.gCore().core.getDataFolder() + "/" + "temp" + ".toml"));
+            writer.write(DynEngine.items, new File(Core.gCore().core.getDataFolder() + "/" + "temp" + ".toml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
