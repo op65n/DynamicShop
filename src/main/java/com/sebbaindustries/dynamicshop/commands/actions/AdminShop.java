@@ -52,10 +52,12 @@ public class AdminShop extends CommandFactory implements ICmd, ITab {
         iStack.setItemMeta(iMeta);
 
         ShopItemImpl item = new ShopItemImpl(iStack, new ShopMeta(4.44, 3.33));
+        String file = item.generateFileName();
         ShopItem shopItem = item;
-
-        System.out.println(ObjectUtils.deserializeObjectToString(shopItem.getBukkitItemStack()));
         shopItem.serialize();
+
+        ShopItem desShopItem = ShopItem.deserialize(file);
+        System.out.println(ObjectUtils.deserializeObjectToString(desShopItem));
     }
 
     @Override

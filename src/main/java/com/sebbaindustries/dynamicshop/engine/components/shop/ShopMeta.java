@@ -2,31 +2,31 @@ package com.sebbaindustries.dynamicshop.engine.components.shop;
 
 public class ShopMeta {
 
-    private double buyPrice;
-    private double sellPrice;
+    private Double buyPrice;
+    private Double sellPrice;
 
     private boolean staticPrice = false;
     private double multiplier = 0.04;
     private double tax = 22;
 
-    public ShopMeta(double buyPrice, double sellPrice) {
+    public ShopMeta(Double buyPrice, Double sellPrice) {
         this.buyPrice = buyPrice;
         this.sellPrice = sellPrice;
     }
 
-    public double getBuyPrice() {
+    public Double getBuyPrice() {
         return buyPrice;
     }
 
-    public void setBuyPrice(double buyPrice) {
+    public void setBuyPrice(Double buyPrice) {
         this.buyPrice = buyPrice;
     }
 
-    public double getSellPrice() {
+    public Double getSellPrice() {
         return sellPrice;
     }
 
-    public void setSellPrice(double sellPrice) {
+    public void setSellPrice(Double sellPrice) {
         this.sellPrice = sellPrice;
     }
 
