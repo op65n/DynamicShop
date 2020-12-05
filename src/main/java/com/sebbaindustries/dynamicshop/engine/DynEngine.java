@@ -26,11 +26,11 @@ import java.util.List;
 
 public class DynEngine {
 
-    public ShopContainer container;
+    public static int latest = 0;
+    public static HashMap<Integer, ShopItem> items = new HashMap<>();
 
     public void initialize() {
         Core.gCore().commandManager = new CommandManager(Core.gCore().core);
         Core.gCore().message = new Toml().read(Core.gCore().fileManager.getFile(FileManager.PluginFiles.MESSAGES)).to(Message.class);
-        container = new ShopContainer();
     }
 }

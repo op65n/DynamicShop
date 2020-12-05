@@ -34,7 +34,7 @@ public class Buy extends CommandFactory implements ICmd, ITab {
                 .build();
 
         try {
-            writer.write(Core.gCore().dynEngine.container, new File(Core.gCore().core.getDataFolder() + "/" + "temp" + ".toml"));
+            writer.write(DynEngine.items, new File(Core.gCore().core.getDataFolder() + "/" + "temp" + ".toml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
