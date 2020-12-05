@@ -1,8 +1,7 @@
 package com.sebbaindustries.dynamicshop.engine.structure;
 
-public interface Serializable<T> {
+public interface Serializable {
 
-    void serialize(String fileName);
-    T deserialize();
+    void serialize();
 
 }
