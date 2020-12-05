@@ -25,7 +25,7 @@ public class ShopItemImpl implements ShopItem {
 
     public ShopItemImpl(ItemStack iStack, ShopMeta meta) {
         this.meta = meta;
-        this.material = iStack.getType();
+        //this.material = iStack.getType();
 
         if (!iStack.hasItemMeta()) return;
 
@@ -39,20 +39,20 @@ public class ShopItemImpl implements ShopItem {
 
     }
 
-    private Material material;
+    //private Material material;
     private List<String> lore;
     private String displayName;
     private HashMap<String, Integer> enchants;
     private ShopMeta meta;
 
-    public String generateFileName() {
-        return material.name().toLowerCase();
-    }
+    //public String generateFileName() {
+    //    return material.name().toLowerCase();
+    //}
 
 
     @Override
     public ItemStack getBukkitItemStack() {
-        ItemStack iStack = new ItemStack(material);
+        ItemStack iStack = new ItemStack(Material.ACACIA_BOAT);
 
         ItemMeta iMeta = iStack.getItemMeta();
         if (lore != null) iMeta.setLore(lore);
@@ -78,11 +78,11 @@ public class ShopItemImpl implements ShopItem {
         TomlWriter writer = new TomlWriter.Builder()
                 .indentTablesBy(4)
                 .build();
-        try {
-            writer.write(this, new File(Core.gCore().core.getDataFolder() + "/" + material.name().toLowerCase() + ".toml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        //try {
+        //    writer.write(this, new File(Core.gCore().core.getDataFolder() + "/" + material.name().toLowerCase() + ".toml"));
+        //} catch (IOException e) {
+        //    e.printStackTrace();
+        //}
     }
 
     @Deprecated
@@ -95,7 +95,7 @@ public class ShopItemImpl implements ShopItem {
         public ShopItemImpl build(Toml toml, String file) {
             this.toml = toml;
             this.file = file;
-            item.material = getMaterial();
+            //item.material = getMaterial();
             setLore();
             setDisplayName();
             setEnchants();
