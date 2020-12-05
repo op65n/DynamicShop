@@ -1,4 +1,4 @@
-package com.sebbaindustries.dynamicshop.engine.extensions;
+package com.sebbaindustries.dynamicshop.engine.components.shop;
 
 public class ShopMeta {
 
