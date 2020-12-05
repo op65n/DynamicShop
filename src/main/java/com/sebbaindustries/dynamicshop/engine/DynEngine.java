@@ -4,6 +4,7 @@ import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;
 import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.commands.CommandManager;
+import com.sebbaindustries.dynamicshop.engine.components.shop.ShopItem;
 import com.sebbaindustries.dynamicshop.engine.structure.DirectoryStructure;
 import com.sebbaindustries.dynamicshop.messages.Message;
 import com.sebbaindustries.dynamicshop.utils.FileManager;
@@ -17,9 +18,12 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 
 public class DynEngine {
+
+    public static List<ShopItem> items = new ArrayList<>();
 
     public void initialize() {
         Core.gCore().commandManager = new CommandManager(Core.gCore().core);
