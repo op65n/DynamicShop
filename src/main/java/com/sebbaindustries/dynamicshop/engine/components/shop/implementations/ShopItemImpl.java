@@ -85,6 +85,7 @@ public class ShopItemImpl implements ShopItem {
         }
     }
 
+    @Deprecated
     public static class UnsafeComponentBuilder {
 
         private Toml toml;

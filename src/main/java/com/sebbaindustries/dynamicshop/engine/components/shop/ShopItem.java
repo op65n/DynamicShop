@@ -15,13 +15,13 @@ public interface ShopItem extends com.sebbaindustries.dynamicshop.engine.structu
     ShopMeta getShopMeta();
     void setShopMeta(ShopMeta meta);
 
-    static ShopItem deserialize(String file) {
+    static ShopItem deserializeUnsafe(String file) {
         Toml toml = new Toml().read(new File(Core.gCore().core.getDataFolder() + "/" + file + ".toml"));
 
         return new ShopItemImpl.UnsafeComponentBuilder().build(toml, file + ".toml");
     }
 
-    static ShopItem deserializeWithToml(String file) {
+    static ShopItem deserialize(String file) {
         return new Toml().read(new File(Core.gCore().core.getDataFolder() + "/" + file + ".toml")).to(ShopItemImpl.class);
     }
 }
