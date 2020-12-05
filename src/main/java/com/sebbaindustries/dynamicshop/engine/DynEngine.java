@@ -23,7 +23,7 @@ import java.util.List;
 
 public class DynEngine {
 
-    public static List<ShopItem> items = new ArrayList<>();
+    public static HashMap<String, ShopItem> items = new HashMap<>();
 
     public void initialize() {
         Core.gCore().commandManager = new CommandManager(Core.gCore().core);
