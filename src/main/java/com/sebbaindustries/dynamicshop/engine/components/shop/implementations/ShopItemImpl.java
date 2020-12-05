@@ -97,7 +97,7 @@ public class ShopItemImpl implements ShopItem {
             item.material = getMaterial();
             setLore();
             setDisplayName();
-            setEnchants();
+            //setEnchants();
             setMeta();
 
             return item;
