@@ -29,7 +29,6 @@ public class Buy extends CommandFactory implements ICmd, ITab {
     @Override
     public void execute(@NotNull CommandSender sender, @NotNull String[] args) {
         TomlWriter writer = new TomlWriter.Builder()
-                .indentTablesBy(4)
                 .build();
         try {
             writer.write(DynEngine.items, new File(Core.gCore().core.getDataFolder() + "/" + "temp" + ".toml"));
