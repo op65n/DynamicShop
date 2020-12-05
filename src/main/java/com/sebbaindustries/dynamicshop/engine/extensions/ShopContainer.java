@@ -2,11 +2,10 @@ package com.sebbaindustries.dynamicshop.engine.extensions;
 
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopItem;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
 
 public class ShopContainer {
 
-    public List<ShopItem> items = new ArrayList<>();
+    public HashMap<String, ShopItem> items = new HashMap<>();
 
 }
