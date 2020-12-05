@@ -20,4 +20,8 @@ public interface ShopItem extends com.sebbaindustries.dynamicshop.engine.structu
 
         return new ShopItemImpl.UnsafeComponentBuilder().build(toml, file + ".toml");
     }
+
+    static ShopItem deserializeWithToml(String file) {
+        return new Toml().read(new File(Core.gCore().core.getDataFolder() + "/" + file + ".toml")).to(ShopItemImpl.class);
+    }
 }
