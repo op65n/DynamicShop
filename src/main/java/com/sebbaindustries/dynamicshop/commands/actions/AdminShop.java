@@ -1,15 +1,13 @@
 package com.sebbaindustries.dynamicshop.commands.actions;
 
-import com.moandjiezana.toml.Toml;
 import com.moandjiezana.toml.TomlWriter;
 import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.commands.components.CommandFactory;
 import com.sebbaindustries.dynamicshop.commands.components.ICmd;
 import com.sebbaindustries.dynamicshop.commands.components.ITab;
-import com.sebbaindustries.dynamicshop.engine.components.ShopItem;
-import com.sebbaindustries.dynamicshop.engine.extensions.ItemStackImpl;
-import com.sebbaindustries.dynamicshop.messages.Message;
-import com.sebbaindustries.dynamicshop.utils.FileManager;
+import com.sebbaindustries.dynamicshop.engine.components.shop.ShopItem;
+import com.sebbaindustries.dynamicshop.engine.components.shop.ShopMeta;
+import com.sebbaindustries.dynamicshop.engine.components.shop.implementations.ShopItemImpl;
 import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -53,21 +51,11 @@ public class AdminShop extends CommandFactory implements ICmd, ITab {
         iMeta.setLore(lore);
         iStack.setItemMeta(iMeta);
 
-        ShopItem shopItem = new ShopItem(iStack, 4.03, 2.66);
+        ShopItemImpl item = new ShopItemImpl(iStack, new ShopMeta(4.44, 3.33));
+        ShopItem shopItem = item;
 
-
-        TomlWriter writer = new TomlWriter();
-        try {
-            writer.write(shopItem, new File(Core.gCore().core.getDataFolder() + "/item.toml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        ShopItem desShopItem = new Toml().read(Core.gCore().core.getDataFolder() + "/item.toml").to(ShopItem.class);
-        System.out.println(ObjectUtils.deserializeObjectToString(desShopItem));
-
-        ItemStack desItemStack = desShopItem.getItemStack().getBukkitItemStack();
-        player.getInventory().setItemInMainHand(desItemStack);
+        System.out.println(ObjectUtils.deserializeObjectToString(shopItem.getBukkitItemStack()));
+        shopItem.serialize();
     }
 
     @Override
