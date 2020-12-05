@@ -58,6 +58,9 @@ public class AdminShop extends CommandFactory implements ICmd, ITab {
 
         ShopItem desShopItem = ShopItem.deserialize(file);
         System.out.println(ObjectUtils.deserializeObjectToString(desShopItem));
+
+        ItemStack desItemStack = desShopItem.getBukkitItemStack();
+        player.getInventory().setItemInMainHand(desItemStack);
     }
 
     @Override
