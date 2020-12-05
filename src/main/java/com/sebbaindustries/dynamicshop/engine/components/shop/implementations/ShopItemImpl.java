@@ -25,7 +25,7 @@ public class ShopItemImpl implements ShopItem {
 
     public ShopItemImpl(ItemStack iStack, ShopMeta meta) {
         this.meta = meta;
-        //this.material = iStack.getType();
+        this.material = iStack.getType();
 
         if (!iStack.hasItemMeta()) return;
 
@@ -39,15 +39,15 @@ public class ShopItemImpl implements ShopItem {
 
     }
 
-    //private Material material;
+    private Material material;
     private List<String> lore;
     private String displayName;
     private HashMap<String, Integer> enchants;
     private ShopMeta meta;
 
-    //public String generateFileName() {
-    //    return material.name().toLowerCase();
-    //}
+    public String generateFileName() {
+        return material.name().toLowerCase();
+    }
 
 
     @Override
@@ -78,11 +78,11 @@ public class ShopItemImpl implements ShopItem {
         TomlWriter writer = new TomlWriter.Builder()
                 .indentTablesBy(4)
                 .build();
-        //try {
-        //    writer.write(this, new File(Core.gCore().core.getDataFolder() + "/" + material.name().toLowerCase() + ".toml"));
-        //} catch (IOException e) {
-        //    e.printStackTrace();
-        //}
+        try {
+            writer.write(this, new File(Core.gCore().core.getDataFolder() + "/" + material.name().toLowerCase() + ".toml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Deprecated
