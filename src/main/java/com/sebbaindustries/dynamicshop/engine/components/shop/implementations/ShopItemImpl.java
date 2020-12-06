@@ -1,8 +1,5 @@
 package com.sebbaindustries.dynamicshop.engine.components.shop.implementations;
 
-import com.moandjiezana.toml.Toml;
-import com.moandjiezana.toml.TomlWriter;
-import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopItem;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopMeta;
 import com.sebbaindustries.dynamicshop.log.PluginLogger;
@@ -11,11 +8,8 @@ import org.bukkit.enchantments.EnchantmentWrapper;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ShopItemImpl implements ShopItem {
 
@@ -23,8 +17,7 @@ public class ShopItemImpl implements ShopItem {
 
     }
 
-    public ShopItemImpl(ItemStack iStack, ShopMeta meta) {
-        this.meta = meta;
+    public ShopItemImpl(ItemStack iStack) {
         this.material = iStack.getType();
 
         if (!iStack.hasItemMeta()) return;
@@ -40,14 +33,12 @@ public class ShopItemImpl implements ShopItem {
     }
 
     private Material material;
+    private Double buyPrice;
+    private Double sellPrice;
     private List<String> lore;
     private String displayName;
     private HashMap<String, Integer> enchants;
     private ShopMeta meta;
-
-    public String generateFileName() {
-        return material.name().toLowerCase();
-    }
 
 
     @Override
@@ -64,7 +55,37 @@ public class ShopItemImpl implements ShopItem {
     }
 
     @Override
+    public Material getBukkitMaterial() {
+        if (material == null) {
+            PluginLogger.logSevere("Null item");
+            return Material.ACACIA_BOAT;
+        }
+        return this.material;
+    }
+
+    @Override
+    public Double buyPrice() {
+        return this.buyPrice;
+    }
+
+    @Override
+    public void setBuyPrice(Double price) {
+        this.buyPrice = price;
+    }
+
+    @Override
+    public Double sellPrice() {
+        return this.sellPrice;
+    }
+
+    @Override
+    public void setSellPrice(Double price) {
+        this.sellPrice = price;
+    }
+
+    @Override
     public ShopMeta getShopMeta() {
+        if (meta == null) return new ShopMeta();
         return this.meta;
     }
 
@@ -73,85 +94,26 @@ public class ShopItemImpl implements ShopItem {
         this.meta = meta;
     }
 
-    @Override
-    public void serialize() {
-        TomlWriter writer = new TomlWriter.Builder()
-                .indentTablesBy(4)
-                .build();
-        try {
-            writer.write(this, new File(Core.gCore().core.getDataFolder() + "/" + material.name().toLowerCase() + ".toml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    //@Override
+    //public void serialize() {
+    //    TomlWriter writer = new TomlWriter.Builder()
+    //            .indentTablesBy(4)
+    //            .build();
+    //    try {
+    //        writer.write(this, new File(Core.gCore().core.getDataFolder() + "/" + material.name().toLowerCase() + ".toml"));
+    //    } catch (IOException e) {
+    //        e.printStackTrace();
+    //    }
+    //}
 
-    @Deprecated
-    public static class UnsafeComponentBuilder {
+    //@Override
+    //public ShopItem deserialize(String file) {
+    //    return new Toml().read(new File(Core.gCore().core.getDataFolder() + "/" + file + ".toml")).to(ShopItemImpl.class);
+    //}
 
-        private Toml toml;
-        private String file;
-        private ShopItemImpl item = new ShopItemImpl();
-
-        public ShopItemImpl build(Toml toml, String file) {
-            this.toml = toml;
-            this.file = file;
-            //item.material = getMaterial();
-            setLore();
-            setDisplayName();
-            setEnchants();
-            setMeta();
-
-            return item;
-        }
-
-        private Material getMaterial() {
-            String materialTomlString = toml.getString("material");
-            if (materialTomlString == null) {
-                materialTomlString = "DIRT";
-                PluginLogger.logSevere("Null material string in file " + file);
-            }
-            Material material = Material.matchMaterial(materialTomlString);
-            if (material == null) {
-                material = Material.DIRT;
-                PluginLogger.logSevere("Null material match string in file " + file);
-            }
-            return material;
-        }
-
-        private void setLore() {
-            List<String> lore = toml.getList("lore");
-            if (lore == null) return;
-            item.lore = lore;
-        }
-
-        private void setDisplayName() {
-            String displayName = toml.getString("displayName");
-            if (displayName == null) return;
-            item.displayName = displayName;
-        }
-
-        private void setEnchants() {
-            Map<String, Object> enchantObjects;
-            try {
-                enchantObjects = toml.getTable("enchants").toMap();
-            } catch (NullPointerException e) {
-                return;
-            }
-            if (enchantObjects == null) return;
-            HashMap<String, Integer> enchants = new HashMap<>();
-            // Don't even dare to ask why this is here..
-            enchantObjects.forEach((enchant, object) -> enchants.put(enchant, Math.toIntExact((Long) object)));
-            item.enchants = enchants;
-        }
-
-        private void setMeta() {
-            ShopMeta meta = toml.getTable("meta").to(ShopMeta.class);
-            if (meta == null) {
-                meta = new ShopMeta(null, null);
-                PluginLogger.logSevere("Null meta in file " + file);
-            }
-            item.meta = meta;
-        }
-    }
+    //public static ShopItem deserialize() {
+    //    PluginLogger.logSevere("Unsupported!");
+    //    return new ShopItemImpl().deserialize("");
+    //}
 
 }
