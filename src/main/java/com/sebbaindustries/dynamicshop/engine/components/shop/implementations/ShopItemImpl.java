@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ShopItemImpl implements ShopItem {
 
-    private ShopItemImpl() {
+    public ShopItemImpl() {
 
     }
 
