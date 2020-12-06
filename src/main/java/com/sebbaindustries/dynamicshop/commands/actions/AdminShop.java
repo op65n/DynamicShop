@@ -37,6 +37,7 @@ public class AdminShop extends CommandFactory implements ICmd, ITab {
         ItemStack iStack = new ItemStack(player.getInventory().getItemInMainHand());
         ShopItem item = (ShopItem) new ShopItemImpl(iStack);
         DynEngine.items.put(DynEngine.latest, item);
+        DynEngine.latest++;
 
     }
 
