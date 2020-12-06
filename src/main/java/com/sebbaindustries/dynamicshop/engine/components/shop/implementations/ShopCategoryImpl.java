@@ -11,8 +11,8 @@ public class ShopCategoryImpl implements ShopCategory {
     private HashMap<Integer, ShopItemImpl> items = new HashMap<>();
 
     @Override
-    public String getUUID() {
-        return this.name;
+    public UUID getUUID() {
+        return UUID.nameUUIDFromBytes(name.getBytes());
     }
 
     @Override

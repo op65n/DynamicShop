@@ -14,6 +14,7 @@ import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 import java.io.File;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 public class DynShopContainer {
 
@@ -38,7 +39,7 @@ public class DynShopContainer {
         });
     }
 
-    public HashMap<String, ShopCategory> categoryHashMap = new HashMap<>();
+    public HashMap<UUID, ShopCategory> categoryHashMap = new HashMap<>();
 
     public void addCategory(ShopCategory category) {
         categoryHashMap.put(category.getUUID(), category);
