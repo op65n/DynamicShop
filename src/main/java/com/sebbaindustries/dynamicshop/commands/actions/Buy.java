@@ -7,8 +7,11 @@ import com.sebbaindustries.dynamicshop.commands.components.ICmd;
 import com.sebbaindustries.dynamicshop.commands.components.ITab;
 import com.sebbaindustries.dynamicshop.engine.DynEngine;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopItem;
+import com.sebbaindustries.dynamicshop.messages.Message;
+import com.sebbaindustries.dynamicshop.messages.MessageBuilder;
 import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -30,27 +33,16 @@ public class Buy extends CommandFactory implements ICmd, ITab {
 
     @Override
     public void execute(@NotNull CommandSender sender, @NotNull String[] args) {
+        if (!(sender instanceof Player)) {
+            MessageBuilder.sendTo(sender).text(Message.get().consoleCannotExecute).format().build().send();
+            return;
+        }
+        Player player = (Player) sender;
         TomlWriter writer = new TomlWriter.Builder()
                 .build();
 
-        TomlWriter writer1 = new TomlWriter.Builder()
-                .indentTablesBy(2)
-                .build();
-
-        TomlWriter writer2 = new TomlWriter.Builder()
-                .indentTablesBy(2)
-                .indentValuesBy(2)
-                .build();
-
-        TomlWriter writer3 = new TomlWriter.Builder()
-                .indentValuesBy(2)
-                .build();
-
         try {
-            writer.write(DynEngine.items, new File(Core.gCore().core.getDataFolder() + "/" + "temp" + ".toml"));
-            writer1.write(DynEngine.items, new File(Core.gCore().core.getDataFolder() + "/" + "temp1" + ".toml"));
-            writer2.write(DynEngine.items, new File(Core.gCore().core.getDataFolder() + "/" + "temp2" + ".toml"));
-            writer3.write(DynEngine.items, new File(Core.gCore().core.getDataFolder() + "/" + "temp3" + ".toml"));
+            writer.write(DynEngine.shopCategory, new File(Core.gCore().core.getDataFolder() + "/" + "temp" + ".toml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
