@@ -28,8 +28,7 @@ public class DynShopContainer {
         files.forEach(fileName -> {
             if (!fileName.endsWith(".toml")) return;
             try {
-                ShopCategoryImpl shopCategoryImplementation = new Toml().read(new File(DirectoryStructure.Directory.CATEGORIES.path + fileName)).to(ShopCategoryImpl.class);
-                ShopCategory shopCategory = (ShopCategory) shopCategoryImplementation;
+                ShopCategory shopCategory = (ShopCategory) new Toml().read(new File(DirectoryStructure.Directory.CATEGORIES.path + fileName)).to(ShopCategoryImpl.class);
                 categoryHashMap.put(shopCategory.getUUID(), shopCategory);
             } catch (Exception e) {
                 e.printStackTrace();
