@@ -18,7 +18,7 @@ public class DynShopContainer {
 
     public DynShopContainer() {
         List<String> paths = FileUtils.getFilePathsInCategories();
-        if (paths == null) {
+        if (paths == null || paths.isEmpty()) {
             PluginLogger.logWarn("Plugin is not configured, maintenance mode is turned on!");
             // TODO: Add maintenance mode.
             return;

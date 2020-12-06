@@ -38,14 +38,6 @@ public class Buy extends CommandFactory implements ICmd, ITab {
             return;
         }
         Player player = (Player) sender;
-        TomlWriter writer = new TomlWriter.Builder()
-                .build();
-
-        try {
-            writer.write(DynEngine.shopCategory, new File(Core.gCore().core.getDataFolder() + "/" + "temp" + ".toml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
