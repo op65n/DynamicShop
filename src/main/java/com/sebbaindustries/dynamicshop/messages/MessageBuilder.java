@@ -1,6 +1,8 @@
 package com.sebbaindustries.dynamicshop.messages;
 
+import com.sebbaindustries.dynamicshop.log.PluginLogger;
 import com.sebbaindustries.dynamicshop.utils.Color;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -35,15 +37,31 @@ public class MessageBuilder {
         ;
     }
 
+    private enum Recipient {
+        CONSOLE,
+        PLAYER,
+        ;
+    }
+
     private MessageType type;
+    private Recipient recipient;
     private List<String> multilineMessage = new ArrayList<>();
     private String message = "$NULL";
 
     private Player player;
+    private CommandSender sender;
 
     public static MessageBuilder sendTo(Player player) {
         MessageBuilder messageBuilder = new MessageBuilder();
         messageBuilder.player = player;
+        messageBuilder.recipient = Recipient.PLAYER;
+        return messageBuilder;
+    }
+
+    public static MessageBuilder sendTo(CommandSender sender) {
+        MessageBuilder messageBuilder = new MessageBuilder();
+        messageBuilder.sender = sender;
+        messageBuilder.recipient = Recipient.CONSOLE;
         return messageBuilder;
     }
 
@@ -61,10 +79,18 @@ public class MessageBuilder {
 
     public void send() {
         if (type == MessageType.MULTILINE) {
-            multilineMessage.forEach(player::sendMessage);
+            if (recipient == Recipient.PLAYER) {
+                multilineMessage.forEach(player::sendMessage);
+                return;
+            }
+            multilineMessage.forEach(sender::sendMessage);
             return;
         }
-        player.sendMessage(message);
+        if (recipient == Recipient.PLAYER) {
+            player.sendMessage(message);
+            return;
+        }
+        sender.sendMessage(message);
     }
 
     public class MessageBuilderComponents {
@@ -98,6 +124,10 @@ public class MessageBuilder {
         }
 
         public MessageBuilder.MessageBuilderComponents applyCommonPlaceholders() {
+            if (recipient == Recipient.CONSOLE) {
+                PluginLogger.logWarn("Console cannot use applyCommonPlaceholders method!");
+                return this;
+            }
             Arrays.stream(Placeholder.values()).forEach(placeholder -> {
                 if (!placeholder.isCommon) return;
                 switch (placeholder) {
