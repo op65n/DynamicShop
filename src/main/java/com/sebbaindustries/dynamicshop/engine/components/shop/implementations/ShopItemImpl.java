@@ -13,10 +13,6 @@ import java.util.List;
 
 public class ShopItemImpl implements ShopItem {
 
-    public ShopItemImpl() {
-
-    }
-
     public ShopItemImpl(ItemStack iStack) {
         this.material = iStack.getType();
 
@@ -93,27 +89,5 @@ public class ShopItemImpl implements ShopItem {
     public void setShopMeta(ShopMeta meta) {
         this.meta = meta;
     }
-
-    //@Override
-    //public void serialize() {
-    //    TomlWriter writer = new TomlWriter.Builder()
-    //            .indentTablesBy(4)
-    //            .build();
-    //    try {
-    //        writer.write(this, new File(Core.gCore().core.getDataFolder() + "/" + material.name().toLowerCase() + ".toml"));
-    //    } catch (IOException e) {
-    //        e.printStackTrace();
-    //    }
-    //}
-
-    //@Override
-    //public ShopItem deserialize(String file) {
-    //    return new Toml().read(new File(Core.gCore().core.getDataFolder() + "/" + file + ".toml")).to(ShopItemImpl.class);
-    //}
-
-    //public static ShopItem deserialize() {
-    //    PluginLogger.logSevere("Unsupported!");
-    //    return new ShopItemImpl().deserialize("");
-    //}
 
 }
