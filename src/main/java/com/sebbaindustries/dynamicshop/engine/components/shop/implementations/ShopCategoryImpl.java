@@ -25,9 +25,6 @@ public class ShopCategoryImpl implements ShopCategory {
 
     @Override
     public HashMap<Integer, ShopItem> getItems() {
-        //HashMap<Integer, ShopItem> integerShopItemHashMap = new HashMap<>();
-        //items.forEach((num, item) -> integerShopItemHashMap.put(num, (ShopItem) item));
-        //return integerShopItemHashMap;
         return (HashMap<Integer, ShopItem>) items.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, o -> (ShopItem) o.getValue()));
     }
 }

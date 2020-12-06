@@ -27,7 +27,6 @@ public class DynShopContainer {
             try {
                 ShopCategory shopCategory = (ShopCategory) new Toml().read(new File(DirectoryStructure.Directory.CATEGORIES.path + fileName)).to(ShopCategoryImpl.class);
                 categoryHashMap.put(shopCategory.getUUID(), shopCategory);
-                System.out.println(ObjectUtils.deserializeObjectToString(shopCategory.getItems()));
             } catch (Exception e) {
                 e.printStackTrace();
                 PluginLogger.logWarn("Error happened while reading " + fileName  + " please check if you have setup the plugin correctly.");
