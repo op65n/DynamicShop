@@ -12,7 +12,7 @@ public class ShopCategoryImpl implements ShopCategory {
 
     @Override
     public String getUUID() {
-        return UUID.fromString(name).toString();
+        return this.name;
     }
 
     @Override
