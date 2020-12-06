@@ -13,10 +13,6 @@ import java.util.List;
 
 public class ShopItemImpl implements ShopItem {
 
-    public ShopItemImpl() {
-
-    }
-
     public ShopItemImpl(ItemStack iStack) {
         this.material = iStack.getType();
 
