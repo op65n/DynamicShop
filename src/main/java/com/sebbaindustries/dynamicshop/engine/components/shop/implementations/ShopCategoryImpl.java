@@ -9,7 +9,7 @@ import java.util.UUID;
 public class ShopCategoryImpl implements ShopCategory {
 
     private String name = "GenericShopName";
-    private HashMap<Integer, ShopItemImpl> items = new HashMap<>();
+    private HashMap<Integer, ShopItem> items = new HashMap<>();
 
     @Override
     public UUID getUUID() {
@@ -23,8 +23,6 @@ public class ShopCategoryImpl implements ShopCategory {
 
     @Override
     public HashMap<Integer, ShopItem> getItems() {
-        HashMap<Integer, ShopItem> integerShopItemHashMap = new HashMap<>();
-        items.forEach((num, item) -> integerShopItemHashMap.put(num, (ShopItem) item));
-        return integerShopItemHashMap;
+        return items;
     }
 }
