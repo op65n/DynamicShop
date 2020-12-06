@@ -31,6 +31,7 @@ public class DynShopContainer {
                 ShopCategory shopCategory = (ShopCategory) shopCategoryImplementation;
                 categoryHashMap.put(shopCategory.getUUID(), shopCategory);
             } catch (Exception e) {
+                e.printStackTrace();
                 PluginLogger.logWarn("Error happened while reading " + fileName  + " please check if you have setup the plugin correctly.");
             }
 
