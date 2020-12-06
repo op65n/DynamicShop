@@ -33,8 +33,24 @@ public class Buy extends CommandFactory implements ICmd, ITab {
         TomlWriter writer = new TomlWriter.Builder()
                 .build();
 
+        TomlWriter writer1 = new TomlWriter.Builder()
+                .indentTablesBy(2)
+                .build();
+
+        TomlWriter writer2 = new TomlWriter.Builder()
+                .indentTablesBy(2)
+                .indentValuesBy(2)
+                .build();
+
+        TomlWriter writer3 = new TomlWriter.Builder()
+                .indentValuesBy(2)
+                .build();
+
         try {
             writer.write(DynEngine.items, new File(Core.gCore().core.getDataFolder() + "/" + "temp" + ".toml"));
+            writer1.write(DynEngine.items, new File(Core.gCore().core.getDataFolder() + "/" + "temp1" + ".toml"));
+            writer2.write(DynEngine.items, new File(Core.gCore().core.getDataFolder() + "/" + "temp2" + ".toml"));
+            writer3.write(DynEngine.items, new File(Core.gCore().core.getDataFolder() + "/" + "temp3" + ".toml"));
         } catch (IOException e) {
             e.printStackTrace();
         }

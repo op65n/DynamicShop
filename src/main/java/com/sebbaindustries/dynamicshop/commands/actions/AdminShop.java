@@ -1,12 +1,10 @@
 package com.sebbaindustries.dynamicshop.commands.actions;
 
-import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.commands.components.CommandFactory;
 import com.sebbaindustries.dynamicshop.commands.components.ICmd;
 import com.sebbaindustries.dynamicshop.commands.components.ITab;
 import com.sebbaindustries.dynamicshop.engine.DynEngine;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopItem;
-import com.sebbaindustries.dynamicshop.engine.components.shop.ShopMeta;
 import com.sebbaindustries.dynamicshop.engine.components.shop.implementations.ShopItemImpl;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -37,9 +35,9 @@ public class AdminShop extends CommandFactory implements ICmd, ITab {
 
         Player player = (Player) sender;
         ItemStack iStack = new ItemStack(player.getInventory().getItemInMainHand());
-        ShopItemImpl item = new ShopItemImpl(iStack, new ShopMeta(4.44, 3.33));
-        DynEngine.items.put(DynEngine.latest, (ShopItem) item);
-        DynEngine.latest++;
+        ShopItem item = (ShopItem) new ShopItemImpl(iStack);
+        DynEngine.items.put(DynEngine.latest, item);
+
     }
 
     @Override
