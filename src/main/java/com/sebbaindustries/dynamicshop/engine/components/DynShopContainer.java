@@ -1,13 +1,10 @@
 package com.sebbaindustries.dynamicshop.engine.components;
 
 import com.moandjiezana.toml.Toml;
-import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
 import com.sebbaindustries.dynamicshop.engine.components.shop.implementations.ShopCategoryImpl;
 import com.sebbaindustries.dynamicshop.engine.structure.DirectoryStructure;
 import com.sebbaindustries.dynamicshop.log.PluginLogger;
-import com.sebbaindustries.dynamicshop.messages.Message;
-import com.sebbaindustries.dynamicshop.utils.FileManager;
 import com.sebbaindustries.dynamicshop.utils.FileUtils;
 import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 
@@ -30,6 +27,7 @@ public class DynShopContainer {
             try {
                 ShopCategory shopCategory = (ShopCategory) new Toml().read(new File(DirectoryStructure.Directory.CATEGORIES.path + fileName)).to(ShopCategoryImpl.class);
                 categoryHashMap.put(shopCategory.getUUID(), shopCategory);
+                System.out.println(ObjectUtils.deserializeObjectToString(shopCategory.getItems()));
             } catch (Exception e) {
                 e.printStackTrace();
                 PluginLogger.logWarn("Error happened while reading " + fileName  + " please check if you have setup the plugin correctly.");
