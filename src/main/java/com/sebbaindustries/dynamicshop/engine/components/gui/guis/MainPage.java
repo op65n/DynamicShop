@@ -1,9 +1,10 @@
 package com.sebbaindustries.dynamicshop.engine.components.gui.guis;
 
+import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIMetaData;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterface;
+import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterfaceItem;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,7 +25,7 @@ public class MainPage implements UserInterface, Listener {
     private Player player;
     private Inventory inventory;
     private UIMetaData metaData;
-    private HashMap<Integer, String> inventorySlots = new HashMap<>();
+    private HashMap<Integer, UserInterfaceItem> inventorySlots = Core.gCore().dynEngine.shopUI.mainPageCache.item;
 
     @Override
     public void open(Player player) {
@@ -45,6 +46,8 @@ public class MainPage implements UserInterface, Listener {
     @Override
     public void update() {
         inventory = Bukkit.createInventory(null, metaData.getRows()*9, metaData.getTitle());
+        // TODO: Add slot limiter
+        inventorySlots.forEach((position, item) -> inventory.setItem(position, item.getBukkitItemStack()));
     }
 
     @Override

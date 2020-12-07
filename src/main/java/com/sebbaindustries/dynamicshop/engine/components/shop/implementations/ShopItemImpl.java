@@ -39,7 +39,7 @@ public class ShopItemImpl implements ShopItem {
 
     @Override
     public ItemStack getBukkitItemStack() {
-        ItemStack iStack = new ItemStack(Material.ACACIA_BOAT);
+        ItemStack iStack = new ItemStack(getBukkitMaterial());
 
         ItemMeta iMeta = iStack.getItemMeta();
         if (lore != null) iMeta.setLore(lore);
