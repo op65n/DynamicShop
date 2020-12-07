@@ -3,6 +3,7 @@ package com.sebbaindustries.dynamicshop.commands.actions;
 import com.sebbaindustries.dynamicshop.commands.components.CommandFactory;
 import com.sebbaindustries.dynamicshop.commands.components.ICmd;
 import com.sebbaindustries.dynamicshop.commands.components.ITab;
+import com.sebbaindustries.dynamicshop.engine.components.gui.InventoryUI;
 import com.sebbaindustries.dynamicshop.messages.Message;
 import com.sebbaindustries.dynamicshop.messages.MessageBuilder;
 import org.bukkit.command.CommandSender;
@@ -31,6 +32,8 @@ public class Shop extends CommandFactory implements ICmd, ITab {
             return;
         }
         Player player = (Player) sender;
+        InventoryUI inventoryUI = new InventoryUI();
+        inventoryUI.openInventory(player);
     }
 
     @Override
