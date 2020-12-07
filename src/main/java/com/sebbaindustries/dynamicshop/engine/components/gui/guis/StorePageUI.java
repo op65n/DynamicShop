@@ -4,7 +4,7 @@ import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIMetaDa
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterface;
 import org.bukkit.entity.Player;
 
-public class StorePage implements UserInterface {
+public class StorePageUI implements UserInterface {
 
     @Override
     public void open(Player player) {

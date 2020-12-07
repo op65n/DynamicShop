@@ -1,3 +1,5 @@
+guiName = "&6Hello &2There!"
+
 [item.0]
 material = "WARPED_STEM"
 
@@ -13,5 +15,5 @@ material = "WARPED_STEM"
 [item.4]
 material = "WARPED_STEM"
 
-[item.5]
+[item.23]
 material = "WARPED_STEM"
