@@ -71,7 +71,6 @@ public class MainPage implements UserInterface, Listener {
         final ItemStack clickedItem = e.getCurrentItem();
 
         // verify current item is not null
-        if (clickedItem == null || clickedItem.getType() == Material.AIR) return;
 
         final Player p = (Player) e.getWhoClicked();
 
