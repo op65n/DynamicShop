@@ -15,5 +15,17 @@ public class DynEngine {
         Core.gCore().commandManager = new CommandManager(Core.gCore().core);
         Core.gCore().message = new Toml().read(Core.gCore().fileManager.getFile(FileManager.PluginFiles.MESSAGES)).to(Message.class);
         this.container = new DynShopContainer();
+        if (container.successfulSetup) maintenance = false;
     }
+
+    private boolean maintenance = true;
+
+    public boolean maintenanceMode() {
+        return this.maintenance;
+    }
+
+    public void setMaintenance(boolean maintenance) {
+        this.maintenance = maintenance;
+    }
+
 }
