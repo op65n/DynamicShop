@@ -64,13 +64,6 @@ public class MainPage implements UserInterface, Listener {
 
     @EventHandler
     public void onInventoryClick(final InventoryClickEvent e) {
-        if (e.getInventory() != inventory) return;
-
-        e.setCancelled(true);
-
-        final ItemStack clickedItem = e.getCurrentItem();
-
-        // verify current item is not null
 
         final Player p = (Player) e.getWhoClicked();
 
