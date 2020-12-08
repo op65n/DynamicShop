@@ -1,25 +1,53 @@
 guiName = "&6Hello &2There!"
+size = 3
 
 [background]
 material = "BLACK_STAINED_GLASS_PANE"
 displayName = " "
 
-[item.0]
-material = "WARPED_STEM"
+# [item.3]
+# material = "BIRCH_WOOD"
 
-[item.1]
-material = "BIRCH_WOOD"
+# Category slot No.1
+[item.11]
+material = "GRASS_BLOCK"
+lore = ["&Buu you suck!"]
+placeholder = true
+  [onLeftClick]
+  action = "OPEN"
+  [onRightClick]
+  action = "OPEN"
+  [onMiddleClick]
+  action = "STATISTICS"
 
-[item.2]
-material = "WARPED_STEM"
+# Category slot No.2
+[item.12]
+material = "CAKE"
+lore = ["&Buu you suck!"]
+placeholder = true
+  [onLeftClick]
+  action = "OPEN"
+  [onRightClick]
+  action = "OPEN"
+  [onMiddleClick]
+  action = "STATISTICS"
 
-[item.3]
-material = "BIRCH_WOOD"
+# Category slot No.3
+[item.13]
+material = "DIAMOND_ORE"
+lore = ["&Buu you suck!"]
+placeholder = true
+  [onLeftClick]
+  action = "OPEN"
+  [onRightClick]
+  action = "OPEN"
+  [onMiddleClick]
+  action = "STATISTICS"
 
-[item.4]
-material = "WARPED_STEM"
-
-[item.5]
+# Category slot No.4
+[item.14]
+material = "SLIME_BLOCK"
+lore = ["&Buu you suck!"]
 placeholder = true
 [onLeftClick]
 action = "OPEN"
@@ -28,5 +56,14 @@ action = "OPEN"
 [onMiddleClick]
 action = "STATISTICS"
 
-[item.23]
-material = "BIRCH_WOOD"
+# Category slot No.5
+[item.15]
+material = "IRON_BLOCK"
+lore = ["&Buu you suck!"]
+placeholder = true
+[onLeftClick]
+action = "OPEN"
+[onRightClick]
+action = "OPEN"
+[onMiddleClick]
+action = "STATISTICS"
