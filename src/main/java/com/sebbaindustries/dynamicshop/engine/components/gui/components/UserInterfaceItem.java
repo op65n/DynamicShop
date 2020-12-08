@@ -11,10 +11,24 @@ import java.util.List;
 
 public class UserInterfaceItem {
 
+    private boolean placeholder = false;
+    private EActions action;
     private Material material;
     private List<String> lore;
     private String displayName;
     private HashMap<String, Integer> enchants;
+
+    public boolean hasAction() {
+        return action != null;
+    }
+
+    public EActions getAction() {
+        return this.action;
+    }
+
+    public boolean isPlaceholder() {
+        return placeholder;
+    }
 
     public ItemStack getBukkitItemStack() {
         ItemStack iStack = new ItemStack(getBukkitMaterial());
