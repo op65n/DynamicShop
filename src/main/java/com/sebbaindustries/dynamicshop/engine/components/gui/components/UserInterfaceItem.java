@@ -20,7 +20,7 @@ public class UserInterfaceItem {
     public UIAction onMiddleClick;
 
     private Material material;
-    private List<String> lore;
+    private List<String> lore = new ArrayList<>();
     private String displayName;
     private HashMap<String, Integer> enchants;
 
@@ -35,11 +35,11 @@ public class UserInterfaceItem {
 
         List<String> coloredLore = new ArrayList<>();
         lore.forEach(loreLine -> coloredLore.add(Color.format(loreLine)));
-        if (lore != null) iMeta.setLore(coloredLore);
+        if (lore != null && !lore.isEmpty()) iMeta.setLore(coloredLore);
 
         if (displayName != null) iMeta.setDisplayName(Color.format(displayName));
 
-        if (enchants != null) enchants.forEach((enchant, val) -> iMeta.addEnchant(new EnchantmentWrapper(enchant), val, true));
+        if (enchants != null && !enchants.isEmpty()) enchants.forEach((enchant, val) -> iMeta.addEnchant(new EnchantmentWrapper(enchant), val, true));
 
         iStack.setItemMeta(iMeta);
         return iStack;
