@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * @author SebbaIndustries
+ * @version 1.0
  */
 public class Message {
 
@@ -28,6 +29,11 @@ public class Message {
     public List<String> multiLineMessage = new ArrayList<>();
 
 
+    /**
+     * Gets an message class instance form the global core
+     *
+     * @return message class instance
+     */
     public static Message get() {
         return Core.gCore().message;
     }

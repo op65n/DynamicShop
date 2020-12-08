@@ -70,6 +70,5 @@ public final class Core extends JavaPlugin {
     public void onEnable() {
         super.onEnable();
         plugin.initialize();
-        PluginLogger.log("Plugin initialization complete!");
     }
 }

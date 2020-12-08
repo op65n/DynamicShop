@@ -35,10 +35,9 @@ public class UserInterfaceItem {
 
         List<String> coloredLore = new ArrayList<>();
         lore.forEach(loreLine -> coloredLore.add(Color.format(loreLine)));
+
         if (lore != null && !lore.isEmpty()) iMeta.setLore(coloredLore);
-
         if (displayName != null) iMeta.setDisplayName(Color.format(displayName));
-
         if (enchants != null && !enchants.isEmpty()) enchants.forEach((enchant, val) -> iMeta.addEnchant(new EnchantmentWrapper(enchant), val, true));
 
         iStack.setItemMeta(iMeta);

@@ -15,7 +15,7 @@ public final class Color {
     private static final Pattern HEX_PATTERN = Pattern.compile("#<([A-Fa-f0-9]){6}>");
 
     /**
-     * Formats hex and '&' codes
+     * Formats hex (#>ffffff<) and '&' (&6) codes, treat this like a blackbox.
      *
      * @param s Un-Formatted string
      * @return Formatted string

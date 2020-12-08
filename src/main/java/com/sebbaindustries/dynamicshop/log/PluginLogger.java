@@ -3,6 +3,10 @@ package com.sebbaindustries.dynamicshop.log;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * @author SebbaIndustries
+ * @version 1.0
+ */
 public class PluginLogger {
 
     private static final Logger logger = Logger.getLogger("DynamicShop");

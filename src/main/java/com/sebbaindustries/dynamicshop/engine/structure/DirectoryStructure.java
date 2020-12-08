@@ -28,6 +28,9 @@ public class DirectoryStructure {
         generateDirectoryStructure();
     }
 
+    /**
+     * Generates missing directories inside plugins/DynamicShop directory
+     */
     public void generateDirectoryStructure() {
         createMissing(Directory.BASE);
         createMissing(Directory.SHOP);

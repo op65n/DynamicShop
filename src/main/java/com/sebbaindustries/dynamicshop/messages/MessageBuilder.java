@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author SebbaIndustries
+ * @version 1.0
+ */
 public class MessageBuilder {
 
     public enum Placeholder {
@@ -51,6 +55,12 @@ public class MessageBuilder {
     private Player player;
     private CommandSender sender;
 
+    /**
+     * Creates a new MessageBuilder instance and saves player to the memory
+     *
+     * @param player Player
+     * @return MessageBuilder Instance
+     */
     public static MessageBuilder sendTo(Player player) {
         MessageBuilder messageBuilder = new MessageBuilder();
         messageBuilder.player = player;
@@ -58,6 +68,12 @@ public class MessageBuilder {
         return messageBuilder;
     }
 
+    /**
+     * Creates a new MessageBuilder instance and saves command sender to the memory
+     *
+     * @param sender Command sender, player/console
+     * @return MessageBuilder Instance
+     */
     public static MessageBuilder sendTo(CommandSender sender) {
         MessageBuilder messageBuilder = new MessageBuilder();
         messageBuilder.sender = sender;
@@ -65,19 +81,37 @@ public class MessageBuilder {
         return messageBuilder;
     }
 
+    /**
+     * Adds text to a message and sets component type to single line
+     *
+     * @param message Message string
+     * @return new MessageBuilderComponents class
+     */
     public MessageBuilderComponents text(String message) {
         type = MessageType.NORMAL;
         this.message = message;
         return new MessageBuilderComponents();
     }
 
+    /**
+     * Adds text to a message and sets component type to multi line
+     *
+     * @param multilineMessage List of messages
+     * @return new MessageBuilderComponents class
+     */
     public MessageBuilderComponents text(List<String> multilineMessage) {
         type = MessageType.MULTILINE;
         this.multilineMessage = multilineMessage;
         return new MessageBuilderComponents();
     }
 
+    /**
+     * Sends player a message from the buffer
+     */
     public void send() {
+        /*
+        MULTILINE message handling
+         */
         if (type == MessageType.MULTILINE) {
             if (recipient == Recipient.PLAYER) {
                 multilineMessage.forEach(player::sendMessage);
@@ -86,6 +120,10 @@ public class MessageBuilder {
             multilineMessage.forEach(sender::sendMessage);
             return;
         }
+
+        /*
+        SINGLE LINE message handling
+         */
         if (recipient == Recipient.PLAYER) {
             player.sendMessage(message);
             return;
@@ -93,8 +131,18 @@ public class MessageBuilder {
         sender.sendMessage(message);
     }
 
+    /**
+     * @author SebbaIndustries
+     * @version 1.0
+     */
     public class MessageBuilderComponents {
 
+        /**
+         * Replaces all placeholders in a message string
+         *
+         * @param placeholder Placeholder enum
+         * @param replacement Replacement String
+         */
         private void placeholderImpl(Placeholder placeholder, String replacement) {
             if (type == MessageType.MULTILINE) {
                 int tail = 0;
@@ -108,21 +156,47 @@ public class MessageBuilder {
             message = message.replaceAll(placeholder.get, replacement);
         }
 
+        /**
+         * Placeholder component for double values
+         *
+         * @param placeholder Placeholder enum
+         * @param replacement Replacement String
+         * @return instance of MessageBuilderComponents class
+         */
         public MessageBuilder.MessageBuilderComponents placeholder(Placeholder placeholder, double replacement) {
             placeholderImpl(placeholder, String.valueOf(replacement));
             return this;
         }
 
+        /**
+         * Placeholder component for int values
+         *
+         * @param placeholder Placeholder enum
+         * @param replacement Replacement String
+         * @return instance of MessageBuilderComponents class
+         */
         public MessageBuilder.MessageBuilderComponents placeholder(Placeholder placeholder, int replacement) {
             placeholderImpl(placeholder, String.valueOf(replacement));
             return this;
         }
 
+        /**
+         * Placeholder component for string values
+         *
+         * @param placeholder Placeholder enum
+         * @param replacement Replacement String
+         * @return instance of MessageBuilderComponents class
+         */
         public MessageBuilder.MessageBuilderComponents placeholder(Placeholder placeholder, String replacement) {
             placeholderImpl(placeholder, replacement);
             return this;
         }
 
+        /**
+         * Replaces all common placeholders
+         *
+         * @return instance of MessageBuilderComponents class
+         */
         public MessageBuilder.MessageBuilderComponents applyCommonPlaceholders() {
             if (recipient == Recipient.CONSOLE) {
                 PluginLogger.logWarn("Console cannot use applyCommonPlaceholders method!");
@@ -137,6 +211,11 @@ public class MessageBuilder {
             return this;
         }
 
+        /**
+         * Formats a message with color.
+         *
+         * @return instance of MessageBuilderComponents class
+         */
         public MessageBuilder.MessageBuilderComponents format() {
             if (type == MessageType.MULTILINE) {
                 int tail = 0;
@@ -151,6 +230,11 @@ public class MessageBuilder {
             return this;
         }
 
+        /**
+         * Build the message
+         *
+         * @return MessageBuilder base class instance
+         */
         public MessageBuilder build() {
             return MessageBuilder.this;
         }
