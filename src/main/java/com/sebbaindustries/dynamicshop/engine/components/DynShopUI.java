@@ -5,6 +5,7 @@ import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.engine.components.gui.cache.UICache;
 import com.sebbaindustries.dynamicshop.log.PluginLogger;
 import com.sebbaindustries.dynamicshop.utils.FileManager;
+import org.jetbrains.annotations.NotNull;
 
 public class DynShopUI {
 
@@ -16,37 +17,29 @@ public class DynShopUI {
         /*
         main_page.toml
          */
-        try {
-            mainPageCache = new Toml().read(Core.gCore().fileManager.getFile(FileManager.PluginFiles.GUI_MAIN_PAGE)).to(UICache.class);
-        } catch (Exception e) {
-            PluginLogger.logWarn("Error happened while reading " + FileManager.PluginFiles.GUI_MAIN_PAGE.fileName  + " please check if you have setup the plugin correctly.");
-            e.printStackTrace();
-            PluginLogger.logWarn("Error happened while reading " + FileManager.PluginFiles.GUI_MAIN_PAGE.fileName  + " please check if you have setup the plugin correctly.");
-            successfulSetup = false;
-        }
+        mainPageCache = getUICacheFromToml(FileManager.PluginFiles.GUI_MAIN_PAGE);
 
         /*
         store_page.toml
          */
-        try {
-            storePageCache = new Toml().read(Core.gCore().fileManager.getFile(FileManager.PluginFiles.GUI_STORE_PAGE)).to(UICache.class);
-        } catch (Exception e) {
-            PluginLogger.logWarn("Error happened while reading " + FileManager.PluginFiles.GUI_STORE_PAGE.fileName  + " please check if you have setup the plugin correctly.");
-            e.printStackTrace();
-            PluginLogger.logWarn("Error happened while reading " + FileManager.PluginFiles.GUI_STORE_PAGE.fileName  + " please check if you have setup the plugin correctly.");
-            successfulSetup = false;
-        }
+        storePageCache = getUICacheFromToml(FileManager.PluginFiles.GUI_STORE_PAGE);
 
         /*
         transaction_page.toml
          */
+        transactionPageCache = getUICacheFromToml(FileManager.PluginFiles.GUI_TRANSACTION_PAGE);
+
+    }
+
+    private UICache getUICacheFromToml(final @NotNull FileManager.PluginFiles file) {
         try {
-            transactionPageCache = new Toml().read(Core.gCore().fileManager.getFile(FileManager.PluginFiles.GUI_TRANSACTION_PAGE)).to(UICache.class);
+            return new Toml().read(Core.gCore().fileManager.getFile(file)).to(UICache.class);
         } catch (Exception e) {
-            PluginLogger.logWarn("Error happened while reading " + FileManager.PluginFiles.GUI_TRANSACTION_PAGE.fileName  + " please check if you have setup the plugin correctly.");
+            PluginLogger.logWarn("Error happened while reading " + file.fileName  + " please check if you have setup the plugin correctly.");
             e.printStackTrace();
-            PluginLogger.logWarn("Error happened while reading " + FileManager.PluginFiles.GUI_TRANSACTION_PAGE.fileName  + " please check if you have setup the plugin correctly.");
+            PluginLogger.logWarn("Error happened while reading " + file.fileName  + " please check if you have setup the plugin correctly.");
             successfulSetup = false;
+            return null;
         }
     }
 
