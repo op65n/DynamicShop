@@ -13,57 +13,57 @@ displayName = " "
 material = "GRASS_BLOCK"
 lore = ["&Buu you suck!"]
 placeholder = true
-[onLeftClick]
-action = "OPEN"
-[onRightClick]
-action = "OPEN"
-[onMiddleClick]
-action = "STATISTICS"
+  [item.11.onLeftClick]
+  action = "OPEN"
+  [item.11.onRightClick]
+  action = "OPEN"
+  [item.11.onMiddleClick]
+  action = "STATISTICS"
 
 # Category slot No.2
 [item.12]
 material = "CAKE"
 lore = ["&Buu you suck!"]
 placeholder = true
-[onLeftClick]
-action = "OPEN"
-[onRightClick]
-action = "OPEN"
-[onMiddleClick]
-action = "STATISTICS"
+  [item.12.onLeftClick]
+  action = "OPEN"
+  [item.12.onRightClick]
+  action = "OPEN"
+  [item.12.onMiddleClick]
+  action = "STATISTICS"
 
 # Category slot No.3
 [item.13]
 material = "DIAMOND_ORE"
 lore = ["&Buu you suck!"]
 placeholder = true
-[onLeftClick]
-action = "OPEN"
-[onRightClick]
-action = "OPEN"
-[onMiddleClick]
-action = "STATISTICS"
+  [item.13.onLeftClick]
+  action = "OPEN"
+  [item.13.onRightClick]
+  action = "OPEN"
+  [item.13.onMiddleClick]
+  action = "STATISTICS"
 
 # Category slot No.4
 [item.14]
 material = "SLIME_BLOCK"
 lore = ["&Buu you suck!"]
 placeholder = true
-[onLeftClick]
-action = "OPEN"
-[onRightClick]
-action = "OPEN"
-[onMiddleClick]
-action = "STATISTICS"
+  [item.14.onLeftClick]
+  action = "OPEN"
+  [item.14.onRightClick]
+  action = "OPEN"
+  [item.14.onMiddleClick]
+  action = "STATISTICS"
 
 # Category slot No.5
 [item.15]
 material = "IRON_BLOCK"
 lore = ["&Buu you suck!"]
 placeholder = true
-[onLeftClick]
-action = "OPEN"
-[onRightClick]
-action = "OPEN"
-[onMiddleClick]
-action = "STATISTICS"
+  [item.15.onLeftClick]
+  action = "OPEN"
+  [item.15.onRightClick]
+  action = "OPEN"
+  [item.15.onMiddleClick]
+  action = "STATISTICS"
