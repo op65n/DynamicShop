@@ -1,19 +1,23 @@
 guiName = "&6Hello &2There!"
 
+[background]
+material = "BLACK_STAINED_GLASS"
+displayName = " "
+
 [item.0]
 material = "WARPED_STEM"
 
 [item.1]
-material = "WARPED_STEM"
+material = "BIRCH_WOOD"
 
 [item.2]
 material = "WARPED_STEM"
 
 [item.3]
-material = "WARPED_STEM"
+material = "BIRCH_WOOD"
 
 [item.4]
 material = "WARPED_STEM"
 
 [item.23]
-material = "WARPED_STEM"
+material = "BIRCH_WOOD"

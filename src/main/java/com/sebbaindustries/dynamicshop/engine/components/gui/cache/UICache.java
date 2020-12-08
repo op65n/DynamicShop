@@ -8,5 +8,6 @@ public class UICache {
 
     public String guiName = "Generic GUI name";
     public Integer size = -1;
+    public UserInterfaceItem background;
     public HashMap<Integer, UserInterfaceItem> item = new HashMap<>();
 }
