@@ -13,36 +13,36 @@ displayName = " "
 material = "GRASS_BLOCK"
 lore = ["&Buu you suck!"]
 placeholder = true
-  [onLeftClick]
-  action = "OPEN"
-  [onRightClick]
-  action = "OPEN"
-  [onMiddleClick]
-  action = "STATISTICS"
+[onLeftClick]
+action = "OPEN"
+[onRightClick]
+action = "OPEN"
+[onMiddleClick]
+action = "STATISTICS"
 
 # Category slot No.2
 [item.12]
 material = "CAKE"
 lore = ["&Buu you suck!"]
 placeholder = true
-  [onLeftClick]
-  action = "OPEN"
-  [onRightClick]
-  action = "OPEN"
-  [onMiddleClick]
-  action = "STATISTICS"
+[onLeftClick]
+action = "OPEN"
+[onRightClick]
+action = "OPEN"
+[onMiddleClick]
+action = "STATISTICS"
 
 # Category slot No.3
 [item.13]
 material = "DIAMOND_ORE"
 lore = ["&Buu you suck!"]
 placeholder = true
-  [onLeftClick]
-  action = "OPEN"
-  [onRightClick]
-  action = "OPEN"
-  [onMiddleClick]
-  action = "STATISTICS"
+[onLeftClick]
+action = "OPEN"
+[onRightClick]
+action = "OPEN"
+[onMiddleClick]
+action = "STATISTICS"
 
 # Category slot No.4
 [item.14]
