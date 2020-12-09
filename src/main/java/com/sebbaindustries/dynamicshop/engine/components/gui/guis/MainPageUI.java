@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -103,15 +104,15 @@ public class MainPageUI implements UserInterface, Listener {
 
         // Using slots click is a best option for your inventory click's
         p.sendMessage("You clicked at slot " + e.getRawSlot());
+
+        e.setCancelled(true);
     }
 
     // Cancel dragging in our inventory
     @EventHandler
     public void onInventoryDrag(final InventoryDragEvent e) {
-        System.out.println("test");
-        if (e.getInventory() == inventory || player.getInventory() == e.getInventory()) {
-            System.out.println("canceled");
-            e.setCancelled(true);
-        }
+        e.getWhoClicked().sendMessage("drag event");
+        System.out.println("drag event");
+        e.setCancelled(true);
     }
 }
