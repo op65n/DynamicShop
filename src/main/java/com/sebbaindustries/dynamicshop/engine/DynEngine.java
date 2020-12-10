@@ -5,7 +5,7 @@ import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.commands.CommandManager;
 import com.sebbaindustries.dynamicshop.engine.components.DynShopContainer;
 import com.sebbaindustries.dynamicshop.engine.components.DynShopUI;
-import com.sebbaindustries.dynamicshop.engine.components.gui.guis.MainPageUI;
+import com.sebbaindustries.dynamicshop.engine.components.gui.listeners.InventoryListeners;
 import com.sebbaindustries.dynamicshop.messages.Message;
 import com.sebbaindustries.dynamicshop.utils.FileManager;
 
@@ -26,7 +26,7 @@ public class DynEngine {
         /*
         GUI listeners
          */
-        Core.gCore().core.getServer().getPluginManager().registerEvents(new MainPageUI(), Core.gCore().core);
+        Core.gCore().core.getServer().getPluginManager().registerEvents(new InventoryListeners(), Core.gCore().core);
     }
 
     private boolean maintenance = true;

@@ -7,11 +7,7 @@ import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInte
 import com.sebbaindustries.dynamicshop.utils.Color;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -56,16 +52,17 @@ public class MainPageUI implements UserInterface, Listener {
     public void open(Player player) {
         player.openInventory(inventory);
         this.player = player;
+        Core.gCore().dynEngine.shopUI.inventoryHolderCache.userInterfaceHashMap.put(player, this);
     }
 
     @Override
     public void draw() {
-
+        Core.gCore().dynEngine.shopUI.inventoryHolderCache.userInterfaceHashMap.put(player, this);
     }
 
     @Override
     public void clear() {
-
+        Core.gCore().dynEngine.shopUI.inventoryHolderCache.userInterfaceHashMap.put(player, this);
     }
 
     @Override
@@ -73,6 +70,7 @@ public class MainPageUI implements UserInterface, Listener {
         inventory = Bukkit.createInventory(null, metaData.getRows()*9, metaData.getTitle());
         fillBackground();
         inventorySlots.forEach((position, item) -> inventory.setItem(position, item.getBukkitItemStack()));
+        Core.gCore().dynEngine.shopUI.inventoryHolderCache.userInterfaceHashMap.put(player, this);
     }
 
     private void fillBackground() {
@@ -85,6 +83,7 @@ public class MainPageUI implements UserInterface, Listener {
     @Override
     public void close() {
         player.closeInventory();
+        Core.gCore().dynEngine.shopUI.inventoryHolderCache.userInterfaceHashMap.remove(player);
     }
 
     @Override
@@ -95,26 +94,5 @@ public class MainPageUI implements UserInterface, Listener {
     @Override
     public UIMetaData getMetaData() {
         return this.metaData;
-    }
-
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onInventoryClick(final InventoryClickEvent e) {
-
-        if (inventory != e.getClickedInventory()) return;
-
-        final Player p = (Player) e.getWhoClicked();
-
-        // Using slots click is a best option for your inventory click's
-        p.sendMessage("You clicked at slot " + e.getRawSlot());
-
-        e.setCancelled(true);
-    }
-
-    // Cancel dragging in our inventory
-    @EventHandler
-    public void onInventoryDrag(final InventoryDragEvent e) {
-        e.getWhoClicked().sendMessage("drag event");
-        System.out.println("drag event");
-        e.setCancelled(true);
     }
 }

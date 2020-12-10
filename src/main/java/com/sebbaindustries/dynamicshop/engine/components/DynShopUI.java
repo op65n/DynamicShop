@@ -2,6 +2,7 @@ package com.sebbaindustries.dynamicshop.engine.components;
 
 import com.moandjiezana.toml.Toml;
 import com.sebbaindustries.dynamicshop.Core;
+import com.sebbaindustries.dynamicshop.engine.components.gui.cache.InventoryHolderCache;
 import com.sebbaindustries.dynamicshop.engine.components.gui.cache.UICache;
 import com.sebbaindustries.dynamicshop.log.PluginLogger;
 import com.sebbaindustries.dynamicshop.utils.FileManager;
@@ -11,6 +12,7 @@ public class DynShopUI {
 
     public DynShopUI() {
         load();
+        inventoryHolderCache = new InventoryHolderCache();
     }
 
     public void load() {
@@ -46,6 +48,8 @@ public class DynShopUI {
     public UICache mainPageCache;
     public UICache storePageCache;
     public UICache transactionPageCache;
+
+    public InventoryHolderCache inventoryHolderCache;
 
     public boolean successfulSetup = true;
 
