@@ -88,11 +88,13 @@ public class MainPageUI implements UserInterface {
 
     @Override
     public void onRightClick(int slot) {
+        if (inventorySlots.get(slot) == null) return;
         UIAction.Actions action = inventorySlots.get(slot).onRightClick.get();
         if (action == null) return;
         switch (action) {
             case CLOSE -> close();
             case OPEN -> {
+                close();
                 UserInterface ui = new StorePageUI();
                 ui.update();
                 ui.open(player);
@@ -102,11 +104,13 @@ public class MainPageUI implements UserInterface {
 
     @Override
     public void onLeftClick(int slot) {
+        if (inventorySlots.get(slot) == null) return;
         UIAction.Actions action = inventorySlots.get(slot).onLeftClick.get();
         if (action == null) return;
         switch (action) {
             case CLOSE -> close();
             case OPEN -> {
+                close();
                 UserInterface ui = new StorePageUI();
                 ui.update();
                 ui.open(player);
