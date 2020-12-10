@@ -1,6 +1,7 @@
 package com.sebbaindustries.dynamicshop.engine.components.gui.guis;
 
 import com.sebbaindustries.dynamicshop.Core;
+import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIAction;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIMetaData;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterface;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterfaceItem;
@@ -87,9 +88,12 @@ public class MainPageUI implements UserInterface {
 
     @Override
     public void onRightClick(int slot) {
-        switch (inventorySlots.get(slot).onRightClick.get()) {
+       UIAction.Actions action = inventorySlots.get(slot).onRightClick.get();
+       if (action == null) return;
+        switch (action) {
             case CLOSE -> close();
             case OPEN -> {
+                close();
                 UserInterface ui = new StorePageUI();
                 ui.update();
                 ui.open(player);
@@ -99,7 +103,9 @@ public class MainPageUI implements UserInterface {
 
     @Override
     public void onLeftClick(int slot) {
-        switch (inventorySlots.get(slot).onLeftClick.get()) {
+        UIAction.Actions action = inventorySlots.get(slot).onLeftClick.get();
+        if (action == null) return;
+        switch (action) {
             case CLOSE -> close();
             case OPEN -> {
                 UserInterface ui = new StorePageUI();
