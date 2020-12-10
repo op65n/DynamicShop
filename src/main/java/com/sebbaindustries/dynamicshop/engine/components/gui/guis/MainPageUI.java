@@ -94,7 +94,6 @@ public class MainPageUI implements UserInterface {
         switch (action) {
             case CLOSE -> close();
             case OPEN -> {
-                close();
                 UserInterface ui = new StorePageUI();
                 ui.update();
                 ui.open(player);
@@ -110,7 +109,6 @@ public class MainPageUI implements UserInterface {
         switch (action) {
             case CLOSE -> close();
             case OPEN -> {
-                close();
                 UserInterface ui = new StorePageUI();
                 ui.update();
                 ui.open(player);
