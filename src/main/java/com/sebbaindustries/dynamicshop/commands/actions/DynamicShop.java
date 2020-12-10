@@ -23,7 +23,7 @@ public class DynamicShop extends CommandFactory implements ICmd, ITab {
 
     @Override
     public void execute(@NotNull CommandSender sender, @NotNull String[] args) {
-
+        info(sender);
     }
 
     private void info(CommandSender sender) {
