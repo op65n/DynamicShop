@@ -1,5 +1,6 @@
 package com.sebbaindustries.dynamicshop.engine.components.shop.implementations;
 
+import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterfaceItem;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopItem;
 
@@ -10,8 +11,15 @@ import java.util.stream.Collectors;
 
 public class ShopCategoryImpl implements ShopCategory {
 
+    int priority = -1;
     private String name = "GenericShopName";
+    private UserInterfaceItem icon;
     private HashMap<Integer, ShopItemImpl> items = new HashMap<>();
+
+    @Override
+    public int priority() {
+        return this.priority;
+    }
 
     @Override
     public UUID getUUID() {
@@ -21,6 +29,11 @@ public class ShopCategoryImpl implements ShopCategory {
     @Override
     public String getName() {
         return this.name;
+    }
+
+    @Override
+    public UserInterfaceItem icon() {
+        return icon;
     }
 
     @Override

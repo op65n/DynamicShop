@@ -9,9 +9,7 @@ import com.sebbaindustries.dynamicshop.utils.FileUtils;
 import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class DynShopContainer {
 
@@ -45,6 +43,12 @@ public class DynShopContainer {
     public boolean successfulSetup = true;
 
     public HashMap<UUID, ShopCategory> categoryHashMap = new HashMap<>();
+
+    public List<ShopCategory> getPrioritizedCategoryList() {
+        List<ShopCategory> categories = new ArrayList<>(categoryHashMap.values());
+        categories.sort(Comparator.comparing(ShopCategory::priority));
+        return categories;
+    }
 
     public void addCategory(ShopCategory category) {
         categoryHashMap.put(category.getUUID(), category);

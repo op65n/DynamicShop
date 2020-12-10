@@ -70,7 +70,15 @@ public class MainPageUI implements UserInterface {
         inventory = Bukkit.createInventory(null, metaData.getRows()*9, metaData.getTitle());
         fillBackground();
         inventorySlots.forEach((position, item) -> inventory.setItem(position, item.getBukkitItemStack()));
+        fillCategories();
         Core.gCore().dynEngine.shopUI.invHolder.userInterfaceHashMap.put(player, this);
+    }
+
+    private void fillCategories() {
+        Core.gCore().dynEngine.container.getPrioritizedCategoryList().forEach(shopCategory -> inventorySlots.forEach(((position, item) -> {
+            if (!item.isPlaceholder()) return;
+            inventory.setItem(position, shopCategory.icon().getBukkitItemStack());
+        })));
     }
 
     private void fillBackground() {
