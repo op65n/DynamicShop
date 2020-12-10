@@ -9,4 +9,8 @@ public class InventoryHolderCache {
 
     public HashMap<Player, UserInterface> userInterfaceHashMap = new HashMap<>();
 
+    public HashMap<Player, UserInterface> cache() {
+        return userInterfaceHashMap;
+    }
+
 }

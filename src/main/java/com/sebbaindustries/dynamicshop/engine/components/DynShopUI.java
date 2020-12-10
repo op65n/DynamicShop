@@ -12,7 +12,7 @@ public class DynShopUI {
 
     public DynShopUI() {
         load();
-        inventoryHolderCache = new InventoryHolderCache();
+        invHolder = new InventoryHolderCache();
     }
 
     public void load() {
@@ -49,7 +49,7 @@ public class DynShopUI {
     public UICache storePageCache;
     public UICache transactionPageCache;
 
-    public InventoryHolderCache inventoryHolderCache;
+    public InventoryHolderCache invHolder;
 
     public boolean successfulSetup = true;
 

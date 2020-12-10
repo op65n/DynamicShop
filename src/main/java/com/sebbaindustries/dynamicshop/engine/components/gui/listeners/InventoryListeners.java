@@ -1,6 +1,7 @@
 package com.sebbaindustries.dynamicshop.engine.components.gui.listeners;
 
 import com.sebbaindustries.dynamicshop.Core;
+import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterface;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -14,18 +15,21 @@ public class InventoryListeners implements @NotNull Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onInventoryClick(final InventoryClickEvent e) {
 
-        final Player p = (Player) e.getWhoClicked();
+        final Player player = (Player) e.getWhoClicked();
 
-        if (Core.gCore().dynEngine.shopUI.inventoryHolderCache.userInterfaceHashMap.containsKey(p)) {
+        if (Core.gCore().dynEngine.shopUI.invHolder.userInterfaceHashMap.containsKey(player)) {
             e.setCancelled(true);
-            System.out.println("cancled");
+            UserInterface ui = Core.gCore().dynEngine.shopUI.invHolder.cache().get(player);
+            if (e.isLeftClick()) System.out.println("left");
+            if (e.isRightClick()) System.out.println("right");
+            if (e.isShiftClick()) System.out.println("shift?");
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onClose(InventoryCloseEvent e) {
         Player player = (Player) e.getPlayer();
-        Core.gCore().dynEngine.shopUI.inventoryHolderCache.userInterfaceHashMap.remove(player);
+        Core.gCore().dynEngine.shopUI.invHolder.userInterfaceHashMap.remove(player);
     }
 
     // Cancel dragging in our inventory

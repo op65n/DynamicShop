@@ -52,17 +52,17 @@ public class MainPageUI implements UserInterface, Listener {
     public void open(Player player) {
         player.openInventory(inventory);
         this.player = player;
-        Core.gCore().dynEngine.shopUI.inventoryHolderCache.userInterfaceHashMap.put(player, this);
+        Core.gCore().dynEngine.shopUI.invHolder.userInterfaceHashMap.put(player, this);
     }
 
     @Override
     public void draw() {
-        Core.gCore().dynEngine.shopUI.inventoryHolderCache.userInterfaceHashMap.put(player, this);
+        Core.gCore().dynEngine.shopUI.invHolder.userInterfaceHashMap.put(player, this);
     }
 
     @Override
     public void clear() {
-        Core.gCore().dynEngine.shopUI.inventoryHolderCache.userInterfaceHashMap.put(player, this);
+        Core.gCore().dynEngine.shopUI.invHolder.userInterfaceHashMap.put(player, this);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class MainPageUI implements UserInterface, Listener {
         inventory = Bukkit.createInventory(null, metaData.getRows()*9, metaData.getTitle());
         fillBackground();
         inventorySlots.forEach((position, item) -> inventory.setItem(position, item.getBukkitItemStack()));
-        Core.gCore().dynEngine.shopUI.inventoryHolderCache.userInterfaceHashMap.put(player, this);
+        Core.gCore().dynEngine.shopUI.invHolder.userInterfaceHashMap.put(player, this);
     }
 
     private void fillBackground() {
@@ -83,7 +83,7 @@ public class MainPageUI implements UserInterface, Listener {
     @Override
     public void close() {
         player.closeInventory();
-        Core.gCore().dynEngine.shopUI.inventoryHolderCache.userInterfaceHashMap.remove(player);
+        Core.gCore().dynEngine.shopUI.invHolder.userInterfaceHashMap.remove(player);
     }
 
     @Override
