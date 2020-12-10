@@ -23,6 +23,7 @@ public class InventoryListeners implements @NotNull Listener {
             if (e.isLeftClick()) System.out.println("left");
             if (e.isRightClick()) System.out.println("right");
             if (e.isShiftClick()) System.out.println("shift?");
+            if (e.getClick().isCreativeAction()) System.out.println("cAction");
         }
     }
 
