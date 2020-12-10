@@ -34,7 +34,8 @@ public class CommandManager implements CommandExecutor, TabCompleter {
                 new Buy(),
                 new Sell(),
                 new Price(),
-                new AdminShop()
+                new AdminShop(),
+                new DynamicShop()
         );
     }
 
