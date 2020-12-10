@@ -8,10 +8,10 @@ import com.sebbaindustries.dynamicshop.utils.Color;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
-import org.bukkit.event.inventory.InventoryMoveItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -97,8 +97,10 @@ public class MainPageUI implements UserInterface, Listener {
         return this.metaData;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onInventoryClick(final InventoryClickEvent e) {
+
+        if (inventory != e.getClickedInventory()) return;
 
         final Player p = (Player) e.getWhoClicked();
 

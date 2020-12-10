@@ -48,7 +48,7 @@ public class UserInterfaceItem {
     public Material getBukkitMaterial() {
         if (material == null) {
             PluginLogger.logSevere("Null item");
-            displayName = Color.format("&4&bERROR!");
+            displayName = Color.format("&4&lERROR!");
             lore.add(Color.format("&cNull item / broken configuration"));
             return Material.ACACIA_BOAT;
         }
