@@ -88,12 +88,11 @@ public class MainPageUI implements UserInterface {
 
     @Override
     public void onRightClick(int slot) {
-       UIAction.Actions action = inventorySlots.get(slot).onRightClick.get();
-       if (action == null) return;
+        UIAction.Actions action = inventorySlots.get(slot).onRightClick.get();
+        if (action == null) return;
         switch (action) {
             case CLOSE -> close();
             case OPEN -> {
-                close();
                 UserInterface ui = new StorePageUI();
                 ui.update();
                 ui.open(player);

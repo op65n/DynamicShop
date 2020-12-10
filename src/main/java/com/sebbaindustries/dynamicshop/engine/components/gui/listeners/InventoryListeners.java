@@ -23,7 +23,6 @@ public class InventoryListeners implements @NotNull Listener {
             if (e.isLeftClick()) ui.onLeftClick(e.getRawSlot());
             if (e.isRightClick()) ui.onRightClick(e.getRawSlot());
             if (e.getClick().isCreativeAction()) ui.onMiddleClick(e.getRawSlot());
-            ui.update();
         }
     }
 
