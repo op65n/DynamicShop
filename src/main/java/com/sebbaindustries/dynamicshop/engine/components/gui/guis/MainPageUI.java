@@ -7,13 +7,12 @@ import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInte
 import com.sebbaindustries.dynamicshop.utils.Color;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 
-public class MainPageUI implements UserInterface, Listener {
+public class MainPageUI implements UserInterface {
 
     public MainPageUI() {
         metaData = new UIMetaData();
@@ -84,6 +83,35 @@ public class MainPageUI implements UserInterface, Listener {
     public void close() {
         player.closeInventory();
         Core.gCore().dynEngine.shopUI.invHolder.userInterfaceHashMap.remove(player);
+    }
+
+    @Override
+    public void onRightClick(int slot) {
+        switch (inventorySlots.get(slot).onRightClick.get()) {
+            case CLOSE -> close();
+            case OPEN -> {
+                UserInterface ui = new StorePageUI();
+                ui.update();
+                ui.open(player);
+            }
+        }
+    }
+
+    @Override
+    public void onLeftClick(int slot) {
+        switch (inventorySlots.get(slot).onLeftClick.get()) {
+            case CLOSE -> close();
+            case OPEN -> {
+                UserInterface ui = new StorePageUI();
+                ui.update();
+                ui.open(player);
+            }
+        }
+    }
+
+    @Override
+    public void onMiddleClick(int slot) {
+
     }
 
     @Override

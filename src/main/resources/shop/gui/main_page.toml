@@ -19,9 +19,9 @@ placeholder = true
 [item.12]
 placeholder = true
   [item.12.onLeftClick]
-  action = "OPEN"
+  action = "CLOSE"
   [item.12.onRightClick]
-  action = "OPEN"
+  action = "CLOSE"
   [item.12.onMiddleClick]
   action = "STATISTICS"
 

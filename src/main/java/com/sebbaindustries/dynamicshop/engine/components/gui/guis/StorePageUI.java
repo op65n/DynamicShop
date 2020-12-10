@@ -32,6 +32,21 @@ public class StorePageUI implements UserInterface {
     }
 
     @Override
+    public void onRightClick(int slot) {
+
+    }
+
+    @Override
+    public void onLeftClick(int slot) {
+
+    }
+
+    @Override
+    public void onMiddleClick(int slot) {
+
+    }
+
+    @Override
     public void setMetaData(UIMetaData metaData) {
 
     }

@@ -20,10 +20,10 @@ public class InventoryListeners implements @NotNull Listener {
         if (Core.gCore().dynEngine.shopUI.invHolder.userInterfaceHashMap.containsKey(player)) {
             e.setCancelled(true);
             UserInterface ui = Core.gCore().dynEngine.shopUI.invHolder.cache().get(player);
-            if (e.isLeftClick()) System.out.println("left");
-            if (e.isRightClick()) System.out.println("right");
-            if (e.isShiftClick()) System.out.println("shift?");
-            if (e.getClick().isCreativeAction()) System.out.println("cAction");
+            if (e.isLeftClick()) ui.onLeftClick(e.getRawSlot());
+            if (e.isRightClick()) ui.onRightClick(e.getRawSlot());
+            if (e.getClick().isCreativeAction()) ui.onMiddleClick(e.getRawSlot());
+            ui.update();
         }
     }
 
