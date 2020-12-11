@@ -46,7 +46,7 @@ public class MainPageUI implements UserInterface {
 
     @Override
     public void update() {
-        inventory = UserInterfaceUtils.updateGUIFrame(metaData, inventorySlots, background);
+        //inventory = UserInterfaceUtils.updateGUIFrame(metaData, inventorySlots, background);
         fillCategories();
         inventorySlots.forEach((position, item) -> inventory.setItem(position, item.getBukkitItemStack()));
         InventoryHolderCache.cache(player, this);
