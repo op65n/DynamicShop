@@ -1,17 +1,15 @@
 package com.sebbaindustries.dynamicshop.engine.structure;
 
-import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.log.PluginLogger;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.logging.Logger;
 
 public class DirectoryStructure {
 
-    enum Directory {
+    public enum Directory {
         BASE("plugins/DynamicShop/"),
         SHOP("plugins/DynamicShop/shop/"),
         GUI("plugins/DynamicShop/shop/gui/"),
@@ -30,6 +28,9 @@ public class DirectoryStructure {
         generateDirectoryStructure();
     }
 
+    /**
+     * Generates missing directories inside plugins/DynamicShop directory
+     */
     public void generateDirectoryStructure() {
         createMissing(Directory.BASE);
         createMissing(Directory.SHOP);

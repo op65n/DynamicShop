@@ -3,14 +3,11 @@ package com.sebbaindustries.dynamicshop.utils;
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 import com.sebbaindustries.dynamicshop.Core;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 
 /**
@@ -20,7 +17,6 @@ import java.nio.charset.StandardCharsets;
 @SuppressWarnings("unused")
 public final class ObjectUtils {
 
-    //private static final Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
 
     private ObjectUtils() {
@@ -38,6 +34,13 @@ public final class ObjectUtils {
     }
 
 
+    /**
+     * This will be removed soon, don't use unless necessary!
+     *
+     * @param fileName N/A
+     * @param object N/A
+     */
+    @Deprecated
     public static void saveGsonFile(String fileName, Object object) {
         try {
             Writer writer = new FileWriter(Core.gCore().core.getDataFolder() + "/" + fileName + ".js", StandardCharsets.UTF_8);
@@ -49,10 +52,28 @@ public final class ObjectUtils {
         }
     }
 
+    /**
+     * This will be removed soon, don't use unless necessary!
+     *
+     * @param object N/A
+     * @param cl N/A
+     * @param <T> N/A
+     * @return N/A
+     */
+    @Deprecated
     public static <T> T getClassFromGson(Object object, Class<T> cl) {
         return gson.fromJson(gson.toJson(object), cl);
     }
 
+    /**
+     * This will be removed soon, don't use unless necessary!
+     *
+     * @param fileName N/A
+     * @param cl N/A
+     * @param <T> N/A
+     * @return N/A
+     */
+    @Deprecated
     public static <T> T getGsonFile(String fileName, Class<T> cl) {
         JsonReader reader;
         try {
@@ -64,17 +85,13 @@ public final class ObjectUtils {
         return gson.fromJson(reader, cl);
     }
 
-    public static <T> T getGsonFile(String fileName, Type type) {
-        JsonReader reader;
-        try {
-            reader = new JsonReader(new FileReader(Core.gCore().core.getDataFolder() + "/" + fileName + ".js", StandardCharsets.UTF_8));
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-        return gson.fromJson(reader, type);
-    }
-
+    /**
+     * This will be removed soon, don't use unless necessary!
+     *
+     * @param fileName N/A
+     * @return N/A
+     */
+    @Deprecated
     public static JsonObject getJson(String fileName) {
         JsonReader reader;
         try {

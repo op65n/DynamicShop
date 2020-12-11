@@ -20,3 +20,5 @@ commands:
     description: "N/A"
   adminshop:
     description: "N/A"
+  dynshop:
+    description: "N/A"

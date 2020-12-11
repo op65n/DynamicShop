@@ -3,7 +3,14 @@ package com.sebbaindustries.dynamicshop.commands.actions;
 import com.sebbaindustries.dynamicshop.commands.components.CommandFactory;
 import com.sebbaindustries.dynamicshop.commands.components.ICmd;
 import com.sebbaindustries.dynamicshop.commands.components.ITab;
+import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIMetaData;
+import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterface;
+import com.sebbaindustries.dynamicshop.engine.components.gui.guis.MainPageUI;
+import com.sebbaindustries.dynamicshop.messages.Message;
+import com.sebbaindustries.dynamicshop.messages.MessageBuilder;
+import com.sebbaindustries.dynamicshop.utils.Color;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
@@ -23,7 +30,14 @@ public class Shop extends CommandFactory implements ICmd, ITab {
 
     @Override
     public void execute(@NotNull CommandSender sender, @NotNull String[] args) {
-
+        if (!(sender instanceof Player)) {
+            MessageBuilder.sendTo(sender).text(Message.get().consoleCannotExecute).format().build().send();
+            return;
+        }
+        Player player = (Player) sender;
+        UserInterface ui = new MainPageUI();
+        ui.update();
+        ui.open(player);
     }
 
     @Override

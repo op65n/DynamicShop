@@ -2,6 +2,7 @@ package com.sebbaindustries.dynamicshop.global;
 
 import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.engine.DynEngine;
+import com.sebbaindustries.dynamicshop.log.PluginLogger;
 
 import java.util.logging.Level;
 
@@ -18,7 +19,7 @@ public class ServerPlugin {
     }
 
     private void coreDump() {
-        core.getLogger().log(Level.SEVERE, "Plugin core dumped due to illegal access of ServerPlugin class!");
+        PluginLogger.logSevere("Plugin core dumped due to illegal access of ServerPlugin class!");
         throw new IllegalAccessError("Plugin core dumped due to illegal access of ServerPlugin class!");
     }
 
@@ -30,7 +31,7 @@ public class ServerPlugin {
     public final void load(Core core) {
         this.core = core;
         Core.globalCore = new GlobalCore(core);
-        core.getLogger().log(Level.INFO, "GlobalCore class instance created, initializing plugin modules!");
+        PluginLogger.log("GlobalCore class instance created, initializing plugin modules!");
     }
 
     /**
@@ -42,6 +43,7 @@ public class ServerPlugin {
             return;
         }
         Core.gCore().dynEngine = new DynEngine();
+        PluginLogger.log("Starting DynEngine instance!");
         Core.gCore().dynEngine.initialize();
     }
 
