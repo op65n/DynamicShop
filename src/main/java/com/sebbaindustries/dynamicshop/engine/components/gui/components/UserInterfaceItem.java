@@ -1,5 +1,6 @@
 package com.sebbaindustries.dynamicshop.engine.components.gui.components;
 
+import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
 import com.sebbaindustries.dynamicshop.log.PluginLogger;
 import com.sebbaindustries.dynamicshop.utils.Color;
 import org.bukkit.Material;

@@ -5,6 +5,7 @@ import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIAction
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIMetaData;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterface;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterfaceItem;
+import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
 import com.sebbaindustries.dynamicshop.utils.Color;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -32,6 +33,7 @@ public class MainPageUI implements UserInterface {
     private Inventory inventory;
     private UIMetaData metaData;
     private HashMap<Integer, UserInterfaceItem> inventorySlots;
+    private HashMap<Integer, ShopCategory> categories = new HashMap<>();
     private UserInterfaceItem background = null;
 
     private void sizeGUI() {
@@ -83,6 +85,7 @@ public class MainPageUI implements UserInterface {
                 itm.lore = category.icon().getLore();
                 itm.displayName = category.getName();
                 inventorySlots.put(entry.getKey(), itm);
+                categories.put(entry.getKey(), category);
                 return true;
             }
             return false;
@@ -110,7 +113,7 @@ public class MainPageUI implements UserInterface {
         switch (action) {
             case CLOSE -> close();
             case OPEN -> {
-                UserInterface ui = new StorePageUI();
+                UserInterface ui = new StorePageUI(categories.get(slot));
                 ui.update();
                 ui.open(player);
             }
@@ -125,7 +128,7 @@ public class MainPageUI implements UserInterface {
         switch (action) {
             case CLOSE -> close();
             case OPEN -> {
-                UserInterface ui = new StorePageUI();
+                UserInterface ui = new StorePageUI(categories.get(slot));
                 ui.update();
                 ui.open(player);
             }

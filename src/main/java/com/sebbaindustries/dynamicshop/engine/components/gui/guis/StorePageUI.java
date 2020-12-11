@@ -4,6 +4,7 @@ import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIMetaData;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterface;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterfaceItem;
+import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
 import com.sebbaindustries.dynamicshop.utils.Color;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -14,7 +15,7 @@ import java.util.HashMap;
 
 public class StorePageUI implements UserInterface {
 
-    public StorePageUI() {
+    public StorePageUI(ShopCategory category) {
         metaData = new UIMetaData();
         String guiName = Core.gCore().dynEngine.shopUI.storePageCache.guiName;
         metaData.setTitle(Color.format(guiName));
