@@ -6,73 +6,73 @@ displayName = " "
 
 [item.10]
 placeholder = true
-[item.10.onLeftClick]
-action = "BUY"
-[item.10.onRightClick]
-action = "SELL"
-[item.10.onMiddleClick]
-action = "STATISTICS"
+  [item.10.onLeftClick]
+  action = "BUY"
+  [item.10.onRightClick]
+  action = "SELL"
+  [item.10.onMiddleClick]
+  action = "STATISTICS"
 
 [item.11]
 placeholder = true
-[item.11.onLeftClick]
-action = "BUY"
-[item.11.onRightClick]
-action = "SELL"
-[item.11.onMiddleClick]
-action = "STATISTICS"
+  [item.11.onLeftClick]
+  action = "BUY"
+  [item.11.onRightClick]
+  action = "SELL"
+  [item.11.onMiddleClick]
+  action = "STATISTICS"
 
 [item.12]
 placeholder = true
-[item.12.onLeftClick]
-action = "BUY"
-[item.12.onRightClick]
-action = "SELL"
-[item.12.onMiddleClick]
-action = "STATISTICS"
+  [item.12.onLeftClick]
+  action = "BUY"
+  [item.12.onRightClick]
+  action = "SELL"
+  [item.12.onMiddleClick]
+  action = "STATISTICS"
 
 [item.13]
 placeholder = true
-[item.13.onLeftClick]
-action = "BUY"
-[item.13.onRightClick]
-action = "SELL"
-[item.13.onMiddleClick]
-action = "STATISTICS"
+  [item.13.onLeftClick]
+  action = "BUY"
+  [item.13.onRightClick]
+  action = "SELL"
+  [item.13.onMiddleClick]
+  action = "STATISTICS"
 
 [item.14]
 placeholder = true
-[item.14.onLeftClick]
-action = "BUY"
-[item.14.onRightClick]
-action = "SELL"
-[item.14.onMiddleClick]
-action = "STATISTICS"
+  [item.14.onLeftClick]
+  action = "BUY"
+  [item.14.onRightClick]
+  action = "SELL"
+  [item.14.onMiddleClick]
+  action = "STATISTICS"
 
 [item.15]
 placeholder = true
-[item.15.onLeftClick]
-action = "BUY"
-[item.15.onRightClick]
-action = "SELL"
-[item.15.onMiddleClick]
-action = "STATISTICS"
+  [item.15.onLeftClick]
+  action = "BUY"
+  [item.15.onRightClick]
+  action = "SELL"
+  [item.15.onMiddleClick]
+  action = "STATISTICS"
 
 [item.16]
 placeholder = true
-[item.16.onLeftClick]
-action = "BUY"
-[item.16.onRightClick]
-action = "SELL"
-[item.16.onMiddleClick]
-action = "STATISTICS"
+  [item.16.onLeftClick]
+  action = "BUY"
+  [item.16.onRightClick]
+  action = "SELL"
+  [item.16.onMiddleClick]
+  action = "STATISTICS"
 
 # Back button, moves down dynamicly
 [item.31]
 material = "KNOWLEDGE_BOOK"
-[item.31.onLeftClick]
-action = "BACK"
-[item.31.onRightClick]
-action = "BACK"
-[item.31.onMiddleClick]
-action = "BACK"
+  [item.31.onLeftClick]
+  action = "BACK"
+  [item.31.onRightClick]
+  action = "BACK"
+  [item.31.onMiddleClick]
+  action = "BACK"

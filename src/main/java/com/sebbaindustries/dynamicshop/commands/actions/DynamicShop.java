@@ -27,13 +27,13 @@ public class DynamicShop extends CommandFactory implements ICmd, ITab {
     }
 
     private void info(CommandSender sender) {
-        sender.sendMessage(Color.format("#<333333>[#<007070>Dynamic#<A60050>Shop#<333333>]"));
-        sender.sendMessage(Color.format("#<333333>-------------"));
-        sender.sendMessage(Color.format("#<007070>Version#<333333>: #<A60050>DynamicShop 0.1.7 (Leptir) for Paper 1.16.x"));
-        sender.sendMessage(Color.format("#<007070>Plugin engine#<333333>: #<A60050>1.0.3-2-non-modular"));
-        sender.sendMessage(Color.format("#<007070>Uptime#<333333>: #<A60050>${DAYS} days, ${HOURS} hours, ${MINUTES} min"));
+        sender.sendMessage(Color.format("#<333333>[#<007070>DynamicShop#<333333>]"));
+        sender.sendMessage(Color.format(" "));
+        sender.sendMessage(Color.format("&fVersion#<333333>: #<A60050>0.1.7 #<333333>(&fLeptir#<333333>) #<A60050>for &fPaper 1.16.x"));
+        sender.sendMessage(Color.format("&fPlugin engine#<333333>: #<A60050>1.0.3-2-non-modular"));
+        sender.sendMessage(Color.format("&fUptime#<333333>: &f3 #<A60050>days, &f8 #<A60050>hours, &f23 #<A60050>min"));
         sender.sendMessage(Color.format(""));
-        sender.sendMessage(Color.format("#<007070>Made by#<333333>: #<A60050>SebbaIndustries #<333333>/ #<A60050>Nzd_1"));
+        sender.sendMessage(Color.format("&fMade by#<333333>: #<A60050>SebbaIndustries &f/ #<A60050>Nzd_1"));
         sender.sendMessage(Color.format(""));
     }
 
