@@ -79,16 +79,15 @@ public class MainPageUI implements UserInterface {
         //    if (!item.isPlaceholder()) return;
         //    inventory.setItem(position, shopCategory.icon().getBukkitItemStack());
         //})));
+
         Core.gCore().dynEngine.container.getPrioritizedCategoryList().forEach(category -> {
-            int position = 0;
-            for (UserInterfaceItem item : inventorySlots.values()) {
-                if (!item.isPlaceholder()) {
-                    position++;
-                    continue;
+            inventorySlots.entrySet().stream().anyMatch(entry -> {
+                if (entry.getValue().isPlaceholder()) {
+                    inventory.setItem(entry.getKey(), category.icon().getBukkitItemStack());
+                    return true;
                 }
-                inventory.setItem(position, category.icon().getBukkitItemStack());
-                break;
-            }
+                return false;
+            });
         });
     }
 
