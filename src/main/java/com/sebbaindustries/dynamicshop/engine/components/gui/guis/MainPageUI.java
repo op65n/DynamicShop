@@ -33,7 +33,7 @@ public class MainPageUI implements UserInterface {
     private Inventory inventory;
 
     private UIMetaData metaData;
-    private final HashMap<Integer, UserInterfaceItem> inventorySlots;
+    private HashMap<Integer, UserInterfaceItem> inventorySlots;
     private final HashMap<Integer, ShopCategory> categories = new HashMap<>();
     private final UserInterfaceItem background;
 
@@ -47,9 +47,11 @@ public class MainPageUI implements UserInterface {
     @Override
     public void update() {
         inventory = UserInterfaceUtils.updateGUIFrame(metaData, inventorySlots, background);
+        HashMap<Integer, UserInterfaceItem> inventorySlotsCopy = inventorySlots;
         fillCategories();
         inventorySlots.forEach((position, item) -> inventory.setItem(position, item.getBukkitItemStack()));
         InventoryHolderCache.cache(player, this);
+        inventorySlots = inventorySlotsCopy;
     }
 
     private void fillCategories() {
