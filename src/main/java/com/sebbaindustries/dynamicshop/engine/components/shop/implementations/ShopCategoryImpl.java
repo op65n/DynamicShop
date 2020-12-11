@@ -1,6 +1,6 @@
 package com.sebbaindustries.dynamicshop.engine.components.shop.implementations;
 
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterfaceItem;
+import com.sebbaindustries.dynamicshop.engine.components.shop.Icon;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopItem;
 
@@ -13,7 +13,7 @@ public class ShopCategoryImpl implements ShopCategory {
 
     int priority = -1;
     private String name = "GenericShopName";
-    private UserInterfaceItem icon;
+    private Icon icon;
     private HashMap<Integer, ShopItemImpl> items = new HashMap<>();
 
     @Override
@@ -32,7 +32,7 @@ public class ShopCategoryImpl implements ShopCategory {
     }
 
     @Override
-    public UserInterfaceItem icon() {
+    public Icon icon() {
         return icon;
     }
 

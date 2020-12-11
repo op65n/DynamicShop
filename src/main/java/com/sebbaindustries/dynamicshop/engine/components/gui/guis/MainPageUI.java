@@ -69,23 +69,20 @@ public class MainPageUI implements UserInterface {
     public void update() {
         inventory = Bukkit.createInventory(null, metaData.getRows()*9, metaData.getTitle());
         fillBackground();
-        inventorySlots.forEach((position, item) -> inventory.setItem(position, item.getBukkitItemStack()));
         fillCategories();
+        inventorySlots.forEach((position, item) -> inventory.setItem(position, item.getBukkitItemStack()));
         Core.gCore().dynEngine.shopUI.invHolder.userInterfaceHashMap.put(player, this);
     }
 
     private void fillCategories() {
-        //Core.gCore().dynEngine.container.getPrioritizedCategoryList().forEach(shopCategory -> inventorySlots.forEach(((position, item) -> {
-        //    if (!item.isPlaceholder()) return;
-        //    inventory.setItem(position, shopCategory.icon().getBukkitItemStack());
-        //})));
-
         Core.gCore().dynEngine.container.getPrioritizedCategoryList().forEach(category -> {
             inventorySlots.entrySet().stream().anyMatch(entry -> {
                 if (entry.getValue().isPlaceholder()) {
-                    inventory.setItem(entry.getKey(), category.icon().getBukkitItemStack());
                     var itm = entry.getValue();
                     itm.placeholder = false;
+                    itm.material = category.icon().getIcon();
+                    itm.lore = category.icon().getLore();
+                    itm.displayName = category.icon().getDisplayName();
                     inventorySlots.put(entry.getKey(), itm);
                     return true;
                 }

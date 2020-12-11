@@ -20,9 +20,9 @@ public class UserInterfaceItem {
     public UIAction onMiddleClick;
 
 
-    private Material material;
-    private List<String> lore = new ArrayList<>();
-    private String displayName;
+    public Material material;
+    public List<String> lore = new ArrayList<>();
+    public String displayName;
     private HashMap<String, Integer> enchants;
 
     public boolean isPlaceholder() {
