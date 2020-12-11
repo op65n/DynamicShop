@@ -19,14 +19,21 @@ public class MainPageUI implements UserInterface {
 
     public MainPageUI() {
         UICache cache = Core.gCore().dynEngine.getShopUI().getMainPageCache();
+        // TODO: remove me!
+        System.out.println("MainPageUI 1");
         System.out.println(ObjectUtils.deserializeObjectToString(cache));
         metaData = UserInterfaceUtils.setupMetaData(cache);
         background = UserInterfaceUtils.setupBackground(cache);
         inventorySlots = UserInterfaceUtils.setupBaseItemOrder(cache);
         inventory = UserInterfaceUtils.updateGUIFrame(metaData, inventorySlots, background);
-
+        // TODO: remove me!
+        System.out.println("MainPageUI 2");
+        System.out.println(ObjectUtils.deserializeObjectToString(Core.gCore().dynEngine.getShopUI().getMainPageCache()));
         // Update/flush cache
         InventoryHolderCache.cache(player, this);
+        // TODO: remove me!
+        System.out.println("MainPageUI 3");
+        System.out.println(ObjectUtils.deserializeObjectToString(Core.gCore().dynEngine.getShopUI().getMainPageCache()));
     }
 
     private Player player;
@@ -42,6 +49,9 @@ public class MainPageUI implements UserInterface {
         player.openInventory(inventory);
         this.player = player;
         InventoryHolderCache.cache(player, this);
+        // TODO: remove me!
+        System.out.println("MainPageUI 4");
+        System.out.println(ObjectUtils.deserializeObjectToString(Core.gCore().dynEngine.getShopUI().getMainPageCache()));
     }
 
     @Override
@@ -52,6 +62,9 @@ public class MainPageUI implements UserInterface {
         inventorySlots.forEach((position, item) -> inventory.setItem(position, item.getBukkitItemStack()));
         InventoryHolderCache.cache(player, this);
         inventorySlots = inventorySlotsCopy;
+        // TODO: remove me!
+        System.out.println("MainPageUI 5");
+        System.out.println(ObjectUtils.deserializeObjectToString(Core.gCore().dynEngine.getShopUI().getMainPageCache()));
     }
 
     private void fillCategories() {
@@ -73,12 +86,18 @@ public class MainPageUI implements UserInterface {
             }
             return false;
         }));
+        // TODO: remove me!
+        System.out.println("MainPageUI 6");
+        System.out.println(ObjectUtils.deserializeObjectToString(Core.gCore().dynEngine.getShopUI().getMainPageCache()));
     }
 
     @Override
     public void close() {
         player.closeInventory();
         InventoryHolderCache.removeIfPresent(player);
+        // TODO: remove me!
+        System.out.println("MainPageUI 7");
+        System.out.println(ObjectUtils.deserializeObjectToString(Core.gCore().dynEngine.getShopUI().getMainPageCache()));
     }
 
     @Override
