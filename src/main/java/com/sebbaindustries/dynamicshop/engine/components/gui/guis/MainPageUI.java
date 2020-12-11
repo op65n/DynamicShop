@@ -8,6 +8,7 @@ import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIMetaDa
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterface;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterfaceItem;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
+import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 import com.sebbaindustries.dynamicshop.utils.UserInterfaceUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -40,6 +41,7 @@ public class MainPageUI implements UserInterface {
         player.openInventory(inventory);
         this.player = player;
         InventoryHolderCache.cache(player, this);
+        System.out.println(ObjectUtils.deserializeObjectToString(this));
     }
 
     @Override
