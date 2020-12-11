@@ -18,7 +18,7 @@ import java.util.HashMap;
 public class MainPageUI implements UserInterface {
 
     public MainPageUI() {
-        UICache cache = Core.gCore().dynEngine.shopUI.getMainPageCache();
+        UICache cache = Core.gCore().dynEngine.getShopUI().getMainPageCache();
         System.out.println(ObjectUtils.deserializeObjectToString(cache));
         metaData = UserInterfaceUtils.setupMetaData(cache);
         background = UserInterfaceUtils.setupBackground(cache);
@@ -54,7 +54,7 @@ public class MainPageUI implements UserInterface {
 
     private void fillCategories() {
         // Category list is already ordered when we get it
-        Core.gCore().dynEngine.container.getPrioritizedCategoryList().forEach(category -> inventorySlots.entrySet().stream().anyMatch(entry -> {
+        Core.gCore().dynEngine.getContainer().getPrioritizedCategoryList().forEach(category -> inventorySlots.entrySet().stream().anyMatch(entry -> {
             if (entry.getValue().isPlaceholder()) {
                 // Update item with ShopCategory data
                 UserInterfaceItem itm = entry.getValue();

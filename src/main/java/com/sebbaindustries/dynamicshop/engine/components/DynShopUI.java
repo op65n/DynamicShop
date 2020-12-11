@@ -2,7 +2,6 @@ package com.sebbaindustries.dynamicshop.engine.components;
 
 import com.moandjiezana.toml.Toml;
 import com.sebbaindustries.dynamicshop.Core;
-import com.sebbaindustries.dynamicshop.engine.components.gui.cache.InventoryHolderCache;
 import com.sebbaindustries.dynamicshop.engine.components.gui.cache.UICache;
 import com.sebbaindustries.dynamicshop.engine.components.maintainer.ComponentManager;
 import com.sebbaindustries.dynamicshop.log.PluginLogger;

@@ -11,8 +11,16 @@ import com.sebbaindustries.dynamicshop.utils.FileManager;
 
 public class DynEngine {
 
-    public DynShopContainer container;
-    public DynShopUI shopUI;
+    private DynShopContainer container;
+    private DynShopUI shopUI;
+
+    public DynShopUI getShopUI() {
+        return shopUI;
+    }
+
+    public DynShopContainer getContainer() {
+        return container;
+    }
 
     public void initialize() {
         Core.gCore().commandManager = new CommandManager(Core.gCore().core);
