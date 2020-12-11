@@ -23,7 +23,7 @@ public class UserInterfaceUtils {
     }
 
     public static HashMap<Integer, UserInterfaceItem> setupBaseItemOrder(UICache cache) {
-        return cache.item;
+        return (HashMap<Integer, UserInterfaceItem>) cache.item.clone();
     }
 
     public static Inventory updateGUIFrame(UIMetaData metaData, HashMap<Integer, UserInterfaceItem> slots, UserInterfaceItem background) {
