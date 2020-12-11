@@ -34,6 +34,7 @@ public class InventoryListeners implements @NotNull Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onClose(final @NotNull InventoryCloseEvent e) {
+        System.out.println("removed");
         InventoryHolderCache.removeIfPresent((Player) e.getPlayer());
     }
 
