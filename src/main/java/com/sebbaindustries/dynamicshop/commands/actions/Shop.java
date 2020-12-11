@@ -8,7 +8,6 @@ import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInte
 import com.sebbaindustries.dynamicshop.engine.components.gui.guis.MainPageUI;
 import com.sebbaindustries.dynamicshop.messages.Message;
 import com.sebbaindustries.dynamicshop.messages.MessageBuilder;
-import com.sebbaindustries.dynamicshop.utils.Color;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

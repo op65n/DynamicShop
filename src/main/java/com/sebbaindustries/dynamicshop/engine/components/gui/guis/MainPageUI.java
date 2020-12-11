@@ -75,20 +75,18 @@ public class MainPageUI implements UserInterface {
     }
 
     private void fillCategories() {
-        Core.gCore().dynEngine.container.getPrioritizedCategoryList().forEach(category -> {
-            inventorySlots.entrySet().stream().anyMatch(entry -> {
-                if (entry.getValue().isPlaceholder()) {
-                    var itm = entry.getValue();
-                    itm.placeholder = false;
-                    itm.material = category.icon().getIcon();
-                    itm.lore = category.icon().getLore();
-                    itm.displayName = category.icon().getDisplayName();
-                    inventorySlots.put(entry.getKey(), itm);
-                    return true;
-                }
-                return false;
-            });
-        });
+        Core.gCore().dynEngine.container.getPrioritizedCategoryList().forEach(category -> inventorySlots.entrySet().stream().anyMatch(entry -> {
+            if (entry.getValue().isPlaceholder()) {
+                var itm = entry.getValue();
+                itm.placeholder = false;
+                itm.material = category.icon().getIcon();
+                itm.lore = category.icon().getLore();
+                itm.displayName = category.getName();
+                inventorySlots.put(entry.getKey(), itm);
+                return true;
+            }
+            return false;
+        }));
     }
 
     private void fillBackground() {
