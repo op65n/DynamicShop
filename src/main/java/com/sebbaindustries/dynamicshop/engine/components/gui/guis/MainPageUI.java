@@ -75,10 +75,21 @@ public class MainPageUI implements UserInterface {
     }
 
     private void fillCategories() {
-        Core.gCore().dynEngine.container.getPrioritizedCategoryList().forEach(shopCategory -> inventorySlots.forEach(((position, item) -> {
-            if (!item.isPlaceholder()) return;
-            inventory.setItem(position, shopCategory.icon().getBukkitItemStack());
-        })));
+        //Core.gCore().dynEngine.container.getPrioritizedCategoryList().forEach(shopCategory -> inventorySlots.forEach(((position, item) -> {
+        //    if (!item.isPlaceholder()) return;
+        //    inventory.setItem(position, shopCategory.icon().getBukkitItemStack());
+        //})));
+        Core.gCore().dynEngine.container.getPrioritizedCategoryList().forEach(category -> {
+            int position = 0;
+            for (UserInterfaceItem item : inventorySlots.values()) {
+                if (!item.isPlaceholder()) {
+                    position++;
+                    continue;
+                }
+                inventory.setItem(position, category.icon().getBukkitItemStack());
+                break;
+            }
+        });
     }
 
     private void fillBackground() {
