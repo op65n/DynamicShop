@@ -6,8 +6,6 @@ public interface UserInterface {
 
     void open(Player player);
 
-    void draw();
-    void clear();
     void update();
     void close();
 

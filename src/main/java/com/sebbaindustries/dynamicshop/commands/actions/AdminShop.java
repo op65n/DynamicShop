@@ -24,7 +24,6 @@ public class AdminShop extends CommandFactory implements ICmd, ITab {
 
     @Override
     public void execute(@NotNull CommandSender sender, @NotNull String[] args) {
-        Core.gCore().dynEngine.container.dataDump();
     }
 
     @Override

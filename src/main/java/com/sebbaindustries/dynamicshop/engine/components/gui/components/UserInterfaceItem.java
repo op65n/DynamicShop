@@ -20,7 +20,6 @@ public class UserInterfaceItem {
     public UIAction onRightClick;
     public UIAction onMiddleClick;
 
-
     public Material material;
     public List<String> lore = new ArrayList<>();
     public String displayName;
@@ -31,26 +30,45 @@ public class UserInterfaceItem {
     }
 
     public ItemStack getBukkitItemStack() {
+        // Create new ItemStack instance
         ItemStack iStack = new ItemStack(getBukkitMaterial());
-
+        // Setup meta
         ItemMeta iMeta = iStack.getItemMeta();
 
+        /*
+        Item lore
+         */
         List<String> coloredLore = new ArrayList<>();
         lore.forEach(loreLine -> coloredLore.add(Color.format(loreLine)));
-
         if (lore != null && !lore.isEmpty()) iMeta.setLore(coloredLore);
+
+        /*
+        Item display name
+         */
         if (displayName != null) iMeta.setDisplayName(Color.format(displayName));
-        if (enchants != null && !enchants.isEmpty()) enchants.forEach((enchant, val) -> iMeta.addEnchant(new EnchantmentWrapper(enchant), val, true));
+
+        /*
+        Item enchants
+         */
+        if (enchants != null && !enchants.isEmpty()) enchants.forEach(
+                (enchant, val) -> iMeta.addEnchant(new EnchantmentWrapper(enchant), val, true)
+        );
         
         iStack.setItemMeta(iMeta);
         return iStack;
     }
-    
+
+    /**
+     * Returns constructed and bukkit material, if material is not present it returns a boat.
+     *
+     * @return Bukkit Material
+     */
     public Material getBukkitMaterial() {
         if (material == null) {
-            PluginLogger.logSevere("Null item");
-            displayName = Color.format("&4&lERROR!");
-            lore.add(Color.format("&cNull item / broken configuration"));
+            // Add some info if material is null.
+            displayName = Color.format("&4&lERROR, null Material instance");
+            lore.clear();
+            lore.add("Check configuration, if you cannot solve this error contact Nzd_1");
             return Material.ACACIA_BOAT;
         }
         return this.material;

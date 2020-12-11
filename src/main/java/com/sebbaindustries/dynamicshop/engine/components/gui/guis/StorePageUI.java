@@ -16,16 +16,7 @@ import java.util.HashMap;
 public class StorePageUI implements UserInterface {
 
     public StorePageUI(ShopCategory category) {
-        metaData = new UIMetaData();
-        String guiName = Core.gCore().dynEngine.shopUI.storePageCache.guiName;
-        metaData.setTitle(Color.format(guiName));
 
-        UserInterfaceItem background = Core.gCore().dynEngine.shopUI.storePageCache.background;
-        if (background != null) this.background = background;
-
-        inventorySlots = Core.gCore().dynEngine.shopUI.storePageCache.item;
-        sizeGUI();
-        inventory = Bukkit.createInventory(null, metaData.getRows()*9, metaData.getTitle());
     }
 
     private Player player;
@@ -34,56 +25,19 @@ public class StorePageUI implements UserInterface {
     private HashMap<Integer, UserInterfaceItem> inventorySlots;
     private UserInterfaceItem background = null;
 
-    private void sizeGUI() {
-        int size = Core.gCore().dynEngine.shopUI.storePageCache.size;
-        if (size == -1) {
-            int guiRows = 1;
-            for (int position : inventorySlots.keySet()) {
-                double potentialGUISize = Math.ceil((double) position / 9.0);
-                if (guiRows < potentialGUISize) guiRows = (int) potentialGUISize;
-            }
-            metaData.setRows(guiRows);
-            return;
-        }
-        metaData.setRows(size);
-    }
-
     @Override
     public void open(Player player) {
-        player.openInventory(inventory);
-        this.player = player;
-        Core.gCore().dynEngine.shopUI.invHolder.userInterfaceHashMap.put(player, this);
-    }
 
-    @Override
-    public void draw() {
-        Core.gCore().dynEngine.shopUI.invHolder.userInterfaceHashMap.put(player, this);
-    }
-
-    @Override
-    public void clear() {
-        Core.gCore().dynEngine.shopUI.invHolder.userInterfaceHashMap.put(player, this);
     }
 
     @Override
     public void update() {
-        inventory = Bukkit.createInventory(null, metaData.getRows()*9, metaData.getTitle());
-        fillBackground();
-        inventorySlots.forEach((position, item) -> inventory.setItem(position, item.getBukkitItemStack()));
-        Core.gCore().dynEngine.shopUI.invHolder.userInterfaceHashMap.put(player, this);
     }
 
-    private void fillBackground() {
-        if (this.background == null) return;
-        for (int i = 0; i < metaData.getRows()*9; i++) {
-            inventory.setItem(i, new ItemStack(background.getBukkitItemStack()));
-        }
-    }
 
     @Override
     public void close() {
-        player.closeInventory();
-        Core.gCore().dynEngine.shopUI.invHolder.userInterfaceHashMap.remove(player);
+
     }
 
     @Override

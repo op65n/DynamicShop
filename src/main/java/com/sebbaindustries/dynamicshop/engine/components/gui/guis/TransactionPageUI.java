@@ -12,16 +12,6 @@ public class TransactionPageUI implements UserInterface {
     }
 
     @Override
-    public void draw() {
-
-    }
-
-    @Override
-    public void clear() {
-
-    }
-
-    @Override
     public void update() {
 
     }

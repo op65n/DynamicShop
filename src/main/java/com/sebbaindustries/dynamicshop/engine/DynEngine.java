@@ -19,9 +19,7 @@ public class DynEngine {
         Core.gCore().message = new Toml().read(Core.gCore().fileManager.getFile(FileManager.PluginFiles.MESSAGES)).to(Message.class);
 
         this.container = new DynShopContainer();
-        if (this.container.successfulSetup) maintenance = false;
         this.shopUI = new DynShopUI();
-        if (this.shopUI.successfulSetup) maintenance = false;
 
         /*
         GUI listeners
@@ -29,14 +27,5 @@ public class DynEngine {
         Core.gCore().core.getServer().getPluginManager().registerEvents(new InventoryListeners(), Core.gCore().core);
     }
 
-    private boolean maintenance = true;
-
-    public boolean maintenanceMode() {
-        return this.maintenance;
-    }
-
-    public void setMaintenance(boolean maintenance) {
-        this.maintenance = maintenance;
-    }
 
 }

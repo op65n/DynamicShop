@@ -2,6 +2,7 @@ package com.sebbaindustries.dynamicshop.global;
 
 import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.engine.DynEngine;
+import com.sebbaindustries.dynamicshop.engine.components.maintainer.ComponentManager;
 import com.sebbaindustries.dynamicshop.log.PluginLogger;
 
 import java.util.logging.Level;
@@ -45,6 +46,7 @@ public class ServerPlugin {
         Core.gCore().dynEngine = new DynEngine();
         PluginLogger.log("Starting DynEngine instance!");
         Core.gCore().dynEngine.initialize();
+        ComponentManager.getInstance().logAll();
     }
 
     /**

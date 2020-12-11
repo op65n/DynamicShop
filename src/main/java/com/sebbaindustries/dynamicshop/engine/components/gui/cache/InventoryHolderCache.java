@@ -7,10 +7,22 @@ import java.util.HashMap;
 
 public class InventoryHolderCache {
 
-    public HashMap<Player, UserInterface> userInterfaceHashMap = new HashMap<>();
+    private static final HashMap<Player, UserInterface> userInterfaceHashMap = new HashMap<>();
 
-    public HashMap<Player, UserInterface> cache() {
+    public static HashMap<Player, UserInterface> cached() {
         return userInterfaceHashMap;
+    }
+
+    public static boolean isPresent(Player player) {
+        return userInterfaceHashMap.get(player) != null;
+    }
+
+    public static void removeIfPresent(Player player) {
+        if (isPresent(player)) userInterfaceHashMap.remove(player);
+    }
+
+    public static void cache(Player player, UserInterface ui) {
+        userInterfaceHashMap.put(player, ui);
     }
 
 }
