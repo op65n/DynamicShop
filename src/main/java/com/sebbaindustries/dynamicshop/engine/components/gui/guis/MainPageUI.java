@@ -41,7 +41,10 @@ public class MainPageUI implements UserInterface {
         player.openInventory(inventory);
         this.player = player;
         InventoryHolderCache.cache(player, this);
-        System.out.println(ObjectUtils.deserializeObjectToString(this));
+        System.out.println(ObjectUtils.deserializeObjectToString(metaData));
+        System.out.println(ObjectUtils.deserializeObjectToString(inventorySlots));
+        System.out.println(ObjectUtils.deserializeObjectToString(categories));
+        System.out.println(ObjectUtils.deserializeObjectToString(background));
     }
 
     @Override
