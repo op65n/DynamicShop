@@ -13,7 +13,6 @@ public class DynShopUI {
 
     public DynShopUI() {
         load();
-        invHolder = new InventoryHolderCache();
     }
 
     public void load() {
@@ -55,10 +54,19 @@ public class DynShopUI {
         }
     }
 
-    public UICache mainPageCache;
-    public UICache storePageCache;
-    public UICache transactionPageCache;
+    private UICache mainPageCache;
+    private UICache storePageCache;
+    private UICache transactionPageCache;
 
-    public InventoryHolderCache invHolder;
+    public UICache getMainPageCache() {
+        return mainPageCache;
+    }
 
+    public UICache getStorePageCache() {
+        return storePageCache;
+    }
+
+    public UICache getTransactionPageCache() {
+        return transactionPageCache;
+    }
 }

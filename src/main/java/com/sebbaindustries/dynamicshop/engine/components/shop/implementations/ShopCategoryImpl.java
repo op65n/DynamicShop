@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class ShopCategoryImpl implements ShopCategory {
 
-    int priority = -1;
+    private int priority = -1;
     private String name = "GenericShopName";
     private Icon icon;
     private HashMap<Integer, ShopItemImpl> items = new HashMap<>();

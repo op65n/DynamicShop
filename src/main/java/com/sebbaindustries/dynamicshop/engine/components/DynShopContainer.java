@@ -61,7 +61,7 @@ public class DynShopContainer {
         });
     }
 
-    public HashMap<UUID, ShopCategory> categoryHashMap = new HashMap<>();
+    private final HashMap<UUID, ShopCategory> categoryHashMap = new HashMap<>();
 
     /**
      * Returns sorted list of categories based on priority value, base priority

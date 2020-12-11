@@ -18,7 +18,7 @@ import java.util.HashMap;
 public class MainPageUI implements UserInterface {
 
     public MainPageUI() {
-        UICache cache = Core.gCore().dynEngine.shopUI.mainPageCache;
+        UICache cache = Core.gCore().dynEngine.shopUI.getMainPageCache();
         System.out.println(ObjectUtils.deserializeObjectToString(cache));
         metaData = UserInterfaceUtils.setupMetaData(cache);
         background = UserInterfaceUtils.setupBackground(cache);
@@ -46,7 +46,7 @@ public class MainPageUI implements UserInterface {
 
     @Override
     public void update() {
-        //inventory = UserInterfaceUtils.updateGUIFrame(metaData, inventorySlots, background);
+        inventory = UserInterfaceUtils.updateGUIFrame(metaData, inventorySlots, background);
         fillCategories();
         inventorySlots.forEach((position, item) -> inventory.setItem(position, item.getBukkitItemStack()));
         InventoryHolderCache.cache(player, this);
@@ -58,10 +58,10 @@ public class MainPageUI implements UserInterface {
             if (entry.getValue().isPlaceholder()) {
                 // Update item with ShopCategory data
                 UserInterfaceItem itm = entry.getValue();
-                itm.placeholder = false;
-                itm.material = category.icon().getIcon();
-                itm.lore = category.icon().getLore();
-                itm.displayName = category.getName();
+                itm.setPlaceholder(false);
+                itm.setMaterial(category.icon().getIcon());
+                itm.setLore(category.icon().getLore());
+                itm.setDisplayName(category.getName());
 
                 // Update item slot
                 inventorySlots.put(entry.getKey(), itm);
@@ -82,7 +82,7 @@ public class MainPageUI implements UserInterface {
     @Override
     public void onRightClick(int slot) {
         if (inventorySlots.get(slot) == null) return;
-        UIAction.Actions action = inventorySlots.get(slot).onRightClick.get();
+        UIAction.Actions action = inventorySlots.get(slot).getOnRightClick().get();
         if (action == null) return;
         switch (action) {
             case CLOSE -> close();
@@ -97,7 +97,7 @@ public class MainPageUI implements UserInterface {
     @Override
     public void onLeftClick(int slot) {
         if (inventorySlots.get(slot) == null) return;
-        UIAction.Actions action = inventorySlots.get(slot).onLeftClick.get();
+        UIAction.Actions action = inventorySlots.get(slot).getOnLeftClick().get();
         if (action == null) return;
         switch (action) {
             case CLOSE -> close();
