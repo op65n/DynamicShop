@@ -19,6 +19,7 @@ public class MainPageUI implements UserInterface {
 
     public MainPageUI() {
         UICache cache = Core.gCore().dynEngine.shopUI.mainPageCache;
+        System.out.println(ObjectUtils.deserializeObjectToString(cache));
         metaData = UserInterfaceUtils.setupMetaData(cache);
         background = UserInterfaceUtils.setupBackground(cache);
         inventorySlots = UserInterfaceUtils.setupBaseItemOrder(cache);
@@ -41,10 +42,6 @@ public class MainPageUI implements UserInterface {
         player.openInventory(inventory);
         this.player = player;
         InventoryHolderCache.cache(player, this);
-        System.out.println(ObjectUtils.deserializeObjectToString(metaData));
-        System.out.println(ObjectUtils.deserializeObjectToString(inventorySlots));
-        System.out.println(ObjectUtils.deserializeObjectToString(categories));
-        System.out.println(ObjectUtils.deserializeObjectToString(background));
     }
 
     @Override
