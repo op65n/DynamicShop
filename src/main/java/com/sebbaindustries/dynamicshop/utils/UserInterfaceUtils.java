@@ -13,17 +13,17 @@ public class UserInterfaceUtils {
 
     public static UIMetaData setupMetaData(UICache cache) {
         UIMetaData metaData = new UIMetaData();
-        metaData.setTitle(cache.guiName);
-        metaData.setRows(cache.size);
+        metaData.setTitle(cache.getGuiName());
+        metaData.setRows(cache.getSize());
         return metaData;
     }
 
     public static UserInterfaceItem setupBackground(UICache cache) {
-        return cache.background;
+        return cache.getBackground();
     }
 
     public static HashMap<Integer, UserInterfaceItem> setupBaseItemOrder(UICache cache) {
-        return (HashMap<Integer, UserInterfaceItem>) cache.item.clone();
+        return cache.getItem();
     }
 
     public static Inventory updateGUIFrame(UIMetaData metaData, HashMap<Integer, UserInterfaceItem> slots, UserInterfaceItem background) {
