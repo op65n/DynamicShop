@@ -84,6 +84,9 @@ public class MainPageUI implements UserInterface {
             inventorySlots.entrySet().stream().anyMatch(entry -> {
                 if (entry.getValue().isPlaceholder()) {
                     inventory.setItem(entry.getKey(), category.icon().getBukkitItemStack());
+                    var itm = entry.getValue();
+                    itm.placeholder = false;
+                    inventorySlots.put(entry.getKey(), itm);
                     return true;
                 }
                 return false;

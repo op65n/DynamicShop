@@ -13,7 +13,7 @@ import java.util.List;
 
 public class UserInterfaceItem {
 
-    private boolean placeholder = false;
+    public boolean placeholder = false;
 
     public UIAction onLeftClick;
     public UIAction onRightClick;
