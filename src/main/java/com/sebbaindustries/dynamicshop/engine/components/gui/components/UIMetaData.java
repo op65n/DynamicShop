@@ -3,7 +3,7 @@ package com.sebbaindustries.dynamicshop.engine.components.gui.components;
 public class UIMetaData {
 
     private int rows = 1;
-    private String title = "Generic GUI name";
+    private String title = "GUI name";
 
     public int getRows() {
         return rows;
