@@ -6,7 +6,6 @@ import com.sebbaindustries.dynamicshop.engine.components.shop.ShopItem;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class ShopCategoryImpl implements ShopCategory {
@@ -19,11 +18,6 @@ public class ShopCategoryImpl implements ShopCategory {
     @Override
     public int priority() {
         return this.priority;
-    }
-
-    @Override
-    public UUID getUUID() {
-        return UUID.nameUUIDFromBytes(name.getBytes());
     }
 
     @Override

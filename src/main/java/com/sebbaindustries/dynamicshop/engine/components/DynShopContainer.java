@@ -45,7 +45,7 @@ public class DynShopContainer {
                         new File(DirectoryStructure.Directory.CATEGORIES.path + fileName)
                 ).to(ShopCategoryImpl.class);
 
-                categoryHashMap.put(shopCategory.getUUID(), shopCategory);
+                categoryHashMap.put(fileName, shopCategory);
                 PluginLogger.log("File " + fileName + " loaded successfully!");
 
             } catch (Exception e) {
@@ -61,7 +61,7 @@ public class DynShopContainer {
         });
     }
 
-    private final HashMap<UUID, ShopCategory> categoryHashMap = new HashMap<>();
+    private final HashMap<String, ShopCategory> categoryHashMap = new HashMap<>();
 
     /**
      * Returns sorted list of categories based on priority value, base priority
