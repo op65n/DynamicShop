@@ -1,5 +1,4 @@
-guiName = "&3&lTrgovina"
-size = 3
+guiName = "&3&lStore"
 
 [background]
 material = "BLACK_STAINED_GLASS_PANE"
@@ -19,9 +18,9 @@ placeholder = true
 [item.12]
 placeholder = true
   [item.12.onLeftClick]
-  action = "CLOSE"
+  action = "OPEN"
   [item.12.onRightClick]
-  action = "CLOSE"
+  action = "OPEN"
   [item.12.onMiddleClick]
   action = "STATISTICS"
 
@@ -54,3 +53,18 @@ placeholder = true
   action = "OPEN"
   [item.15.onMiddleClick]
   action = "STATISTICS"
+
+# Closes the UI
+[item.23]
+material = "KNOWLEDGE_BOOK"
+displayName = " "
+lore = [
+  " &2&lExit shop ",
+  " "
+]
+  [item.23.onLeftClick]
+  action = "CLOSE"
+  [item.23.onRightClick]
+  action = "CLOSE"
+  [item.23.onMiddleClick]
+  action = "CLOSE"

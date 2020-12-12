@@ -30,7 +30,7 @@ public class MainPageUI implements UserInterface {
         InventoryHolderCache.cache(player, this);
     }
 
-    private Player player;
+    private final Player player;
     private Inventory inventory;
 
     private UIMetaData metaData;
@@ -53,7 +53,6 @@ public class MainPageUI implements UserInterface {
     }
 
     private void fillCategories() {
-        // TODO: check for category sorting, there seems to be a bug
         Core.gCore().dynEngine.getContainer().getPrioritizedCategoryList().forEach(category -> {
             for (int slot : inventorySlots.keySet()) {
                 UserInterfaceItem item = inventorySlots.get(slot);
@@ -80,35 +79,37 @@ public class MainPageUI implements UserInterface {
     public void onRightClick(int slot) {
         if (inventorySlots.get(slot) == null) return;
         UIAction.Actions action = inventorySlots.get(slot).getOnRightClick().get();
-        if (action == null) return;
-        switch (action) {
-            case CLOSE -> close();
-            case OPEN -> {
-                UserInterface ui = new StorePageUI(categories.get(slot));
-                ui.update();
-                ui.open();
-            }
-        }
+        preformClick(action, slot);
     }
 
     @Override
     public void onLeftClick(int slot) {
         if (inventorySlots.get(slot) == null) return;
         UIAction.Actions action = inventorySlots.get(slot).getOnLeftClick().get();
-        if (action == null) return;
-        switch (action) {
-            case CLOSE -> close();
-            case OPEN -> {
-                UserInterface ui = new StorePageUI(categories.get(slot));
-                ui.update();
-                ui.open();
-            }
-        }
+        preformClick(action, slot);
     }
 
     @Override
     public void onMiddleClick(int slot) {
+        if (inventorySlots.get(slot) == null) return;
+        UIAction.Actions action = inventorySlots.get(slot).getOnMiddleClick().get();
+        preformClick(action, slot);
+    }
 
+    private void preformClick(UIAction.Actions action, int slot) {
+        if (action == null) return;
+        switch (action) {
+            case CANCEL, CLOSE, BACK -> close();
+            case OPEN -> {
+                UserInterface ui = new StorePageUI(player, categories.get(slot));
+                // Changing placeholder to a category name
+                UIMetaData uiMetaData = ui.getMetaData();
+                uiMetaData.setTitle(uiMetaData.getTitle().replace("%category%", categories.get(slot).getName()));
+                ui.setMetaData(uiMetaData);
+                ui.update();
+                ui.open();
+            }
+        }
     }
 
     @Override

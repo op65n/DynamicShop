@@ -1,4 +1,4 @@
-guiName = "Stpre page"
+guiName = "&3&lStore &r&8-> %category%"
 
 [background]
 material = "BLACK_STAINED_GLASS_PANE"
@@ -70,6 +70,11 @@ placeholder = true
 # Back button, moves down dynamicly
 [item.31]
 material = "KNOWLEDGE_BOOK"
+displayName = " "
+lore = [
+  " &2&lBack ",
+  " "
+]
   [item.31.onLeftClick]
   action = "BACK"
   [item.31.onRightClick]

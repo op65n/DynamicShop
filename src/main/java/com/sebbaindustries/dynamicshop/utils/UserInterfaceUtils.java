@@ -13,7 +13,7 @@ public class UserInterfaceUtils {
 
     public static UIMetaData setupMetaData(UICache cache) {
         UIMetaData metaData = new UIMetaData();
-        metaData.setTitle(cache.getGuiName());
+        metaData.setTitle(Color.format(cache.getGuiName()));
         metaData.setRows(cache.getSize());
         return metaData;
     }
