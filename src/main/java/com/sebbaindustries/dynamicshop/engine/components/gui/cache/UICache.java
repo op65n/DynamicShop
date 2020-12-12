@@ -4,12 +4,19 @@ import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInte
 
 import java.util.HashMap;
 
-public class UICache {
+public class UICache implements Cloneable {
 
     private String guiName = "Generic GUI name";
     private Integer size = -1;
     private UserInterfaceItem background;
     private HashMap<Integer, UserInterfaceItem> item = new HashMap<>();
+
+    public UICache(UICache cache) {
+        this.guiName = cache.getGuiName();
+        this.size = cache.getSize();
+        this.background = cache.getBackground();
+        this.item = cache.getItem();
+    }
 
     public String getGuiName() {
         return guiName;

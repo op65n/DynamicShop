@@ -58,7 +58,7 @@ public class DynShopUI {
     private UICache transactionPageCache;
 
     public UICache getMainPageCache() {
-        return mainPageCache;
+        return new UICache(mainPageCache);
     }
 
     public UICache getStorePageCache() {
