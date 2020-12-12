@@ -59,21 +59,21 @@ public class StorePageUI implements UserInterface {
 
     @Override
     public void onRightClick(int slot) {
-        if (inventorySlots.get(slot) == null) return;
+        if (inventorySlots.get(slot) == null || inventorySlots.get(slot).isPlaceholder()) return;
         UIAction.Actions action = inventorySlots.get(slot).getOnRightClick().get();
         preformClick(action, slot);
     }
 
     @Override
     public void onLeftClick(int slot) {
-        if (inventorySlots.get(slot) == null) return;
+        if (inventorySlots.get(slot) == null || inventorySlots.get(slot).isPlaceholder()) return;
         UIAction.Actions action = inventorySlots.get(slot).getOnLeftClick().get();
         preformClick(action, slot);
     }
 
     @Override
     public void onMiddleClick(int slot) {
-        if (inventorySlots.get(slot) == null) return;
+        if (inventorySlots.get(slot) == null || inventorySlots.get(slot).isPlaceholder()) return;
         UIAction.Actions action = inventorySlots.get(slot).getOnMiddleClick().get();
         preformClick(action, slot);
     }

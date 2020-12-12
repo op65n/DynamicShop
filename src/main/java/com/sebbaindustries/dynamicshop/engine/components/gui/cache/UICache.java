@@ -6,8 +6,8 @@ import java.util.HashMap;
 
 public class UICache {
 
-    private final String guiName = "Generic GUI name";
-    private final Integer size = -1;
+    private String guiName = "Generic GUI name";
+    private Integer size = -1;
     private UserInterfaceItem background;
     private final HashMap<Integer, UserInterfaceItem> item = new HashMap<>();
 
