@@ -49,4 +49,9 @@ public class UICache implements Cloneable {
     public void setItem(HashMap<Integer, UserInterfaceItem> item) {
         this.item = item;
     }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }
