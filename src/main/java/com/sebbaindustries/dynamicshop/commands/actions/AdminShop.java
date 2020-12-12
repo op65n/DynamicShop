@@ -1,6 +1,5 @@
 package com.sebbaindustries.dynamicshop.commands.actions;
 
-import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.commands.components.CommandFactory;
 import com.sebbaindustries.dynamicshop.commands.components.ICmd;
 import com.sebbaindustries.dynamicshop.commands.components.ITab;

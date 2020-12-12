@@ -1,7 +1,5 @@
 package com.sebbaindustries.dynamicshop.engine.components;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.moandjiezana.toml.Toml;
 import com.rits.cloning.Cloner;
 import com.sebbaindustries.dynamicshop.Core;
@@ -9,8 +7,6 @@ import com.sebbaindustries.dynamicshop.engine.components.gui.cache.UICache;
 import com.sebbaindustries.dynamicshop.engine.components.maintainer.ComponentManager;
 import com.sebbaindustries.dynamicshop.log.PluginLogger;
 import com.sebbaindustries.dynamicshop.utils.FileManager;
-import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
-import org.apache.commons.lang.SerializationUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class DynShopUI {
@@ -48,12 +44,12 @@ public class DynShopUI {
             /*
             This produces a big fucking wall of text, but it works okay.
             */
-            PluginLogger.logWarn("Error happened while reading " + file.fileName  + " please check if you have setup the plugin correctly.");
+            PluginLogger.logWarn("Error happened while reading " + file.fileName + " please check if you have setup the plugin correctly.");
             e.printStackTrace();
-            PluginLogger.logWarn("Error happened while reading " + file.fileName  + " please check if you have setup the plugin correctly.");
+            PluginLogger.logWarn("Error happened while reading " + file.fileName + " please check if you have setup the plugin correctly.");
 
             // Add failed component to the list
-            ComponentManager.addComponent(this.getClass(),"Missing files in plugins/DynamicShop/shop/categories/ directory");
+            ComponentManager.addComponent(this.getClass(), "Missing files in plugins/DynamicShop/shop/categories/ directory");
             return null;
         }
     }

@@ -111,7 +111,7 @@ public class UserInterfaceItem {
         if (enchants != null && !enchants.isEmpty()) enchants.forEach(
                 (enchant, val) -> iMeta.addEnchant(new EnchantmentWrapper(enchant), val, true)
         );
-        
+
         iStack.setItemMeta(iMeta);
         return iStack;
     }
@@ -131,5 +131,5 @@ public class UserInterfaceItem {
         }
         return this.material;
     }
-    
+
 }

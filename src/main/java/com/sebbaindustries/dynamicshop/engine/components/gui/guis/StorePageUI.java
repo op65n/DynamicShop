@@ -1,15 +1,11 @@
 package com.sebbaindustries.dynamicshop.engine.components.gui.guis;
 
-import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIMetaData;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterface;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterfaceItem;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
-import com.sebbaindustries.dynamicshop.utils.Color;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 
@@ -23,7 +19,7 @@ public class StorePageUI implements UserInterface {
     private Inventory inventory;
     private UIMetaData metaData;
     private HashMap<Integer, UserInterfaceItem> inventorySlots;
-    private UserInterfaceItem background = null;
+    private final UserInterfaceItem background = null;
 
     @Override
     public void open(Player player) {

@@ -15,6 +15,7 @@ public final class StringParser {
     public StringParser(String string) {
         this.string = string;
     }
+
     public StringParser(String string, boolean applyStrictPattern) {
         this.string = string;
         if (applyStrictPattern) {

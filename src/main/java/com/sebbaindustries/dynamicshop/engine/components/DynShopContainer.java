@@ -25,7 +25,7 @@ public class DynShopContainer {
         if (files == null || files.isEmpty()) {
             PluginLogger.logWarn("Plugin is not configured, maintenance mode is turned on!");
             // Add failed component to the list
-            ComponentManager.addComponent(this.getClass(),"Missing files in plugins/DynamicShop/shop/categories/ directory");
+            ComponentManager.addComponent(this.getClass(), "Missing files in plugins/DynamicShop/shop/categories/ directory");
             return;
         }
 
@@ -52,9 +52,9 @@ public class DynShopContainer {
                 /*
                 This produces a big fucking wall of text, but it works okay.
                  */
-                PluginLogger.logWarn("Error happened while reading " + fileName  + " please check if you have setup the plugin correctly.");
+                PluginLogger.logWarn("Error happened while reading " + fileName + " please check if you have setup the plugin correctly.");
                 e.printStackTrace();
-                PluginLogger.logWarn("Error happened while reading " + fileName  + " please check if you have setup the plugin correctly.");
+                PluginLogger.logWarn("Error happened while reading " + fileName + " please check if you have setup the plugin correctly.");
                 // Add failed component to the list
                 ComponentManager.addComponent(this.getClass(), "Error in plugins/DynamicShop/shop/categories/ directory inside " + fileName + "file");
             }

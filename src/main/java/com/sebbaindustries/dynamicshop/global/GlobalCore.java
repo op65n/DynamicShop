@@ -6,10 +6,7 @@ import com.sebbaindustries.dynamicshop.engine.DynEngine;
 import com.sebbaindustries.dynamicshop.engine.structure.DirectoryStructure;
 import com.sebbaindustries.dynamicshop.log.PluginLogger;
 import com.sebbaindustries.dynamicshop.messages.Message;
-import com.sebbaindustries.dynamicshop.settings.Configuration;
 import com.sebbaindustries.dynamicshop.utils.FileManager;
-
-import java.util.logging.Level;
 
 /**
  * @author SebbaIndustries

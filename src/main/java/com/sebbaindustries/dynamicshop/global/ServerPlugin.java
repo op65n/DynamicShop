@@ -5,8 +5,6 @@ import com.sebbaindustries.dynamicshop.engine.DynEngine;
 import com.sebbaindustries.dynamicshop.engine.components.maintainer.ComponentManager;
 import com.sebbaindustries.dynamicshop.log.PluginLogger;
 
-import java.util.logging.Level;
-
 /**
  * @author SebbaIndustries
  * @version 1.0

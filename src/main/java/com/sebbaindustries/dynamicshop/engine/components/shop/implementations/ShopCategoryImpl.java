@@ -11,10 +11,10 @@ import java.util.stream.Collectors;
 
 public class ShopCategoryImpl implements ShopCategory {
 
-    private int priority = -1;
-    private String name = "GenericShopName";
+    private final int priority = -1;
+    private final String name = "GenericShopName";
     private Icon icon;
-    private HashMap<Integer, ShopItemImpl> items = new HashMap<>();
+    private final HashMap<Integer, ShopItemImpl> items = new HashMap<>();
 
     @Override
     public int priority() {

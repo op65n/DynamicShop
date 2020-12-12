@@ -4,7 +4,7 @@ import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInte
 
 import java.util.HashMap;
 
-public class UICache  {
+public class UICache {
 
     private final String guiName = "Generic GUI name";
     private final Integer size = -1;

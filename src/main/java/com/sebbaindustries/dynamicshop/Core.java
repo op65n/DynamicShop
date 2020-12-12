@@ -2,11 +2,8 @@ package com.sebbaindustries.dynamicshop;
 
 import com.sebbaindustries.dynamicshop.global.GlobalCore;
 import com.sebbaindustries.dynamicshop.global.ServerPlugin;
-import com.sebbaindustries.dynamicshop.log.PluginLogger;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.logging.Logger;
 
 /**
  * <b>MIT License</b><br>

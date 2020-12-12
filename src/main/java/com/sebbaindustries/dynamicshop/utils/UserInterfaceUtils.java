@@ -37,11 +37,11 @@ public class UserInterfaceUtils {
             metaData.setRows(guiRows);
         }
 
-        Inventory inventory = Bukkit.createInventory(null, metaData.getRows()*9, metaData.getTitle());
+        Inventory inventory = Bukkit.createInventory(null, metaData.getRows() * 9, metaData.getTitle());
 
         // Background covering
         if (background == null) return inventory;
-        for (int i = 0; i < metaData.getRows()*9; i++) {
+        for (int i = 0; i < metaData.getRows() * 9; i++) {
             inventory.setItem(i, new ItemStack(background.getBukkitItemStack()));
         }
 

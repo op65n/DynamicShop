@@ -6,9 +6,13 @@ import java.util.UUID;
 public interface ShopCategory {
 
     int priority();
+
     UUID getUUID();
+
     String getName();
+
     Icon icon();
+
     HashMap<Integer, ShopItem> getItems();
 
 }

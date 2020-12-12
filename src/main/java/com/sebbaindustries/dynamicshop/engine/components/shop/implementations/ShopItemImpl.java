@@ -28,7 +28,7 @@ public class ShopItemImpl implements ShopItem {
 
     }
 
-    private Material material;
+    private final Material material;
     private Double buyPrice;
     private Double sellPrice;
     private List<String> lore;
@@ -44,7 +44,8 @@ public class ShopItemImpl implements ShopItem {
         ItemMeta iMeta = iStack.getItemMeta();
         if (lore != null) iMeta.setLore(lore);
         if (displayName != null) iMeta.setDisplayName(displayName);
-        if (enchants != null) enchants.forEach((enchant, val) -> iMeta.addEnchant(new EnchantmentWrapper(enchant), val, true));
+        if (enchants != null)
+            enchants.forEach((enchant, val) -> iMeta.addEnchant(new EnchantmentWrapper(enchant), val, true));
 
         iStack.setItemMeta(iMeta);
         return iStack;
