@@ -11,11 +11,7 @@ import org.jetbrains.annotations.NotNull;
 public class DynShopUI {
 
     public DynShopUI() {
-        load();
-    }
-
-    public void load() {
-
+        //load();
         ComponentManager.addComponent(this.getClass());
 
         /*
@@ -32,6 +28,26 @@ public class DynShopUI {
         transaction_page.toml
          */
         transactionPageCache = getUICacheFromToml(FileManager.PluginFiles.GUI_TRANSACTION_PAGE);
+    }
+
+    public void load() {
+
+        ComponentManager.addComponent(this.getClass());
+
+        /*
+        main_page.toml
+         */
+        //mainPageCache = getUICacheFromToml(FileManager.PluginFiles.GUI_MAIN_PAGE);
+
+        /*
+        store_page.toml
+         */
+        //storePageCache = getUICacheFromToml(FileManager.PluginFiles.GUI_STORE_PAGE);
+
+        /*
+        transaction_page.toml
+         */
+        //transactionPageCache = getUICacheFromToml(FileManager.PluginFiles.GUI_TRANSACTION_PAGE);
 
     }
 
@@ -53,12 +69,17 @@ public class DynShopUI {
         }
     }
 
-    private UICache mainPageCache;
-    private UICache storePageCache;
-    private UICache transactionPageCache;
+    private final UICache mainPageCache;
+    private final UICache storePageCache;
+    private final UICache transactionPageCache;
 
     public UICache getMainPageCache() {
-        return new UICache(mainPageCache);
+        try {
+            return (UICache) mainPageCache.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public UICache getStorePageCache() {
