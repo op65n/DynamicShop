@@ -37,7 +37,7 @@ public class UserInterfaceUtils {
             metaData.setRows(guiRows);
         }
 
-        Inventory inventory = Bukkit.createInventory(null, metaData.getRows() * 9, metaData.getTitle());
+        Inventory inventory = Bukkit.createInventory(null, metaData.getRows() * 9, Color.format(metaData.getTitle()));
 
         // Background covering
         if (background == null) return inventory;

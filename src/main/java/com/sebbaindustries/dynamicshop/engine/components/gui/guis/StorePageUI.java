@@ -18,6 +18,7 @@ public class StorePageUI implements UserInterface {
 
     public StorePageUI(Player player, ShopCategory category) {
         this.player = player;
+        this.category = category;
 
         UICache cache = Core.gCore().dynEngine.getShopUI().getStorePageCache();
         metaData = UserInterfaceUtils.setupMetaData(cache);
@@ -32,6 +33,7 @@ public class StorePageUI implements UserInterface {
     private final Player player;
     private Inventory inventory;
 
+    private final ShopCategory category;
     private UIMetaData metaData;
     private final HashMap<Integer, UserInterfaceItem> inventorySlots;
     private final UserInterfaceItem background;
@@ -45,9 +47,24 @@ public class StorePageUI implements UserInterface {
     @Override
     public void update() {
         inventory = UserInterfaceUtils.updateGUIFrame(metaData, inventorySlots, background);
-
+        fillItems();
         inventorySlots.forEach((position, item) -> inventory.setItem(position, item.getBukkitItemStack()));
         InventoryHolderCache.cache(player, this);
+    }
+
+    private void fillItems() {
+        category.getItems().forEach((priority, item) -> {
+            for (int slot : inventorySlots.keySet()) {
+                UserInterfaceItem uiItem = inventorySlots.get(slot);
+                if (!uiItem.isPlaceholder()) continue;
+                uiItem.setPlaceholder(false);
+                uiItem.setMaterial(item.getBukkitMaterial());
+                uiItem.setDisplayName(item.getBukkitMaterial().name());
+
+                inventorySlots.put(slot, uiItem);
+                break;
+            }
+        });
     }
 
 
