@@ -3,6 +3,7 @@ package com.sebbaindustries.dynamicshop.engine.components;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.moandjiezana.toml.Toml;
+import com.rits.cloning.Cloner;
 import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.engine.components.gui.cache.UICache;
 import com.sebbaindustries.dynamicshop.engine.components.maintainer.ComponentManager;
@@ -62,8 +63,9 @@ public class DynShopUI {
     private UICache transactionPageCache;
 
     public UICache getMainPageCache() {
-        Gson gson = new Gson();
-        return gson.fromJson(gson.toJson(mainPageCache), UICache.class);
+        //Gson gson = new Gson();
+        //return gson.fromJson(gson.toJson(mainPageCache), UICache.class);
+        return new Cloner().deepClone(mainPageCache);
     }
 
     public UICache getStorePageCache() {
