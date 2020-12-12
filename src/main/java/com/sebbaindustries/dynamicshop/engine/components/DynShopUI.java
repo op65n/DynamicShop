@@ -1,5 +1,7 @@
 package com.sebbaindustries.dynamicshop.engine.components;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.moandjiezana.toml.Toml;
 import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.engine.components.gui.cache.UICache;
@@ -60,7 +62,8 @@ public class DynShopUI {
     private UICache transactionPageCache;
 
     public UICache getMainPageCache() {
-        return ObjectUtils.getClassFromGson(ObjectUtils.deserializeObjectToString(mainPageCache), UICache.class);
+        Gson gson = new Gson();
+        return gson.fromJson(gson.toJson(mainPageCache), UICache.class);
     }
 
     public UICache getStorePageCache() {

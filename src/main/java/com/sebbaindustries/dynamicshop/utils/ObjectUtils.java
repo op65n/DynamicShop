@@ -3,6 +3,7 @@ package com.sebbaindustries.dynamicshop.utils;
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 import com.sebbaindustries.dynamicshop.Core;
+import com.sebbaindustries.dynamicshop.engine.components.gui.cache.UICache;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -31,6 +32,14 @@ public final class ObjectUtils {
      */
     public static String deserializeObjectToString(final Object object) {
         return gson.toJson(object);
+    }
+
+    public static JsonElement deserializeObjectToJson(final Object object) {
+        return gson.toJsonTree(object);
+    }
+
+    public static <T> T getClassFromJson(JsonElement object, Class<T> cl) {
+        return gson.fromJson(object, cl);
     }
 
 
