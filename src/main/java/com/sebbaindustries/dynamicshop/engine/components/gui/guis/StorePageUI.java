@@ -19,7 +19,7 @@ public class StorePageUI implements UserInterface {
     public StorePageUI(Player player, ShopCategory category) {
         this.player = player;
 
-        UICache cache = Core.gCore().dynEngine.getShopUI().getMainPageCache();
+        UICache cache = Core.gCore().dynEngine.getShopUI().getStorePageCache();
         metaData = UserInterfaceUtils.setupMetaData(cache);
         background = UserInterfaceUtils.setupBackground(cache);
         inventorySlots = UserInterfaceUtils.setupBaseItemOrder(cache);

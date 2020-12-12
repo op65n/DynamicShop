@@ -55,16 +55,16 @@ placeholder = true
   action = "STATISTICS"
 
 # Closes the UI
-[item.23]
+[item.22]
 material = "KNOWLEDGE_BOOK"
 displayName = " "
 lore = [
   " &2&lExit shop ",
   " "
 ]
-  [item.23.onLeftClick]
+  [item.22.onLeftClick]
   action = "CLOSE"
-  [item.23.onRightClick]
+  [item.22.onRightClick]
   action = "CLOSE"
-  [item.23.onMiddleClick]
+  [item.22.onMiddleClick]
   action = "CLOSE"
