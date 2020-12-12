@@ -19,28 +19,20 @@ public class MainPageUI implements UserInterface {
 
     public MainPageUI() {
         UICache cache = Core.gCore().dynEngine.getShopUI().getMainPageCache();
-        // TODO: remove me!
-        System.out.println("MainPageUI 1");
-        System.out.println(ObjectUtils.deserializeObjectToString(cache));
         metaData = UserInterfaceUtils.setupMetaData(cache);
         background = UserInterfaceUtils.setupBackground(cache);
         inventorySlots = UserInterfaceUtils.setupBaseItemOrder(cache);
         inventory = UserInterfaceUtils.updateGUIFrame(metaData, inventorySlots, background);
-        // TODO: remove me!
-        System.out.println("MainPageUI 2");
-        System.out.println(ObjectUtils.deserializeObjectToString(Core.gCore().dynEngine.getShopUI().getMainPageCache()));
+
         // Update/flush cache
         InventoryHolderCache.cache(player, this);
-        // TODO: remove me!
-        System.out.println("MainPageUI 3");
-        System.out.println(ObjectUtils.deserializeObjectToString(Core.gCore().dynEngine.getShopUI().getMainPageCache()));
     }
 
     private Player player;
     private Inventory inventory;
 
     private UIMetaData metaData;
-    private HashMap<Integer, UserInterfaceItem> inventorySlots;
+    private final HashMap<Integer, UserInterfaceItem> inventorySlots;
     private final HashMap<Integer, ShopCategory> categories = new HashMap<>();
     private final UserInterfaceItem background;
 
@@ -49,25 +41,22 @@ public class MainPageUI implements UserInterface {
         player.openInventory(inventory);
         this.player = player;
         InventoryHolderCache.cache(player, this);
-        // TODO: remove me!
-        System.out.println("MainPageUI 4");
-        System.out.println(ObjectUtils.deserializeObjectToString(Core.gCore().dynEngine.getShopUI().getMainPageCache()));
     }
 
     @Override
     public void update() {
+        // TODO fix this, pointer shit
         inventory = UserInterfaceUtils.updateGUIFrame(metaData, inventorySlots, background);
-        HashMap<Integer, UserInterfaceItem> inventorySlotsCopy = inventorySlots;
-        fillCategories();
-        inventorySlots.forEach((position, item) -> inventory.setItem(position, item.getBukkitItemStack()));
+        //fillCategories();
+        //inventorySlots.forEach((position, item) -> inventory.setItem(position, item.getBukkitItemStack()));
         InventoryHolderCache.cache(player, this);
-        inventorySlots = inventorySlotsCopy;
         // TODO: remove me!
         System.out.println("MainPageUI 5");
         System.out.println(ObjectUtils.deserializeObjectToString(Core.gCore().dynEngine.getShopUI().getMainPageCache()));
     }
 
     private void fillCategories() {
+        // TODO fix this, pointer shit
         // Category list is already ordered when we get it
         Core.gCore().dynEngine.getContainer().getPrioritizedCategoryList().forEach(category -> inventorySlots.entrySet().stream().anyMatch(entry -> {
             if (entry.getValue().isPlaceholder()) {
@@ -95,9 +84,6 @@ public class MainPageUI implements UserInterface {
     public void close() {
         player.closeInventory();
         InventoryHolderCache.removeIfPresent(player);
-        // TODO: remove me!
-        System.out.println("MainPageUI 7");
-        System.out.println(ObjectUtils.deserializeObjectToString(Core.gCore().dynEngine.getShopUI().getMainPageCache()));
     }
 
     @Override
