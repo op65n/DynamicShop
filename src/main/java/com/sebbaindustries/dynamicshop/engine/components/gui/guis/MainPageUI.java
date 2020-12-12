@@ -8,7 +8,6 @@ import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIMetaDa
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterface;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterfaceItem;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
-import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 import com.sebbaindustries.dynamicshop.utils.UserInterfaceUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -17,7 +16,7 @@ import java.util.HashMap;
 
 public class MainPageUI implements UserInterface {
 
-    public MainPageUI() {
+    public MainPageUI(Player player) {
         UICache cache = Core.gCore().dynEngine.getShopUI().getMainPageCache();
         metaData = UserInterfaceUtils.setupMetaData(cache);
         background = UserInterfaceUtils.setupBackground(cache);
@@ -37,26 +36,20 @@ public class MainPageUI implements UserInterface {
     private final UserInterfaceItem background;
 
     @Override
-    public void open(Player player) {
+    public void open() {
         player.openInventory(inventory);
-        this.player = player;
         InventoryHolderCache.cache(player, this);
     }
 
     @Override
     public void update() {
-        // TODO fix this, pointer shit
         inventory = UserInterfaceUtils.updateGUIFrame(metaData, inventorySlots, background);
         fillCategories();
         inventorySlots.forEach((position, item) -> inventory.setItem(position, item.getBukkitItemStack()));
         InventoryHolderCache.cache(player, this);
-        // TODO: remove me!
-        System.out.println("MainPageUI 5");
-        System.out.println(ObjectUtils.deserializeObjectToString(Core.gCore().dynEngine.getShopUI().getMainPageCache()));
     }
 
     private void fillCategories() {
-        // TODO fix this, pointer shit
         // Category list is already ordered when we get it
         Core.gCore().dynEngine.getContainer().getPrioritizedCategoryList().forEach(category -> inventorySlots.entrySet().stream().anyMatch(entry -> {
             if (entry.getValue().isPlaceholder()) {
@@ -75,9 +68,6 @@ public class MainPageUI implements UserInterface {
             }
             return false;
         }));
-        // TODO: remove me!
-        System.out.println("MainPageUI 6");
-        System.out.println(ObjectUtils.deserializeObjectToString(Core.gCore().dynEngine.getShopUI().getMainPageCache()));
     }
 
     @Override
@@ -96,7 +86,7 @@ public class MainPageUI implements UserInterface {
             case OPEN -> {
                 UserInterface ui = new StorePageUI(categories.get(slot));
                 ui.update();
-                ui.open(player);
+                ui.open();
             }
         }
     }
@@ -111,7 +101,7 @@ public class MainPageUI implements UserInterface {
             case OPEN -> {
                 UserInterface ui = new StorePageUI(categories.get(slot));
                 ui.update();
-                ui.open(player);
+                ui.open();
             }
         }
     }

@@ -33,9 +33,9 @@ public class Shop extends CommandFactory implements ICmd, ITab {
             return;
         }
         Player player = (Player) sender;
-        UserInterface ui = new MainPageUI();
+        UserInterface ui = new MainPageUI(player);
         ui.update();
-        ui.open(player);
+        ui.open();
     }
 
     @Override

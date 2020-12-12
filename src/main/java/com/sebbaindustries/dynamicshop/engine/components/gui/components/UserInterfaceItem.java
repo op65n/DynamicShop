@@ -27,18 +27,6 @@ public class UserInterfaceItem {
         this.placeholder = placeholder;
     }
 
-    public void setOnLeftClick(UIAction onLeftClick) {
-        this.onLeftClick = onLeftClick;
-    }
-
-    public void setOnRightClick(UIAction onRightClick) {
-        this.onRightClick = onRightClick;
-    }
-
-    public void setOnMiddleClick(UIAction onMiddleClick) {
-        this.onMiddleClick = onMiddleClick;
-    }
-
     public void setMaterial(Material material) {
         this.material = material;
     }

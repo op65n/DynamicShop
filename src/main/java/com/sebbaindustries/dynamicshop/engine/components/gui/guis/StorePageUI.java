@@ -22,7 +22,7 @@ public class StorePageUI implements UserInterface {
     private final UserInterfaceItem background = null;
 
     @Override
-    public void open(Player player) {
+    public void open() {
 
     }
 
