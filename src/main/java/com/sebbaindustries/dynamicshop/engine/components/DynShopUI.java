@@ -61,18 +61,20 @@ public class DynShopUI {
     private UICache mainPageCache;
     private UICache storePageCache;
     private UICache transactionPageCache;
+    private final Cloner cloner = new Cloner();
 
     public UICache getMainPageCache() {
-        //Gson gson = new Gson();
-        //return gson.fromJson(gson.toJson(mainPageCache), UICache.class);
-        return new Cloner().deepClone(mainPageCache);
+        // Java is retarded so we are forced to to this shit...
+        return cloner.deepClone(mainPageCache);
     }
 
     public UICache getStorePageCache() {
-        return storePageCache;
+        // Java is retarded so we are forced to to this shit...
+        return cloner.deepClone(storePageCache);
     }
 
     public UICache getTransactionPageCache() {
-        return transactionPageCache;
+        // Java is retarded so we are forced to to this shit...
+        return cloner.deepClone(transactionPageCache);
     }
 }
