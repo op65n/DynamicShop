@@ -17,6 +17,8 @@ import java.util.HashMap;
 public class MainPageUI implements UserInterface {
 
     public MainPageUI(Player player) {
+        this.player = player;
+
         UICache cache = Core.gCore().dynEngine.getShopUI().getMainPageCache();
         metaData = UserInterfaceUtils.setupMetaData(cache);
         background = UserInterfaceUtils.setupBackground(cache);
