@@ -2,10 +2,9 @@ package com.sebbaindustries.dynamicshop.engine.components.gui.cache;
 
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterfaceItem;
 
-import java.io.Serializable;
 import java.util.HashMap;
 
-public class UICache implements Serializable {
+public class UICache  {
 
     private final String guiName = "Generic GUI name";
     private final Integer size = -1;

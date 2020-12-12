@@ -6,6 +6,7 @@ import com.sebbaindustries.dynamicshop.engine.components.gui.cache.UICache;
 import com.sebbaindustries.dynamicshop.engine.components.maintainer.ComponentManager;
 import com.sebbaindustries.dynamicshop.log.PluginLogger;
 import com.sebbaindustries.dynamicshop.utils.FileManager;
+import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 import org.apache.commons.lang.SerializationUtils;
 import org.jetbrains.annotations.NotNull;
 
@@ -59,7 +60,7 @@ public class DynShopUI {
     private UICache transactionPageCache;
 
     public UICache getMainPageCache() {
-        return (UICache) SerializationUtils.clone(mainPageCache);
+        return ObjectUtils.getClassFromGson(ObjectUtils.deserializeObjectToString(mainPageCache), UICache.class);
     }
 
     public UICache getStorePageCache() {
