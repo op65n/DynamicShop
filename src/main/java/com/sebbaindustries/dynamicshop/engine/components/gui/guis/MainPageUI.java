@@ -8,6 +8,7 @@ import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIMetaDa
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterface;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterfaceItem;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
+import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 import com.sebbaindustries.dynamicshop.utils.UserInterfaceUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -70,6 +71,7 @@ public class MainPageUI implements UserInterface {
         //    }
         //    return false;
         //}));
+        System.out.println(ObjectUtils.deserializeObjectToString(Core.gCore().dynEngine.getContainer().getPrioritizedCategoryList()));
         Core.gCore().dynEngine.getContainer().getPrioritizedCategoryList().forEach(category -> {
             for (int slot : inventorySlots.keySet()) {
                 UserInterfaceItem item = inventorySlots.get(slot);
