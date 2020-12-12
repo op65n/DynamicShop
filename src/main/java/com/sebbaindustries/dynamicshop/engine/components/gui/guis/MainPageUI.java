@@ -48,7 +48,7 @@ public class MainPageUI implements UserInterface {
         // TODO fix this, pointer shit
         inventory = UserInterfaceUtils.updateGUIFrame(metaData, inventorySlots, background);
         //fillCategories();
-        //inventorySlots.forEach((position, item) -> inventory.setItem(position, item.getBukkitItemStack()));
+        inventorySlots.forEach((position, item) -> inventory.setItem(position, item.getBukkitItemStack()));
         InventoryHolderCache.cache(player, this);
         // TODO: remove me!
         System.out.println("MainPageUI 5");
