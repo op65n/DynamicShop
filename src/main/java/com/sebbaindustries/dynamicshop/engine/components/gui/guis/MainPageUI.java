@@ -53,23 +53,37 @@ public class MainPageUI implements UserInterface {
 
     private void fillCategories() {
         // Category list is already ordered when we get it
-        Core.gCore().dynEngine.getContainer().getPrioritizedCategoryList().forEach(category -> inventorySlots.entrySet().stream().anyMatch(entry -> {
-            if (entry.getValue().isPlaceholder()) {
-                // Update item with ShopCategory data
-                UserInterfaceItem itm = entry.getValue();
-                itm.setPlaceholder(false);
-                itm.setMaterial(category.icon().getIcon());
-                itm.setLore(category.icon().getLore());
-                itm.setDisplayName(category.getName());
+        //Core.gCore().dynEngine.getContainer().getPrioritizedCategoryList().forEach(category -> inventorySlots.entrySet().stream().anyMatch(entry -> {
+        //    if (entry.getValue().isPlaceholder()) {
+        //        // Update item with ShopCategory data
+        //        UserInterfaceItem itm = entry.getValue();
+        //        itm.setPlaceholder(false);
+        //        itm.setMaterial(category.icon().getIcon());
+        //        itm.setLore(category.icon().getLore());
+        //        itm.setDisplayName(category.getName());
 
-                // Update item slot
-                inventorySlots.put(entry.getKey(), itm);
-                // categories are put into another hashmap for quick access
-                categories.put(entry.getKey(), category);
-                return true;
+        //        // Update item slot
+        //        inventorySlots.put(entry.getKey(), itm);
+        //        // categories are put into another hashmap for quick access
+        //        categories.put(entry.getKey(), category);
+        //        return true;
+        //    }
+        //    return false;
+        //}));
+        Core.gCore().dynEngine.getContainer().getPrioritizedCategoryList().forEach(category -> {
+            for (int slot : inventorySlots.keySet()) {
+                UserInterfaceItem item = inventorySlots.get(slot);
+                if (!item.isPlaceholder()) continue;
+                item.setPlaceholder(false);
+                item.setMaterial(category.icon().getIcon());
+                item.setLore(category.icon().getLore());
+                item.setDisplayName(category.getName());
+
+                inventorySlots.put(slot, item);
+                categories.put(slot, category);
+                break;
             }
-            return false;
-        }));
+        });
     }
 
     @Override
