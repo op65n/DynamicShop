@@ -18,12 +18,7 @@ import java.util.HashMap;
 public class MainPageUI implements UserInterface {
 
     public MainPageUI() {
-        UICache cache = null;
-        try {
-            cache = (UICache) Core.gCore().dynEngine.getShopUI().getMainPageCache().clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-        }
+        UICache cache = Core.gCore().dynEngine.getShopUI().getMainPageCache();
         metaData = UserInterfaceUtils.setupMetaData(cache);
         background = UserInterfaceUtils.setupBackground(cache);
         inventorySlots = UserInterfaceUtils.setupBaseItemOrder(cache);

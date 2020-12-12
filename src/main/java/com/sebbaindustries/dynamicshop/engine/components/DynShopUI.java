@@ -6,12 +6,17 @@ import com.sebbaindustries.dynamicshop.engine.components.gui.cache.UICache;
 import com.sebbaindustries.dynamicshop.engine.components.maintainer.ComponentManager;
 import com.sebbaindustries.dynamicshop.log.PluginLogger;
 import com.sebbaindustries.dynamicshop.utils.FileManager;
+import org.apache.commons.lang.SerializationUtils;
 import org.jetbrains.annotations.NotNull;
 
 public class DynShopUI {
 
     public DynShopUI() {
-        //load();
+        load();
+    }
+
+    public void load() {
+
         ComponentManager.addComponent(this.getClass());
 
         /*
@@ -28,26 +33,6 @@ public class DynShopUI {
         transaction_page.toml
          */
         transactionPageCache = getUICacheFromToml(FileManager.PluginFiles.GUI_TRANSACTION_PAGE);
-    }
-
-    public void load() {
-
-        ComponentManager.addComponent(this.getClass());
-
-        /*
-        main_page.toml
-         */
-        //mainPageCache = getUICacheFromToml(FileManager.PluginFiles.GUI_MAIN_PAGE);
-
-        /*
-        store_page.toml
-         */
-        //storePageCache = getUICacheFromToml(FileManager.PluginFiles.GUI_STORE_PAGE);
-
-        /*
-        transaction_page.toml
-         */
-        //transactionPageCache = getUICacheFromToml(FileManager.PluginFiles.GUI_TRANSACTION_PAGE);
 
     }
 
@@ -69,17 +54,12 @@ public class DynShopUI {
         }
     }
 
-    private final UICache mainPageCache;
-    private final UICache storePageCache;
-    private final UICache transactionPageCache;
+    private UICache mainPageCache;
+    private UICache storePageCache;
+    private UICache transactionPageCache;
 
     public UICache getMainPageCache() {
-        try {
-            return (UICache) mainPageCache.clone();
-        } catch (CloneNotSupportedException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return (UICache) SerializationUtils.clone(mainPageCache);
     }
 
     public UICache getStorePageCache() {

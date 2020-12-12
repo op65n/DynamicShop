@@ -2,9 +2,10 @@ package com.sebbaindustries.dynamicshop.engine.components.gui.cache;
 
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterfaceItem;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
-public class UICache implements Cloneable {
+public class UICache implements Serializable {
 
     private final String guiName = "Generic GUI name";
     private final Integer size = -1;
@@ -26,10 +27,5 @@ public class UICache implements Cloneable {
 
     public HashMap<Integer, UserInterfaceItem> getItem() {
         return item;
-    }
-
-    @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
     }
 }
