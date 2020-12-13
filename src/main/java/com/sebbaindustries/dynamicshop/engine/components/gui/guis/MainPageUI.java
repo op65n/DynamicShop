@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public class MainPageUI implements UserInterface {
 
@@ -34,7 +35,7 @@ public class MainPageUI implements UserInterface {
     private Inventory inventory;
 
     private UIMetaData metaData;
-    private final HashMap<Integer, UserInterfaceItem> inventorySlots;
+    private final Map<Integer, UserInterfaceItem> inventorySlots;
     private final HashMap<Integer, ShopCategory> categories = new HashMap<>();
     private final UserInterfaceItem background;
 

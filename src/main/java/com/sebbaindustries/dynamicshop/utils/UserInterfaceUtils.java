@@ -8,6 +8,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class UserInterfaceUtils {
 
@@ -22,11 +24,11 @@ public class UserInterfaceUtils {
         return cache.getBackground();
     }
 
-    public static HashMap<Integer, UserInterfaceItem> setupBaseItemOrder(UICache cache) {
-        return cache.getItem();
+    public static Map<Integer, UserInterfaceItem> setupBaseItemOrder(UICache cache) {
+        return new TreeMap<>(cache.getItem());
     }
 
-    public static Inventory updateGUIFrame(UIMetaData metaData, HashMap<Integer, UserInterfaceItem> slots, UserInterfaceItem background) {
+    public static Inventory updateGUIFrame(UIMetaData metaData, Map<Integer, UserInterfaceItem> slots, UserInterfaceItem background) {
         // Dynamic GUI sizing
         if (metaData.getRows() == -1) {
             int guiRows = 1;

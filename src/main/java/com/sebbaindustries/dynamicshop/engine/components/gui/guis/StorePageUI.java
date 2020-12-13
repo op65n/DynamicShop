@@ -38,7 +38,7 @@ public class StorePageUI implements UserInterface {
 
     private final ShopCategory category;
     private UIMetaData metaData;
-    private final HashMap<Integer, UserInterfaceItem> inventorySlots;
+    private final Map<Integer, UserInterfaceItem> inventorySlots;
     private final UserInterfaceItem background;
 
     @Override
