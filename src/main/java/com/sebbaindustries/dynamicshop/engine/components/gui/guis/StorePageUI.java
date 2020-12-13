@@ -9,6 +9,7 @@ import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInte
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterfaceItem;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopItem;
+import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 import com.sebbaindustries.dynamicshop.utils.UserInterfaceUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -27,7 +28,7 @@ public class StorePageUI implements UserInterface {
         metaData = UserInterfaceUtils.setupMetaData(cache);
         background = UserInterfaceUtils.setupBackground(cache);
         inventorySlots = UserInterfaceUtils.setupBaseItemOrder(cache);
-        resizeInventory();
+        System.out.println(ObjectUtils.deserializeObjectToString(inventorySlots));
         inventory = UserInterfaceUtils.updateGUIFrame(metaData, inventorySlots, background);
 
         // Update/flush cache
@@ -42,21 +43,6 @@ public class StorePageUI implements UserInterface {
     private Map<Integer, UserInterfaceItem> inventorySlots;
     private final UserInterfaceItem background;
 
-    private void resizeInventory() {
-        int shopItems = category.getItems().size();
-        int itemsUISize = (int) Math.ceil((double) shopItems / 9.0);
-        Map<Integer, UserInterfaceItem> newItemMap = new TreeMap<>();
-        for (int i = 1; i < itemsUISize; i++) {
-            copyMapValues(i).forEach(newItemMap::put);
-        }
-        inventorySlots = newItemMap;
-    }
-
-    private Map<Integer, UserInterfaceItem> copyMapValues(int place) {
-        Map<Integer, UserInterfaceItem> iSlots = new TreeMap<>();
-        inventorySlots.forEach((pos, itm) -> iSlots.put(pos*place, itm));
-        return iSlots;
-    }
 
     @Override
     public void open() {
