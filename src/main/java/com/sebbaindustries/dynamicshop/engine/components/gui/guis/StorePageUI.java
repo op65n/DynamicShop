@@ -28,6 +28,7 @@ public class StorePageUI implements UserInterface {
         metaData = UserInterfaceUtils.setupMetaData(cache);
         background = UserInterfaceUtils.setupBackground(cache);
         inventorySlots = UserInterfaceUtils.setupBaseItemOrder(cache);
+        scaleInventorySlots();
         System.out.println(ObjectUtils.deserializeObjectToString(inventorySlots));
         inventory = UserInterfaceUtils.updateGUIFrame(metaData, inventorySlots, background);
 
@@ -43,6 +44,23 @@ public class StorePageUI implements UserInterface {
     private Map<Integer, UserInterfaceItem> inventorySlots;
     private final UserInterfaceItem background;
 
+
+    private void scaleInventorySlots() {
+        int initialPlaces = 0;
+        for (Map.Entry<Integer, UserInterfaceItem> entry : inventorySlots.entrySet()) {
+            if (entry.getValue().isPlaceholder()) initialPlaces++;
+        }
+        if (initialPlaces < category.getItems().size()) {
+            Map<Integer, UserInterfaceItem> resized = new TreeMap<>(inventorySlots).descendingMap();
+            inventorySlots.clear();
+            resized.forEach((place, itm) -> {
+                if (itm.isPlaceholder()) {
+                    inventorySlots.put(place, itm);
+                }
+                inventorySlots.put(place+9, itm);
+            });
+        }
+    }
 
     @Override
     public void open() {
