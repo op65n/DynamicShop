@@ -8,11 +8,14 @@ import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIMetaDa
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterface;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterfaceItem;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
+import com.sebbaindustries.dynamicshop.engine.components.shop.ShopItem;
 import com.sebbaindustries.dynamicshop.utils.UserInterfaceUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class StorePageUI implements UserInterface {
 
@@ -53,7 +56,9 @@ public class StorePageUI implements UserInterface {
     }
 
     private void fillItems() {
-        category.getItems().forEach((priority, item) -> {
+        Map<Integer, ShopItem> sortedItemsMap = new TreeMap<>(category.getItems());
+
+        sortedItemsMap.forEach((priority, item) -> {
             for (int slot : inventorySlots.keySet()) {
                 UserInterfaceItem uiItem = inventorySlots.get(slot);
                 if (!uiItem.isPlaceholder()) continue;
