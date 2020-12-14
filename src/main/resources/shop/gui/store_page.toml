@@ -13,26 +13,26 @@ placeholder = true
   [item.10.onMiddleClick]
   action = "STATISTICS"
 
-[item.25]
+[item.34]
 placeholder = true
-  [item.25.onLeftClick]
+  [item.34.onLeftClick]
   action = "BUY"
-  [item.25.onRightClick]
+  [item.34.onRightClick]
   action = "SELL"
-  [item.25.onMiddleClick]
+  [item.34.onMiddleClick]
   action = "STATISTICS"
 
 # Back button, moves down dynamicly
-[item.40]
+[item.49]
 material = "KNOWLEDGE_BOOK"
 displayName = " "
 lore = [
   " &2&lBack ",
   " "
 ]
-  [item.40.onLeftClick]
+  [item.49.onLeftClick]
   action = "BACK"
-  [item.40.onRightClick]
+  [item.49.onRightClick]
   action = "BACK"
-  [item.40.onMiddleClick]
+  [item.49.onMiddleClick]
   action = "BACK"

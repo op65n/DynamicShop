@@ -31,6 +31,7 @@ public class StorePageUI implements UserInterface {
         background = UserInterfaceUtils.setupBackground(cache);
         inventorySlots = UserInterfaceUtils.setupBaseItemOrder(cache);
         createShopArea();
+        resize();
         inventory = UserInterfaceUtils.updateGUIFrame(metaData, inventorySlots, background);
 
         // Update/flush cache
@@ -63,18 +64,17 @@ public class StorePageUI implements UserInterface {
         Cloner cloner = new Cloner();
 
         int width = Math.abs((int) (Math.floor((double) (pos2+1) / (double) 9)) - (int) (Math.floor((double) (pos1+1) / (double) 9))) + 1;
-
         int length = Math.abs(pos2 - ((width-1)*9)) + 1;
-
-        System.out.println("pos1: " + pos1 + " pos2: " + pos2);
-        System.out.println("w:" + width + " l: " + length);
 
         for (int x = pos1; x < length; x++) {
             for (int y = 0; y < width; y++) {
-                System.out.println(x+(y*9));
                 inventorySlots.put(x+(y*9), cloner.deepClone(inventorySlots.get(pos1)));
             }
         }
+    }
+
+    private void resize() {
+
     }
 
     @Override
