@@ -30,8 +30,8 @@ public class StorePageUI implements UserInterface {
         metaData = UserInterfaceUtils.setupMetaData(cache);
         background = UserInterfaceUtils.setupBackground(cache);
         inventorySlots = UserInterfaceUtils.setupBaseItemOrder(cache);
+        createShopArea();
         inventory = UserInterfaceUtils.updateGUIFrame(metaData, inventorySlots, background);
-        metaData.setRows(inventory.getSize()/9);
 
         // Update/flush cache
         InventoryHolderCache.cache(player, this);
