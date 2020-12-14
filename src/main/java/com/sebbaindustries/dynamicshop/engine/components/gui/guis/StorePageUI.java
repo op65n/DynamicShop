@@ -64,7 +64,7 @@ public class StorePageUI implements UserInterface {
 
         int width = Math.abs((int) (Math.floor((double) (pos2+1) / (double) 9)) - (int) (Math.floor((double) (pos1+1) / (double) 9))) + 1;
 
-        int length = Math.abs(pos2 - ((width-1)*9));
+        int length = Math.abs(pos2 - ((width-1)*9)) + 1;
 
         System.out.println("pos1: " + pos1 + " pos2: " + pos2);
         System.out.println("w:" + width + " l: " + length);

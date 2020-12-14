@@ -15,11 +15,11 @@ placeholder = true
 
 [item.25]
 placeholder = true
-  [item.16.onLeftClick]
+  [item.25.onLeftClick]
   action = "BUY"
-  [item.16.onRightClick]
+  [item.25.onRightClick]
   action = "SELL"
-  [item.16.onMiddleClick]
+  [item.25.onMiddleClick]
   action = "STATISTICS"
 
 # Back button, moves down dynamicly
@@ -30,9 +30,9 @@ lore = [
   " &2&lBack ",
   " "
 ]
-  [item.31.onLeftClick]
+  [item.40.onLeftClick]
   action = "BACK"
-  [item.31.onRightClick]
+  [item.40.onRightClick]
   action = "BACK"
-  [item.31.onMiddleClick]
+  [item.40.onMiddleClick]
   action = "BACK"
