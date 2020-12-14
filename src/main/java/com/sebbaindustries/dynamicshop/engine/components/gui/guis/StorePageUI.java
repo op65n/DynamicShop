@@ -1,5 +1,6 @@
 package com.sebbaindustries.dynamicshop.engine.components.gui.guis;
 
+import com.rits.cloning.Cloner;
 import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.engine.components.gui.cache.InventoryHolderCache;
 import com.sebbaindustries.dynamicshop.engine.components.gui.cache.UICache;
@@ -14,7 +15,8 @@ import com.sebbaindustries.dynamicshop.utils.UserInterfaceUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -28,9 +30,8 @@ public class StorePageUI implements UserInterface {
         metaData = UserInterfaceUtils.setupMetaData(cache);
         background = UserInterfaceUtils.setupBackground(cache);
         inventorySlots = UserInterfaceUtils.setupBaseItemOrder(cache);
-        scaleInventorySlots();
-        System.out.println(ObjectUtils.deserializeObjectToString(inventorySlots));
         inventory = UserInterfaceUtils.updateGUIFrame(metaData, inventorySlots, background);
+        metaData.setRows(inventory.getSize()/9);
 
         // Update/flush cache
         InventoryHolderCache.cache(player, this);
@@ -45,20 +46,23 @@ public class StorePageUI implements UserInterface {
     private final UserInterfaceItem background;
 
 
-    private void scaleInventorySlots() {
-        int initialPlaces = 0;
-        for (Map.Entry<Integer, UserInterfaceItem> entry : inventorySlots.entrySet()) {
-            if (entry.getValue().isPlaceholder()) initialPlaces++;
-        }
-        if (initialPlaces < category.getItems().size()) {
-            Map<Integer, UserInterfaceItem> resized = new TreeMap<>(inventorySlots).descendingMap();
-            inventorySlots.clear();
-            resized.forEach((place, itm) -> {
-                if (itm.isPlaceholder()) {
-                    inventorySlots.put(place, itm);
+    private void createShopArea() {
+        int pos1 = -1;
+        int pos2 = -1;
+        for (Map.Entry<Integer, UserInterfaceItem> item : inventorySlots.entrySet()) {
+            if (item.getValue().isPlaceholder()) {
+                if (pos1 == -1) {
+                    pos1 = item.getKey();
+                    continue;
                 }
-                inventorySlots.put(place+9, itm);
-            });
+                pos2 = item.getKey();
+                break;
+            }
+        }
+
+        Cloner cloner = new Cloner();
+        for (int i = pos1; i < pos2; i++) {
+            inventorySlots.put(i, cloner.deepClone(inventorySlots.get(pos1)));
         }
     }
 
