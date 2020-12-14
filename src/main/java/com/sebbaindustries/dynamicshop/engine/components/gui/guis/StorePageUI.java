@@ -61,8 +61,14 @@ public class StorePageUI implements UserInterface {
         }
 
         Cloner cloner = new Cloner();
-        for (int i = pos1; i < pos2; i++) {
-            inventorySlots.put(i, cloner.deepClone(inventorySlots.get(pos1)));
+
+        int width = Math.abs((int) Math.ceil((double) pos2+1 / (double) 9) - (int) Math.ceil((double) pos1+1 / (double) 9)) + 1;
+        int length = Math.abs(pos2 - ((width-1)*9));
+
+        for (int i = pos1; i < length; i++) {
+            for (int a = 0; a < width; a++) {
+                inventorySlots.put(i*a, cloner.deepClone(inventorySlots.get(pos1)));
+            }
         }
     }
 
