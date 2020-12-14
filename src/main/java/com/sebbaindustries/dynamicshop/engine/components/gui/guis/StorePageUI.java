@@ -64,14 +64,15 @@ public class StorePageUI implements UserInterface {
 
         int width = Math.abs((int) (Math.floor((double) (pos2+1) / (double) 9)) - (int) (Math.floor((double) (pos1+1) / (double) 9))) + 1;
 
-        int length = Math.abs(pos2 - ((width-1)*9));
+        int length = Math.abs(pos1 - Math.abs(pos2 - ((width-1)*9)));
 
         System.out.println("pos1: " + pos1 + " pos2: " + pos2);
         System.out.println("w:" + width + " l: " + length);
 
-        for (int i = pos1; i < length; i++) {
-            for (int a = 0; a < width; a++) {
-                inventorySlots.put(i*a, cloner.deepClone(inventorySlots.get(pos1)));
+        for (int x = pos1; x < length; x++) {
+            for (int y = 0; y < width; y++) {
+                System.out.println(x+(y*9));
+                inventorySlots.put(x+(y*9), cloner.deepClone(inventorySlots.get(pos1)));
             }
         }
     }
