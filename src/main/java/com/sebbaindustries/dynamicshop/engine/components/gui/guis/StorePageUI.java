@@ -65,6 +65,9 @@ public class StorePageUI implements UserInterface {
         int width = Math.abs((int) Math.ceil((double) pos2+1 / (double) 9) - (int) Math.ceil((double) pos1+1 / (double) 9)) + 1;
         int length = Math.abs(pos2 - ((width-1)*9));
 
+        System.out.println("pos1: " + pos1 + " pos2: " + pos2);
+        System.out.println("w:" + width + " l: " + length);
+
         for (int i = pos1; i < length; i++) {
             for (int a = 0; a < width; a++) {
                 inventorySlots.put(i*a, cloner.deepClone(inventorySlots.get(pos1)));
