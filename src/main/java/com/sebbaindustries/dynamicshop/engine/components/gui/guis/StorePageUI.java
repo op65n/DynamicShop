@@ -62,7 +62,8 @@ public class StorePageUI implements UserInterface {
 
         Cloner cloner = new Cloner();
 
-        int width = Math.abs((int) (Math.floor((double) pos2+1 / (double) 9)) - (int) (Math.floor((double) pos1+1 / (double) 9))) + 1;
+        int width = Math.abs((int) (Math.floor((double) (pos2+1) / (double) 9)) - (int) (Math.floor((double) (pos1+1) / (double) 9))) + 1;
+
         int length = Math.abs(pos2 - ((width-1)*9));
 
         System.out.println("pos1: " + pos1 + " pos2: " + pos2);
