@@ -96,7 +96,7 @@ public class MainPageUI implements UserInterface {
             System.out.println("button");
             Button button = (Button) object;
 
-            switch (button.getOnRightClick()) {
+            switch (button.getOnClick()) {
                 case EXIT, CLOSE, BACK -> close();
             }
             return;
