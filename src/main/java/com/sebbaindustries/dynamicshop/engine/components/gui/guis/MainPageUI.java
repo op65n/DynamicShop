@@ -3,10 +3,8 @@ package com.sebbaindustries.dynamicshop.engine.components.gui.guis;
 import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.engine.components.gui.cache.InventoryHolderCache;
 import com.sebbaindustries.dynamicshop.engine.components.gui.cache.MainPageUICache;
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.Background;
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.Button;
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.Category;
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterface;
+import com.sebbaindustries.dynamicshop.engine.components.gui.components.*;
+import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
 import com.sebbaindustries.dynamicshop.utils.Color;
 import com.sebbaindustries.dynamicshop.utils.UserInterfaceUtils;
 import org.bukkit.Bukkit;
@@ -65,10 +63,19 @@ public class MainPageUI implements UserInterface {
         /*
         Categories
          */
+        int next = 0;
+        for (Category category : cache.getCategory()) {
+            ShopCategory shopCategory = Core.gCore().getEngine().instance().getContainer().getPrioritizedCategoryList().get(next);
+            inventory.setItem(category.getSlot(), new ItemStack(shopCategory.icon().getIcon()));
+            mappedInventory.put(category.getSlot(), shopCategory);
+        }
+
+
         cache.getCategory().forEach(category -> {
             inventory.setItem(category.getSlot(), UserInterfaceUtils.getBukkitItemStack(
                     background.getMaterial(), Color.format("&c&lMissing category"), Collections.singletonList("Please check the configuration!"))
             );
+
             mappedInventory.put(category.getSlot(), category);
         });
 
@@ -85,36 +92,76 @@ public class MainPageUI implements UserInterface {
     @Override
     public void onRightClick(int slot) {
         Object object = mappedInventory.get(slot);
-        if (object == null);
 
-        if (object instanceof Background) {
-            System.out.println("back");
+        if (object == null || object instanceof Background) {
             return;
         }
 
         if (object instanceof Button) {
-            System.out.println("button");
             Button button = (Button) object;
 
-            switch (button.getOnClick()) {
-                case EXIT, CLOSE, BACK -> close();
+            if (button.getOnRightClick() == ClickActions.NA) {
+                buttonHandler(button.getOnClick());
+                return;
             }
+            buttonHandler(button.getOnRightClick());
             return;
         }
 
         if (object instanceof Category) {
-            System.out.println("Cat");
         }
     }
 
     @Override
     public void onLeftClick(int slot) {
+        Object object = mappedInventory.get(slot);
 
+        if (object == null || object instanceof Background) {
+            return;
+        }
+
+        if (object instanceof Button) {
+            Button button = (Button) object;
+
+            if (button.getOnLeftClick() == ClickActions.NA) {
+                buttonHandler(button.getOnClick());
+                return;
+            }
+            buttonHandler(button.getOnLeftClick());
+            return;
+        }
+
+        if (object instanceof Category) {
+        }
     }
 
     @Override
     public void onMiddleClick(int slot) {
+        Object object = mappedInventory.get(slot);
 
+        if (object == null || object instanceof Background) {
+            return;
+        }
+
+        if (object instanceof Button) {
+            Button button = (Button) object;
+
+            if (button.getOnMiddleClick() == ClickActions.NA) {
+                buttonHandler(button.getOnClick());
+                return;
+            }
+            buttonHandler(button.getOnMiddleClick());
+            return;
+        }
+
+        if (object instanceof Category) {
+        }
+    }
+
+    void buttonHandler(ClickActions action) {
+        switch (action) {
+            case EXIT, CLOSE, BACK -> close();
+        }
     }
 
 }
