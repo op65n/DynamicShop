@@ -9,7 +9,7 @@ display = " "
 material = "KNOWLEDGE_BOOK"
 display = " "
 lore = [
-  "&f&l    ● &c&lClose shopf&l ●    &r",
+  "&f&l    ● &c&lClose shop&f&l ●    &r",
   " "
 ]
 onClick = "CLOSE"
