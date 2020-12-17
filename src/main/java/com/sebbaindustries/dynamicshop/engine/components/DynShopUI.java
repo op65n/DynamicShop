@@ -3,7 +3,8 @@ package com.sebbaindustries.dynamicshop.engine.components;
 import com.moandjiezana.toml.Toml;
 import com.rits.cloning.Cloner;
 import com.sebbaindustries.dynamicshop.Core;
-import com.sebbaindustries.dynamicshop.engine.components.gui.cache.UICache;
+import com.sebbaindustries.dynamicshop.engine.components.gui.cache.MainPageUICache;
+import com.sebbaindustries.dynamicshop.engine.components.gui.cache.StorePageUICache;
 import com.sebbaindustries.dynamicshop.engine.components.maintainer.ComponentManager;
 import com.sebbaindustries.dynamicshop.log.PluginLogger;
 import com.sebbaindustries.dynamicshop.utils.FileManager;
@@ -22,24 +23,24 @@ public class DynShopUI {
         /*
         main_page.toml
          */
-        mainPageCache = getUICacheFromToml(FileManager.PluginFiles.GUI_MAIN_PAGE);
+        mainPageCache = getUICacheFromToml(FileManager.PluginFiles.GUI_MAIN_PAGE, MainPageUICache.class);
 
         /*
         store_page.toml
          */
-        storePageCache = getUICacheFromToml(FileManager.PluginFiles.GUI_STORE_PAGE);
+        storePageCache = getUICacheFromToml(FileManager.PluginFiles.GUI_STORE_PAGE, StorePageUICache.class);
 
         /*
         transaction_page.toml
          */
-        transactionPageCache = getUICacheFromToml(FileManager.PluginFiles.GUI_TRANSACTION_PAGE);
+        //transactionPageCache = getUICacheFromToml(FileManager.PluginFiles.GUI_TRANSACTION_PAGE);
 
     }
 
-    private UICache getUICacheFromToml(final @NotNull FileManager.PluginFiles file) {
+    private <T> T getUICacheFromToml(final @NotNull FileManager.PluginFiles file, Class<T> tClass) {
         try {
             // Toml casting to a cache, works perfect to my knowledge
-            return new Toml().read(Core.gCore().fileManager.getFile(file)).to(UICache.class);
+            return new Toml().read(Core.gCore().getFileManager().getFile(file)).to(tClass);
         } catch (Exception e) {
             /*
             This produces a big fucking wall of text, but it works okay.
@@ -54,23 +55,23 @@ public class DynShopUI {
         }
     }
 
-    private UICache mainPageCache;
-    private UICache storePageCache;
-    private UICache transactionPageCache;
+    private MainPageUICache mainPageCache;
+    private StorePageUICache storePageCache;
+    //private UICache transactionPageCache;
     private final Cloner cloner = new Cloner();
 
-    public UICache getMainPageCache() {
+    public MainPageUICache getMainPageCache() {
         // Java is retarded so we are forced to to this shit...
         return cloner.deepClone(mainPageCache);
     }
 
-    public UICache getStorePageCache() {
+    public StorePageUICache getStorePageCache() {
         // Java is retarded so we are forced to to this shit...
         return cloner.deepClone(storePageCache);
     }
 
-    public UICache getTransactionPageCache() {
-        // Java is retarded so we are forced to to this shit...
-        return cloner.deepClone(transactionPageCache);
-    }
+    //public UICache getTransactionPageCache() {
+    //    // Java is retarded so we are forced to to this shit...
+    //    return cloner.deepClone(transactionPageCache);
+    //}
 }

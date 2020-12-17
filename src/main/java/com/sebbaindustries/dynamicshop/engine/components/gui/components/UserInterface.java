@@ -14,9 +14,4 @@ public interface UserInterface {
 
     void onMiddleClick(int slot);
 
-    void setMetaData(UIMetaData metaData);
-
-    UIMetaData getMetaData();
-
-
 }

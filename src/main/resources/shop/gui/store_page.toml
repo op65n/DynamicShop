@@ -1,38 +1,23 @@
-guiName = "&3&lStore &r&8-> %category%"
+name = "&6&lUI Name"
+size = 3
 
 [background]
 material = "BLACK_STAINED_GLASS_PANE"
-displayName = " "
+display = " "
 
-[item.10]
-placeholder = true
-  [item.10.onLeftClick]
-  action = "BUY"
-  [item.10.onRightClick]
-  action = "SELL"
-  [item.10.onMiddleClick]
-  action = "STATISTICS"
+[items]
+cornerA = 10
+cornerB = 34
+collapsed = true
+onClick = "OPEN"
+onMiddleClick = "STATISTICS"
 
-[item.34]
-placeholder = true
-  [item.34.onLeftClick]
-  action = "BUY"
-  [item.34.onRightClick]
-  action = "SELL"
-  [item.34.onMiddleClick]
-  action = "STATISTICS"
-
-# Back button, moves down dynamicly
-[item.49]
+[[button]]
 material = "KNOWLEDGE_BOOK"
-displayName = " "
+display = " "
 lore = [
-  " &2&lBack ",
+  "&f&l    ● &c&lBackf&l ●    &r",
   " "
 ]
-  [item.49.onLeftClick]
-  action = "BACK"
-  [item.49.onRightClick]
-  action = "BACK"
-  [item.49.onMiddleClick]
-  action = "BACK"
+onClick = "BACK"
+slot = 49

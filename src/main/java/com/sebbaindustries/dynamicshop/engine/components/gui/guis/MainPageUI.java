@@ -2,30 +2,24 @@ package com.sebbaindustries.dynamicshop.engine.components.gui.guis;
 
 import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.engine.components.gui.cache.InventoryHolderCache;
-import com.sebbaindustries.dynamicshop.engine.components.gui.cache.UICache;
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIAction;
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIMetaData;
+import com.sebbaindustries.dynamicshop.engine.components.gui.cache.MainPageUICache;
+import com.sebbaindustries.dynamicshop.engine.components.gui.components.Button;
+import com.sebbaindustries.dynamicshop.engine.components.gui.components.Category;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterface;
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterfaceItem;
-import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
-import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
-import com.sebbaindustries.dynamicshop.utils.UserInterfaceUtils;
+import com.sebbaindustries.dynamicshop.utils.Color;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.bukkit.inventory.ItemStack;
 
 public class MainPageUI implements UserInterface {
 
     public MainPageUI(Player player) {
         this.player = player;
+        this.cache = Core.gCore().getEngine().instance().getShopUI().getMainPageCache();
 
-        UICache cache = Core.gCore().dynEngine.getShopUI().getMainPageCache();
-        metaData = UserInterfaceUtils.setupMetaData(cache);
-        background = UserInterfaceUtils.setupBackground(cache);
-        inventorySlots = UserInterfaceUtils.setupBaseItemOrder(cache);
-        inventory = UserInterfaceUtils.updateGUIFrame(metaData, inventorySlots, background);
+        inventory = Bukkit.createInventory(null, cache.getSize() * 9, Color.format(cache.getName()));
 
         // Update/flush cache
         InventoryHolderCache.cache(player, this);
@@ -33,11 +27,8 @@ public class MainPageUI implements UserInterface {
 
     private final Player player;
     private Inventory inventory;
+    private MainPageUICache cache;
 
-    private UIMetaData metaData;
-    private final Map<Integer, UserInterfaceItem> inventorySlots;
-    private final HashMap<Integer, ShopCategory> categories = new HashMap<>();
-    private final UserInterfaceItem background;
 
     @Override
     public void open() {
@@ -47,27 +38,29 @@ public class MainPageUI implements UserInterface {
 
     @Override
     public void update() {
-        inventory = UserInterfaceUtils.updateGUIFrame(metaData, inventorySlots, background);
-        fillCategories();
-        inventorySlots.forEach((position, item) -> inventory.setItem(position, item.getBukkitItemStack()));
+        /*
+        background
+         */
+        for (int i = 0; i < cache.getSize() * 9; i++) {
+            inventory.setItem(i, new ItemStack(cache.getBackground().getMaterial()));
+        }
+
+        /*
+        Buttons
+         */
+        for (Button button : cache.getButton()) {
+            inventory.setItem(button.getSlot(), new ItemStack(button.getMaterial()));
+        }
+
+        /*
+        Categories
+         */
+        for (Category category : cache.getCategory()) {
+            inventory.setItem(category.getSlot(), new ItemStack(Material.BLUE_ICE));
+        }
+
+
         InventoryHolderCache.cache(player, this);
-    }
-
-    private void fillCategories() {
-        Core.gCore().dynEngine.getContainer().getPrioritizedCategoryList().forEach(category -> {
-            for (int slot : inventorySlots.keySet()) {
-                UserInterfaceItem item = inventorySlots.get(slot);
-                if (!item.isPlaceholder()) continue;
-                item.setPlaceholder(false);
-                item.setMaterial(category.icon().getIcon());
-                item.setLore(category.icon().getLore());
-                item.setDisplayName(category.getName());
-
-                inventorySlots.put(slot, item);
-                categories.put(slot, category);
-                break;
-            }
-        });
     }
 
     @Override
@@ -78,48 +71,17 @@ public class MainPageUI implements UserInterface {
 
     @Override
     public void onRightClick(int slot) {
-        if (inventorySlots.get(slot) == null || inventorySlots.get(slot).isPlaceholder()) return;
-        UIAction.Actions action = inventorySlots.get(slot).getOnRightClick().get();
-        preformClick(action, slot);
+
     }
 
     @Override
     public void onLeftClick(int slot) {
-        if (inventorySlots.get(slot) == null || inventorySlots.get(slot).isPlaceholder()) return;
-        UIAction.Actions action = inventorySlots.get(slot).getOnLeftClick().get();
-        preformClick(action, slot);
+
     }
 
     @Override
     public void onMiddleClick(int slot) {
-        if (inventorySlots.get(slot) == null || inventorySlots.get(slot).isPlaceholder()) return;
-        UIAction.Actions action = inventorySlots.get(slot).getOnMiddleClick().get();
-        preformClick(action, slot);
+
     }
 
-    private void preformClick(UIAction.Actions action, int slot) {
-        if (action == null) return;
-        switch (action) {
-            case CANCEL, CLOSE, BACK -> close();
-            case OPEN -> {
-                UserInterface ui = new StorePageUI(player, categories.get(slot));
-                // Changing placeholder to a category name
-                UIMetaData uiMetaData = ui.getMetaData();
-                uiMetaData.setTitle(uiMetaData.getTitle().replace("%category%", categories.get(slot).getName()));
-                ui.setMetaData(uiMetaData);
-                ui.update();
-                ui.open();
-            }
-        }
-    }
-
-    @Override
-    public void setMetaData(UIMetaData metaData) {
-        this.metaData = metaData;
-    }
-
-    @Override
-    public UIMetaData getMetaData() {
-        return this.metaData;
-    }
 }
