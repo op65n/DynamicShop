@@ -7,5 +7,7 @@ public enum ClickActions {
     OPEN,
     CLOSE,
     EXIT,
+    BACK,
+    ;
 
 }

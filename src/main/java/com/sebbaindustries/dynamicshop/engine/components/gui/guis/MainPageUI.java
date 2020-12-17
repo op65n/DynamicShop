@@ -16,6 +16,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Collections;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class MainPageUI implements UserInterface {
 
@@ -32,6 +34,7 @@ public class MainPageUI implements UserInterface {
     private final Player player;
     private Inventory inventory;
     private MainPageUICache cache;
+    private Map<Integer, Object> mappedInventory = new TreeMap<>();
 
 
     @Override
@@ -48,21 +51,26 @@ public class MainPageUI implements UserInterface {
         Background background = cache.getBackground();
         for (int i = 0; i < cache.getSize() * 9; i++) {
             inventory.setItem(i, UserInterfaceUtils.getBukkitItemStack(background.getMaterial(), background.getDisplay(), background.getLore()));
+            mappedInventory.put(i, background);
         }
 
         /*
         Buttons
          */
-        for (Button button : cache.getButton()) {
+        cache.getButton().forEach(button -> {
             inventory.setItem(button.getSlot(), UserInterfaceUtils.getBukkitItemStack(button.getMaterial(), button.getDisplay(), button.getLore()));
-        }
+            mappedInventory.put(button.getSlot(), button);
+        });
 
         /*
         Categories
          */
-        for (Category category : cache.getCategory()) {
-            inventory.setItem(category.getSlot(), UserInterfaceUtils.getBukkitItemStack(background.getMaterial(), Color.format("&c&lMissing category"), Collections.singletonList("Please check the configuration!")));
-        }
+        cache.getCategory().forEach(category -> {
+            inventory.setItem(category.getSlot(), UserInterfaceUtils.getBukkitItemStack(
+                    background.getMaterial(), Color.format("&c&lMissing category"), Collections.singletonList("Please check the configuration!"))
+            );
+            mappedInventory.put(category.getSlot(), category);
+        });
 
 
         InventoryHolderCache.cache(player, this);
@@ -76,7 +84,27 @@ public class MainPageUI implements UserInterface {
 
     @Override
     public void onRightClick(int slot) {
+        Object object = mappedInventory.get(slot);
+        if (object == null);
 
+        if (object instanceof Background) {
+            System.out.println("back");
+            return;
+        }
+
+        if (object instanceof Button) {
+            System.out.println("button");
+            Button button = (Button) object;
+
+            switch (button.getOnRightClick()) {
+                case EXIT, CLOSE, BACK -> close();
+            }
+            return;
+        }
+
+        if (object instanceof Category) {
+            System.out.println("Cat");
+        }
     }
 
     @Override
