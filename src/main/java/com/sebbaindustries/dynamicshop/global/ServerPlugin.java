@@ -41,9 +41,11 @@ public class ServerPlugin {
             coreDump();
             return;
         }
-        Core.gCore().dynEngine = new DynEngine();
-        PluginLogger.log("Starting DynEngine instance!");
-        Core.gCore().dynEngine.initialize();
+        Core.gCore().setEngine(
+                new DynEngine()
+        );
+
+        Core.gCore().getEngine().initialize();
         ComponentManager.getInstance().logAll();
     }
 

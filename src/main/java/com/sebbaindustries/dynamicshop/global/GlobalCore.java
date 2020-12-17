@@ -3,25 +3,29 @@ package com.sebbaindustries.dynamicshop.global;
 import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.commands.CommandManager;
 import com.sebbaindustries.dynamicshop.engine.DynEngine;
+import com.sebbaindustries.dynamicshop.engine.Engine;
 import com.sebbaindustries.dynamicshop.engine.structure.DirectoryStructure;
 import com.sebbaindustries.dynamicshop.log.PluginLogger;
 import com.sebbaindustries.dynamicshop.messages.Message;
 import com.sebbaindustries.dynamicshop.utils.FileManager;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * @author SebbaIndustries
  * @version 1.0
  */
+@Getter @Setter
 public class GlobalCore {
 
     public final Core core;
 
-    public FileManager fileManager;
+    private FileManager fileManager;
     //public Configuration configuration;
-    public Message message;
-    public CommandManager commandManager;
-    public DynEngine dynEngine;
-    public DirectoryStructure directoryStructure;
+    private Message message;
+    private CommandManager commandManager;
+    private Engine engine;
+    private DirectoryStructure directoryStructure;
 
 
     public GlobalCore(Core core) {
