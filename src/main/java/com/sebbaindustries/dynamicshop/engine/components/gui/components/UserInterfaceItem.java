@@ -10,70 +10,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+@Deprecated
 public class UserInterfaceItem {
 
-    private boolean placeholder = false;
-
-    private UIAction onLeftClick;
-    private UIAction onRightClick;
-    private UIAction onMiddleClick;
 
     private Material material;
     private List<String> lore = new ArrayList<>();
     private String displayName;
     private HashMap<String, Integer> enchants;
 
-    public void setPlaceholder(boolean placeholder) {
-        this.placeholder = placeholder;
-    }
-
-    public void setMaterial(Material material) {
-        this.material = material;
-    }
-
-    public void setLore(List<String> lore) {
-        this.lore = lore;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
-    public void setEnchants(HashMap<String, Integer> enchants) {
-        this.enchants = enchants;
-    }
-
-    public UIAction getOnLeftClick() {
-        return onLeftClick;
-    }
-
-    public UIAction getOnRightClick() {
-        return onRightClick;
-    }
-
-    public UIAction getOnMiddleClick() {
-        return onMiddleClick;
-    }
-
-    public Material getMaterial() {
-        return material;
-    }
-
-    public List<String> getLore() {
-        return lore;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public HashMap<String, Integer> getEnchants() {
-        return enchants;
-    }
-
-    public boolean isPlaceholder() {
-        return placeholder;
-    }
 
     public ItemStack getBukkitItemStack() {
         // Create new ItemStack instance
