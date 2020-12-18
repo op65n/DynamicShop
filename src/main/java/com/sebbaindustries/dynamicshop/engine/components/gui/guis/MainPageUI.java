@@ -71,14 +71,14 @@ public class MainPageUI implements UserInterface {
                 categories.remove(shopCategory);
                 break;
             }
-            uiCategory.setCategory(category);
 
             if (category == null) {
                 category = new ShopCategory();
             }
+            uiCategory.setCategory(category);
 
             inventory.setItem(uiCategory.getSlot(), UserInterfaceUtils.getBukkitItemStack(category));
-            mappedInventory.put(uiCategory.getSlot(), category);
+            mappedInventory.put(uiCategory.getSlot(), uiCategory);
         });
 
 
