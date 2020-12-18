@@ -61,7 +61,7 @@ public class MainPageUI implements UserInterface {
         /*
         Categories
          */
-        List<ShopCategory> categories = Core.gCore().getEngine().instance().getContainer().getCategories();
+        List<ShopCategory> categories = Core.gCore().getEngine().instance().getContainer().getPrioritizedCategoryList();
         cache.getCategory().forEach(uiCategory -> {
             ShopCategory category = null;
             for (ShopCategory shopCategory : categories) {

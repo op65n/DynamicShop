@@ -61,19 +61,18 @@ public class DynShopContainer {
         });
     }
 
-    @Getter
     private List<ShopCategory> categories = new ArrayList<>();
 
-    // /**
-    //  * Returns sorted list of categories based on priority value, base priority
-    //  * value is -1, sorting works from lowest to highest
-    //  *
-    //  * @return Sorted ArrayList with ShopCategory component
-    //  */
-    //public List<ShopCategory> getPrioritizedCategoryList() {
-    //    List<ShopCategory> categories = new ArrayList<>(categoryHashMap.values());
-    //    categories.sort(Comparator.comparing(ShopCategory::priority));
-    //    return categories;
-    //}
+    /**
+     * Returns sorted list of categories based on priority value, base priority
+     * value is -1, sorting works from lowest to highest
+     *
+     * @return Sorted ArrayList with ShopCategory component
+     */
+    public List<ShopCategory> getPrioritizedCategoryList() {
+        List<ShopCategory> sorted = new ArrayList<>(categories);
+        sorted.sort(Comparator.comparing(ShopCategory::getPriority));
+        return sorted;
+    }
 
 }
