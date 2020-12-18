@@ -16,23 +16,23 @@ onClick = "CLOSE"
 slot = 22
 
 [[category]]
-onclick = "OPEN"
+onClick = "OPEN"
 slot = 11
 
 [[category]]
-onclick = "OPEN"
+onClick = "OPEN"
 slot = 12
 
 [[category]]
-onclick = "OPEN"
+onClick = "OPEN"
 slot = 13
 
 [[category]]
-onclick = "OPEN"
+onClick = "OPEN"
 slot = 14
 
 [[category]]
-onclick = "OPEN"
+onClick = "OPEN"
 slot = 15
 
 
