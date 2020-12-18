@@ -15,7 +15,7 @@ import java.util.List;
 public class ShopCategory implements BukkitItemStack {
 
     private int priority = 1000;
-    private Icon icon;
+    private Icon icon = new Icon();
 
     private List<ShopItem> items = new ArrayList<>();
 
