@@ -93,6 +93,8 @@ public class MainPageUI implements UserInterface {
 
     @Override
     public void onRightClick(int slot) {
+        System.out.println(slot);
+        System.out.println(ObjectUtils.deserializeObjectToString(mappedInventory));
         Object object = mappedInventory.get(slot);
         if (object == null || object instanceof UIBackground) return;
 
@@ -110,7 +112,6 @@ public class MainPageUI implements UserInterface {
 
     @Override
     public void onLeftClick(int slot) {
-        System.out.println("left click");
         Object object = mappedInventory.get(slot);
         if (object == null || object instanceof UIBackground) return;
 
@@ -121,7 +122,6 @@ public class MainPageUI implements UserInterface {
         }
 
         if (object instanceof UICategory) {
-            System.out.println("Category");
             Clickable category = (UICategory) object;
             categoryHandler(category.leftClick(), slot);
         }
