@@ -1,15 +1,36 @@
 package com.sebbaindustries.dynamicshop.engine.components.shop;
 
-import java.util.HashMap;
+import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.BukkitItemStack;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.bukkit.Material;
 
-public interface ShopCategory {
+import java.util.ArrayList;
+import java.util.List;
 
-    int priority();
+@Getter
+@Setter
+@NoArgsConstructor
+public class ShopCategory implements BukkitItemStack {
 
-    String getName();
+    private int priority = 1000;
+    private Icon icon;
 
-    Icon icon();
+    private List<ShopItem> items = new ArrayList<>();
 
-    HashMap<Integer, ShopItem> getItems();
+    @Override
+    public Material material() {
+        return icon.getMaterial();
+    }
 
+    @Override
+    public String display() {
+        return icon.getDisplay();
+    }
+
+    @Override
+    public List<String> lore() {
+        return icon.getLore();
+    }
 }

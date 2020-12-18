@@ -1,4 +1,4 @@
-package com.sebbaindustries.dynamicshop.engine.components.gui.components;
+package com.sebbaindustries.dynamicshop.engine.components.gui.interfaces;
 
 public interface UserInterface {
 

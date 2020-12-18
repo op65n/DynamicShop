@@ -1,6 +1,6 @@
 package com.sebbaindustries.dynamicshop.engine.components.gui.cache;
 
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterface;
+import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.UserInterface;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;

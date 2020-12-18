@@ -1,14 +1,13 @@
 package com.sebbaindustries.dynamicshop.engine.components.gui.guis;
 
 import com.sebbaindustries.dynamicshop.engine.components.gui.cache.InventoryHolderCache;
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterface;
-import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
+import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.UserInterface;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
 public class StorePageUI implements UserInterface {
 
-    public StorePageUI(Player player, ShopCategory category) {
+    public StorePageUI(Player player) {
         this.player = player;
     }
 

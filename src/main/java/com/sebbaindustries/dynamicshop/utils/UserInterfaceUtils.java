@@ -1,6 +1,6 @@
 package com.sebbaindustries.dynamicshop.utils;
 
-import org.bukkit.Material;
+import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.BukkitItemStack;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -9,24 +9,25 @@ import java.util.List;
 
 public class UserInterfaceUtils {
 
-    public static ItemStack getBukkitItemStack(Material material, String display, List<String> lore) {
+
+    public static ItemStack getBukkitItemStack(BukkitItemStack bukkitItemStack) {
         // Create new ItemStack instance
-        ItemStack iStack = new ItemStack(material);
+        ItemStack iStack = new ItemStack(bukkitItemStack.material());
         ItemMeta iMeta = iStack.getItemMeta();
 
         /*
         Item lore
          */
-        if (lore != null && !lore.isEmpty()) {
+        if (bukkitItemStack.lore() != null && !bukkitItemStack.lore().isEmpty()) {
             List<String> coloredLore = new ArrayList<>();
-            lore.forEach(loreLine -> coloredLore.add(Color.format(loreLine)));
+            bukkitItemStack.lore().forEach(loreLine -> coloredLore.add(Color.format(loreLine)));
             iMeta.setLore(coloredLore);
         }
 
         /*
         Item display name
          */
-        if (display != null) iMeta.setDisplayName(Color.format(display));
+        if (bukkitItemStack.display() != null) iMeta.setDisplayName(Color.format(bukkitItemStack.display()));
 
         iStack.setItemMeta(iMeta);
         return iStack;

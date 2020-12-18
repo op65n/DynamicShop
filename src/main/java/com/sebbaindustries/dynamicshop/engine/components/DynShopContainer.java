@@ -3,10 +3,10 @@ package com.sebbaindustries.dynamicshop.engine.components;
 import com.moandjiezana.toml.Toml;
 import com.sebbaindustries.dynamicshop.engine.components.maintainer.ComponentManager;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
-import com.sebbaindustries.dynamicshop.engine.components.shop.implementations.ShopCategoryImpl;
 import com.sebbaindustries.dynamicshop.engine.structure.DirectoryStructure;
 import com.sebbaindustries.dynamicshop.log.PluginLogger;
 import com.sebbaindustries.dynamicshop.utils.FileUtils;
+import lombok.Getter;
 
 import java.io.File;
 import java.util.*;
@@ -30,7 +30,7 @@ public class DynShopContainer {
         }
 
         // Clear the hashmap, necessary for the reloads
-        categoryHashMap.clear();
+        categories.clear();
 
         // We iterate thru all file names, check if they end in .toml just to be sure
         files.forEach(fileName -> {
@@ -41,11 +41,11 @@ public class DynShopContainer {
             // It works okay-ish for error handling, maybe do a cleaner implementation in the future?
             try {
                 // Thanks to toml we can load classes to interfaces fairly easily.
-                ShopCategory shopCategory = new Toml().read(
+                ShopCategory category = new Toml().read(
                         new File(DirectoryStructure.Directory.CATEGORIES.path + fileName)
-                ).to(ShopCategoryImpl.class);
+                ).to(ShopCategory.class);
 
-                categoryHashMap.put(fileName, shopCategory);
+                categories.add(category);
                 PluginLogger.log("File " + fileName + " loaded successfully!");
 
             } catch (Exception e) {
@@ -61,18 +61,19 @@ public class DynShopContainer {
         });
     }
 
-    private final HashMap<String, ShopCategory> categoryHashMap = new HashMap<>();
+    @Getter
+    private List<ShopCategory> categories = new ArrayList<>();
 
-    /**
-     * Returns sorted list of categories based on priority value, base priority
-     * value is -1, sorting works from lowest to highest
-     *
-     * @return Sorted ArrayList with ShopCategory component
-     */
-    public List<ShopCategory> getPrioritizedCategoryList() {
-        List<ShopCategory> categories = new ArrayList<>(categoryHashMap.values());
-        categories.sort(Comparator.comparing(ShopCategory::priority));
-        return categories;
-    }
+    // /**
+    //  * Returns sorted list of categories based on priority value, base priority
+    //  * value is -1, sorting works from lowest to highest
+    //  *
+    //  * @return Sorted ArrayList with ShopCategory component
+    //  */
+    //public List<ShopCategory> getPrioritizedCategoryList() {
+    //    List<ShopCategory> categories = new ArrayList<>(categoryHashMap.values());
+    //    categories.sort(Comparator.comparing(ShopCategory::priority));
+    //    return categories;
+    //}
 
 }

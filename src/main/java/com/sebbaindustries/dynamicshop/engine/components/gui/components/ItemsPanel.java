@@ -1,5 +1,6 @@
 package com.sebbaindustries.dynamicshop.engine.components.gui.components;
 
+import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.Clickable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -7,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ItemsPanel {
+public class ItemsPanel implements Clickable {
 
     private int cornerA = 1;
     private int cornerB = 7;
@@ -17,4 +18,23 @@ public class ItemsPanel {
     private ClickActions onRightClick = ClickActions.NA;
     private ClickActions onLeftClick = ClickActions.NA;
     private ClickActions onMiddleClick = ClickActions.NA;
+
+    @Override
+    public ClickActions rightClick() {
+        if (this.onRightClick == ClickActions.NA) return this.onClick;
+        return this.onRightClick;
+    }
+
+    @Override
+    public ClickActions leftClick() {
+        if (this.onLeftClick == ClickActions.NA) return this.onClick;
+        return this.onLeftClick;
+    }
+
+    @Override
+    public ClickActions middleClick() {
+        if (this.onMiddleClick == ClickActions.NA) return this.onClick;
+        return this.onMiddleClick;
+    }
+
 }

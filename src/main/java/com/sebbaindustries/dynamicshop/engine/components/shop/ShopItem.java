@@ -1,23 +1,34 @@
 package com.sebbaindustries.dynamicshop.engine.components.shop;
 
+import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.BukkitItemStack;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
-public interface ShopItem {
+import java.util.List;
 
-    ItemStack getBukkitItemStack();
+@Getter
+@Setter
+public class ShopItem implements BukkitItemStack {
 
-    Material getBukkitMaterial();
+    private Material material;
+    private String display;
+    private List<String> lore;
+    private Double buyPrice;
+    private Double sellPrice;
 
-    Double buyPrice();
+    @Override
+    public Material material() {
+        return this.material;
+    }
 
-    void setBuyPrice(Double price);
+    @Override
+    public String display() {
+        return this.display;
+    }
 
-    Double sellPrice();
-
-    void setSellPrice(Double price);
-
-    ShopMeta getShopMeta();
-
-    void setShopMeta(ShopMeta meta);
+    @Override
+    public List<String> lore() {
+        return this.lore;
+    }
 }

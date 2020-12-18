@@ -1,6 +1,6 @@
 package com.sebbaindustries.dynamicshop.engine.components.gui.guis;
 
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterface;
+import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.UserInterface;
 
 public class TransactionPageUI implements UserInterface {
 

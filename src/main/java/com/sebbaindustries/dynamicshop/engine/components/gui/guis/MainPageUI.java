@@ -4,18 +4,16 @@ import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.engine.components.gui.cache.InventoryHolderCache;
 import com.sebbaindustries.dynamicshop.engine.components.gui.cache.MainPageUICache;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.*;
+import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.UserInterface;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
 import com.sebbaindustries.dynamicshop.utils.Color;
 import com.sebbaindustries.dynamicshop.utils.UserInterfaceUtils;
+import jdk.jfr.Category;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class MainPageUI implements UserInterface {
 
@@ -46,9 +44,9 @@ public class MainPageUI implements UserInterface {
         /*
         background
          */
-        Background background = cache.getBackground();
+        UIBackground background = cache.getBackground();
         for (int i = 0; i < cache.getSize() * 9; i++) {
-            inventory.setItem(i, UserInterfaceUtils.getBukkitItemStack(background.getMaterial(), background.getDisplay(), background.getLore()));
+            inventory.setItem(i, UserInterfaceUtils.getBukkitItemStack(background));
             mappedInventory.put(i, background);
         }
 
@@ -56,27 +54,29 @@ public class MainPageUI implements UserInterface {
         Buttons
          */
         cache.getButton().forEach(button -> {
-            inventory.setItem(button.getSlot(), UserInterfaceUtils.getBukkitItemStack(button.getMaterial(), button.getDisplay(), button.getLore()));
+            inventory.setItem(button.getSlot(), UserInterfaceUtils.getBukkitItemStack(button));
             mappedInventory.put(button.getSlot(), button);
         });
 
         /*
         Categories
          */
-        int next = 0;
-        for (Category category : cache.getCategory()) {
-            ShopCategory shopCategory = Core.gCore().getEngine().instance().getContainer().getPrioritizedCategoryList().get(next);
-            inventory.setItem(category.getSlot(), new ItemStack(shopCategory.icon().getIcon()));
-            mappedInventory.put(category.getSlot(), shopCategory);
-        }
+        List<ShopCategory> categories = Core.gCore().getEngine().instance().getContainer().getCategories();
+        cache.getCategory().forEach(uiCategory -> {
+            ShopCategory category = null;
+            for (ShopCategory shopCategory : categories) {
+                category = shopCategory;
+                categories.remove(shopCategory);
+                break;
+            }
+            uiCategory.setCategory(category);
 
+            if (category == null) {
+                category = new ShopCategory();
+            }
 
-        cache.getCategory().forEach(category -> {
-            inventory.setItem(category.getSlot(), UserInterfaceUtils.getBukkitItemStack(
-                    background.getMaterial(), Color.format("&c&lMissing category"), Collections.singletonList("Please check the configuration!"))
-            );
-
-            mappedInventory.put(category.getSlot(), category);
+            inventory.setItem(uiCategory.getSlot(), UserInterfaceUtils.getBukkitItemStack(category));
+            mappedInventory.put(uiCategory.getSlot(), category);
         });
 
 
@@ -93,12 +93,12 @@ public class MainPageUI implements UserInterface {
     public void onRightClick(int slot) {
         Object object = mappedInventory.get(slot);
 
-        if (object == null || object instanceof Background) {
+        if (object == null || object instanceof UIBackground) {
             return;
         }
 
-        if (object instanceof Button) {
-            Button button = (Button) object;
+        if (object instanceof UIButton) {
+            UIButton button = (UIButton) object;
 
             if (button.getOnRightClick() == ClickActions.NA) {
                 buttonHandler(button.getOnClick());
@@ -108,7 +108,7 @@ public class MainPageUI implements UserInterface {
             return;
         }
 
-        if (object instanceof Category) {
+        if (object instanceof UICategory) {
         }
     }
 
@@ -116,12 +116,12 @@ public class MainPageUI implements UserInterface {
     public void onLeftClick(int slot) {
         Object object = mappedInventory.get(slot);
 
-        if (object == null || object instanceof Background) {
+        if (object == null || object instanceof UIBackground) {
             return;
         }
 
-        if (object instanceof Button) {
-            Button button = (Button) object;
+        if (object instanceof UIButton) {
+            UIButton button = (UIButton) object;
 
             if (button.getOnLeftClick() == ClickActions.NA) {
                 buttonHandler(button.getOnClick());
@@ -131,7 +131,7 @@ public class MainPageUI implements UserInterface {
             return;
         }
 
-        if (object instanceof Category) {
+        if (object instanceof UICategory) {
         }
     }
 
@@ -139,12 +139,12 @@ public class MainPageUI implements UserInterface {
     public void onMiddleClick(int slot) {
         Object object = mappedInventory.get(slot);
 
-        if (object == null || object instanceof Background) {
+        if (object == null || object instanceof UIBackground) {
             return;
         }
 
-        if (object instanceof Button) {
-            Button button = (Button) object;
+        if (object instanceof UIButton) {
+            UIButton button = (UIButton) object;
 
             if (button.getOnMiddleClick() == ClickActions.NA) {
                 buttonHandler(button.getOnClick());
@@ -154,7 +154,7 @@ public class MainPageUI implements UserInterface {
             return;
         }
 
-        if (object instanceof Category) {
+        if (object instanceof UICategory) {
         }
     }
 

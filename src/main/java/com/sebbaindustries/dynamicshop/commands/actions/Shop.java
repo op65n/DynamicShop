@@ -3,7 +3,7 @@ package com.sebbaindustries.dynamicshop.commands.actions;
 import com.sebbaindustries.dynamicshop.commands.components.CommandFactory;
 import com.sebbaindustries.dynamicshop.commands.components.ICmd;
 import com.sebbaindustries.dynamicshop.commands.components.ITab;
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterface;
+import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.UserInterface;
 import com.sebbaindustries.dynamicshop.engine.components.gui.guis.MainPageUI;
 import com.sebbaindustries.dynamicshop.messages.Message;
 import com.sebbaindustries.dynamicshop.messages.MessageBuilder;
