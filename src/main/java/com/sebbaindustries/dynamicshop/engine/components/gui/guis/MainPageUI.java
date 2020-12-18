@@ -4,11 +4,11 @@ import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.engine.components.gui.cache.InventoryHolderCache;
 import com.sebbaindustries.dynamicshop.engine.components.gui.cache.MainPageUICache;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.*;
+import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.Clickable;
 import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.UserInterface;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
 import com.sebbaindustries.dynamicshop.utils.Color;
 import com.sebbaindustries.dynamicshop.utils.UserInterfaceUtils;
-import jdk.jfr.Category;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -92,75 +92,70 @@ public class MainPageUI implements UserInterface {
     @Override
     public void onRightClick(int slot) {
         Object object = mappedInventory.get(slot);
-
-        if (object == null || object instanceof UIBackground) {
-            return;
-        }
+        if (object == null || object instanceof UIBackground) return;
 
         if (object instanceof UIButton) {
-            UIButton button = (UIButton) object;
-
-            if (button.getOnRightClick() == ClickActions.NA) {
-                buttonHandler(button.getOnClick());
-                return;
-            }
-            buttonHandler(button.getOnRightClick());
+            Clickable button = (UIButton) object;
+            buttonHandler(button.rightClick());
             return;
         }
 
         if (object instanceof UICategory) {
+            Clickable category = (UICategory) object;
+            categoryHandler(category.rightClick(), slot);
         }
     }
 
     @Override
     public void onLeftClick(int slot) {
         Object object = mappedInventory.get(slot);
-
-        if (object == null || object instanceof UIBackground) {
-            return;
-        }
+        if (object == null || object instanceof UIBackground) return;
 
         if (object instanceof UIButton) {
-            UIButton button = (UIButton) object;
-
-            if (button.getOnLeftClick() == ClickActions.NA) {
-                buttonHandler(button.getOnClick());
-                return;
-            }
-            buttonHandler(button.getOnLeftClick());
+            Clickable button = (UIButton) object;
+            buttonHandler(button.leftClick());
             return;
         }
 
         if (object instanceof UICategory) {
+            Clickable category = (UICategory) object;
+            categoryHandler(category.leftClick(), slot);
         }
     }
 
     @Override
     public void onMiddleClick(int slot) {
         Object object = mappedInventory.get(slot);
-
-        if (object == null || object instanceof UIBackground) {
-            return;
-        }
+        if (object == null || object instanceof UIBackground) return;
 
         if (object instanceof UIButton) {
-            UIButton button = (UIButton) object;
-
-            if (button.getOnMiddleClick() == ClickActions.NA) {
-                buttonHandler(button.getOnClick());
-                return;
-            }
-            buttonHandler(button.getOnMiddleClick());
+            Clickable button = (UIButton) object;
+            buttonHandler(button.middleClick());
             return;
         }
 
         if (object instanceof UICategory) {
+            Clickable category = (UICategory) object;
+            categoryHandler(category.middleClick(), slot);
         }
     }
 
     void buttonHandler(ClickActions action) {
         switch (action) {
             case EXIT, CLOSE, BACK -> close();
+        }
+    }
+
+    void categoryHandler(ClickActions action, int slot) {
+        switch (action) {
+            case EXIT, CLOSE, BACK -> close();
+            case OPEN -> {
+                UICategory category = (UICategory) mappedInventory.get(slot);
+                if (category.getCategory() == null) return;
+                UserInterface ui = new StorePageUI(player, category.getCategory());
+                ui.update();
+                ui.open();
+            }
         }
     }
 
