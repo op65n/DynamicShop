@@ -7,7 +7,9 @@ import com.sebbaindustries.dynamicshop.engine.components.gui.components.*;
 import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.Clickable;
 import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.UserInterface;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
+import com.sebbaindustries.dynamicshop.log.DevLogger;
 import com.sebbaindustries.dynamicshop.utils.Color;
+import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 import com.sebbaindustries.dynamicshop.utils.UserInterfaceUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -108,6 +110,7 @@ public class MainPageUI implements UserInterface {
 
     @Override
     public void onLeftClick(int slot) {
+        System.out.println("left click");
         Object object = mappedInventory.get(slot);
         if (object == null || object instanceof UIBackground) return;
 
@@ -118,6 +121,7 @@ public class MainPageUI implements UserInterface {
         }
 
         if (object instanceof UICategory) {
+            System.out.println("Category");
             Clickable category = (UICategory) object;
             categoryHandler(category.leftClick(), slot);
         }
@@ -151,6 +155,7 @@ public class MainPageUI implements UserInterface {
             case EXIT, CLOSE, BACK -> close();
             case OPEN -> {
                 UICategory category = (UICategory) mappedInventory.get(slot);
+                System.out.println(ObjectUtils.deserializeObjectToString(category));
                 if (category.getCategory() == null) return;
                 UserInterface ui = new StorePageUI(player, category.getCategory());
                 ui.update();
