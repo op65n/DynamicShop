@@ -78,7 +78,7 @@ public class StorePageUI implements UserInterface {
     @Override
     public void onRightClick(int slot) {
         Object object = mappedInventory.get(slot);
-        if (object == null || object instanceof UIBackground) return;
+        if (!UserInterfaceUtils.isClickable(object)) return;
 
         if (object instanceof UIButton) {
             Clickable button = (UIButton) object;
@@ -90,7 +90,7 @@ public class StorePageUI implements UserInterface {
     @Override
     public void onLeftClick(int slot) {
         Object object = mappedInventory.get(slot);
-        if (object == null || object instanceof UIBackground) return;
+        if (!UserInterfaceUtils.isClickable(object)) return;
 
         if (object instanceof UIButton) {
             Clickable button = (UIButton) object;
@@ -102,7 +102,7 @@ public class StorePageUI implements UserInterface {
     @Override
     public void onMiddleClick(int slot) {
         Object object = mappedInventory.get(slot);
-        if (object == null || object instanceof UIBackground) return;
+        if (!UserInterfaceUtils.isClickable(object)) return;
 
         if (object instanceof UIButton) {
             Clickable button = (UIButton) object;

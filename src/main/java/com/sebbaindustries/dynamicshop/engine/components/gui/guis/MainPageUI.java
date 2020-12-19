@@ -8,7 +8,6 @@ import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.Clickabl
 import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.UserInterface;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
 import com.sebbaindustries.dynamicshop.utils.Color;
-import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 import com.sebbaindustries.dynamicshop.utils.UserInterfaceUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -72,8 +71,11 @@ public class MainPageUI implements UserInterface {
             }
 
             if (category == null) {
-                category = new ShopCategory();
+                inventory.setItem(uiCategory.getSlot(), UserInterfaceUtils.getBukkitItemStack(new ShopCategory()));
+                mappedInventory.put(uiCategory.getSlot(), uiCategory);
+                return;
             }
+
             uiCategory.setCategory(category);
 
             inventory.setItem(uiCategory.getSlot(), UserInterfaceUtils.getBukkitItemStack(category));
@@ -93,7 +95,7 @@ public class MainPageUI implements UserInterface {
     @Override
     public void onRightClick(int slot) {
         Object object = mappedInventory.get(slot);
-        if (object == null || object instanceof UIBackground) return;
+        if (!UserInterfaceUtils.isClickable(object)) return;
 
         if (object instanceof UIButton) {
             Clickable button = (UIButton) object;
@@ -110,7 +112,7 @@ public class MainPageUI implements UserInterface {
     @Override
     public void onLeftClick(int slot) {
         Object object = mappedInventory.get(slot);
-        if (object == null || object instanceof UIBackground) return;
+        if (!UserInterfaceUtils.isClickable(object)) return;
 
         if (object instanceof UIButton) {
             Clickable button = (UIButton) object;
@@ -127,7 +129,7 @@ public class MainPageUI implements UserInterface {
     @Override
     public void onMiddleClick(int slot) {
         Object object = mappedInventory.get(slot);
-        if (object == null || object instanceof UIBackground) return;
+        if (!UserInterfaceUtils.isClickable(object)) return;
 
         if (object instanceof UIButton) {
             Clickable button = (UIButton) object;

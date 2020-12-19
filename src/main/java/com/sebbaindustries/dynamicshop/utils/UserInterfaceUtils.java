@@ -1,6 +1,7 @@
 package com.sebbaindustries.dynamicshop.utils;
 
 import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.BukkitItemStack;
+import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.Clickable;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -31,6 +32,10 @@ public class UserInterfaceUtils {
 
         iStack.setItemMeta(iMeta);
         return iStack;
+    }
+
+    public static boolean isClickable(Object object) {
+        return object instanceof Clickable;
     }
 
 }
