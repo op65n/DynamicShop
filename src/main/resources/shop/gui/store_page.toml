@@ -1,5 +1,5 @@
 name = "&6&lShop -> %category%"
-size = 3
+size = 6
 
 [background]
 material = "BLACK_STAINED_GLASS_PANE"
