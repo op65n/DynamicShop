@@ -6,6 +6,7 @@ import com.sebbaindustries.dynamicshop.engine.components.gui.cache.StorePageUICa
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.ClickActions;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIBackground;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIButton;
+import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.BukkitItemStack;
 import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.Clickable;
 import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.UserInterface;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
@@ -17,6 +18,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -56,7 +58,7 @@ public class StorePageUI implements UserInterface {
          */
         UIBackground background = cache.getBackground();
         for (int i = 0; i < cache.getSize() * 9; i++) {
-            inventory.setItem(i, UserInterfaceUtils.getBukkitItemStack(background));
+            //inventory.setItem(i, UserInterfaceUtils.getBukkitItemStack(background));
             mappedInventory.put(i, background);
         }
 
@@ -69,8 +71,19 @@ public class StorePageUI implements UserInterface {
             if (button.getSlot() > 26) {
                 button.setSlot(button.getSlot()-collapseBy);
             }
-            inventory.setItem(button.getSlot(), UserInterfaceUtils.getBukkitItemStack(button));
+            //inventory.setItem(button.getSlot(), UserInterfaceUtils.getBukkitItemStack(button));
             mappedInventory.put(button.getSlot(), button);
+        });
+
+        int newSize = (int) Math.ceil((double) Collections.max(mappedInventory.keySet()) / 9.0);
+        cache.setSize(newSize);
+
+        inventory = Bukkit.createInventory(null, cache.getSize() * 9, Color.format(cache.getName()));
+        mappedInventory.forEach((slot, item) -> {
+            if (item instanceof BukkitItemStack) {
+                BukkitItemStack bukkitItemStack = (BukkitItemStack) item;
+                inventory.setItem(slot, UserInterfaceUtils.getBukkitItemStack(bukkitItemStack));
+            }
         });
 
         InventoryHolderCache.cache(player, this);
@@ -94,7 +107,7 @@ public class StorePageUI implements UserInterface {
             for (int x = cornerA; x < rowLength+cornerA; x++) {
                 ShopItem item = listUtils.getNext();
                 if (item == null) continue;
-                inventory.setItem(x+(y*9), UserInterfaceUtils.getBukkitItemStack(item));
+                //inventory.setItem(x+(y*9), UserInterfaceUtils.getBukkitItemStack(item));
                 mappedInventory.put(x+(y*9), item);
                 itemCount++;
             }
