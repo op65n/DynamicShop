@@ -82,6 +82,8 @@ public class StorePageUI implements UserInterface {
             if (newSize < entry.getKey()) newSize = entry.getKey();
         }
 
+        newSize = (int) Math.ceil((double) newSize / 9.0);
+
         cache.setSize(newSize);
 
         inventory = Bukkit.createInventory(null, cache.getSize() * 9, Color.format(cache.getName()));
