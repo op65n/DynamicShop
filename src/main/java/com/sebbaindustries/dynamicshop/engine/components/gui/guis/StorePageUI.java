@@ -6,17 +6,16 @@ import com.sebbaindustries.dynamicshop.engine.components.gui.cache.StorePageUICa
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.ClickActions;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIBackground;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIButton;
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIShopItem;
 import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.Clickable;
 import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.UserInterface;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
+import com.sebbaindustries.dynamicshop.engine.components.shop.ShopItem;
 import com.sebbaindustries.dynamicshop.utils.Color;
+import com.sebbaindustries.dynamicshop.utils.ListUtils;
 import com.sebbaindustries.dynamicshop.utils.UserInterfaceUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -83,19 +82,14 @@ public class StorePageUI implements UserInterface {
         int collumLength = Math.abs(collumStart - collumEnd) + 1;
         int rowLength = Math.abs(cornerA - (cornerB - ((collumLength-1) * 9))) + 1;
 
-        System.out.println("CornerA: " + cornerA);
-        System.out.println("CornerB: " + cornerB);
-        System.out.println("collumStart: " + collumStart);
-        System.out.println("collumEnd: " + collumEnd);
-        System.out.println("collumLength: " + collumLength);
-        System.out.println("rowLength: " + rowLength);
+        ListUtils<ShopItem> listUtils = new ListUtils<>(category.getItems());
 
         for (int x = cornerA; x < rowLength+cornerA; x++) {
-            for (int y = collumStart; y <= collumEnd; y++) {
-                System.out.println(x+(y*9));
-                UIShopItem shopItem = new UIShopItem();
-                inventory.setItem(x+(y*9), new ItemStack(Material.ACACIA_BOAT));
-                mappedInventory.put(x+(y*9), shopItem);
+            for (int y = 0; y < collumEnd; y++) {
+                ShopItem item = listUtils.getNext();
+                if (item == null) continue;
+                inventory.setItem(x+(y*9), UserInterfaceUtils.getBukkitItemStack(item));
+                mappedInventory.put(x+(y*9), item);
             }
         }
     }
