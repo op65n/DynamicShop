@@ -92,10 +92,10 @@ public class StorePageUI implements UserInterface {
 
         for (int x = cornerA; x < rowLength+cornerA; x++) {
             for (int y = collumStart; y <= collumEnd; y++) {
-                System.out.println(x*y);
+                System.out.println(x+(y*9));
                 UIShopItem shopItem = new UIShopItem();
-                inventory.setItem(x*y, new ItemStack(Material.ACACIA_BOAT));
-                mappedInventory.put(x*y, shopItem);
+                inventory.setItem(x+(y*9), new ItemStack(Material.ACACIA_BOAT));
+                mappedInventory.put(x+(y*9), shopItem);
             }
         }
     }
