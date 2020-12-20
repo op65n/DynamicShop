@@ -90,7 +90,7 @@ public class StorePageUI implements UserInterface {
         System.out.println("collumLength: " + collumLength);
         System.out.println("rowLength: " + rowLength);
 
-        for (int x = cornerA; x < rowLength; x++) {
+        for (int x = cornerA; x < rowLength+cornerA; x++) {
             for (int y = collumStart; y < collumEnd; y++) {
                 System.out.println(x*y);
                 UIShopItem shopItem = new UIShopItem();
