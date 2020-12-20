@@ -75,7 +75,13 @@ public class StorePageUI implements UserInterface {
             mappedInventory.put(button.getSlot(), button);
         });
 
-        int newSize = (int) Math.ceil((double) Collections.max(mappedInventory.keySet()) / 9.0);
+        int newSize = 0;
+
+        for (Map.Entry<Integer, Object> entry : mappedInventory.entrySet()) {
+            if (entry.getValue() instanceof UIBackground) continue;
+            if (newSize < entry.getKey()) newSize = entry.getKey();
+        }
+
         cache.setSize(newSize);
 
         inventory = Bukkit.createInventory(null, cache.getSize() * 9, Color.format(cache.getName()));
