@@ -88,6 +88,7 @@ public class StorePageUI implements UserInterface {
 
         inventory = Bukkit.createInventory(null, cache.getSize() * 9, Color.format(cache.getName()));
         mappedInventory.forEach((slot, item) -> {
+            if (slot > cache.getSize()*9-1) return;
             if (item instanceof BukkitItemStack) {
                 BukkitItemStack bukkitItemStack = (BukkitItemStack) item;
                 inventory.setItem(slot, UserInterfaceUtils.getBukkitItemStack(bukkitItemStack));
