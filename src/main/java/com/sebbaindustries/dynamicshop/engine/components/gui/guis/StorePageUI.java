@@ -40,6 +40,7 @@ public class StorePageUI implements UserInterface {
     private ShopCategory category;
     private Map<Integer, Object> mappedInventory = new TreeMap<>();
 
+    int collapseBy = 0;
 
 
     @Override
@@ -59,15 +60,18 @@ public class StorePageUI implements UserInterface {
             mappedInventory.put(i, background);
         }
 
+        createItemsPanel();
+
         /*
         Buttons
          */
         cache.getButton().forEach(button -> {
+            if (button.getSlot() > 26) {
+                button.setSlot(button.getSlot()-collapseBy);
+            }
             inventory.setItem(button.getSlot(), UserInterfaceUtils.getBukkitItemStack(button));
             mappedInventory.put(button.getSlot(), button);
         });
-
-        createItemsPanel();
 
         InventoryHolderCache.cache(player, this);
     }
@@ -76,22 +80,31 @@ public class StorePageUI implements UserInterface {
         int cornerA = cache.getItems().getCornerA();
         int cornerB = cache.getItems().getCornerB();
 
-        int collumStart = (cornerA+1) / 9;
-        int collumEnd = (cornerB+1) / 9;
+        int columnStart = (cornerA+1) / 9;
+        int columnEnd = (cornerB+1) / 9;
 
-        int collumLength = Math.abs(collumStart - collumEnd) + 1;
-        int rowLength = Math.abs(cornerA - (cornerB - ((collumLength-1) * 9))) + 1;
+        int columnLength = Math.abs(columnStart - columnEnd) + 1;
+        int rowLength = Math.abs(cornerA - (cornerB - ((columnLength-1) * 9))) + 1;
 
         ListUtils<ShopItem> listUtils = new ListUtils<>(category.getOrderedItemList());
 
-        for (int y = 0; y < collumEnd; y++) {
+        int itemCount = 0;
+
+        for (int y = 0; y < columnEnd; y++) {
             for (int x = cornerA; x < rowLength+cornerA; x++) {
                 ShopItem item = listUtils.getNext();
                 if (item == null) continue;
                 inventory.setItem(x+(y*9), UserInterfaceUtils.getBukkitItemStack(item));
                 mappedInventory.put(x+(y*9), item);
+                itemCount++;
             }
         }
+
+        int usedColumns = (int) Math.ceil((double) itemCount / 9.0);
+
+        if (usedColumns >= columnLength) return;
+        if (cache.getItems().isCollapsed()) collapseBy = (columnLength - usedColumns) * 9;
+
     }
 
 
