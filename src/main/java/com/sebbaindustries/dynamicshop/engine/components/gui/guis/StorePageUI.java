@@ -6,6 +6,7 @@ import com.sebbaindustries.dynamicshop.engine.components.gui.cache.StorePageUICa
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.ClickActions;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIBackground;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIButton;
+import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIShopItem;
 import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.Clickable;
 import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.UserInterface;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
@@ -65,7 +66,35 @@ public class StorePageUI implements UserInterface {
             mappedInventory.put(button.getSlot(), button);
         });
 
+        createItemsPanel();
+
         InventoryHolderCache.cache(player, this);
+    }
+
+    private void createItemsPanel() {
+        int cornerA = cache.getItems().getCornerA();
+        int cornerB = cache.getItems().getCornerB();
+
+        int collumStart = (cornerA+1) / 9;
+        int collumEnd = (cornerB+1) / 9;
+
+        int collumLength = Math.abs(collumStart - collumEnd);
+        int rowLength = Math.abs(cornerA - (cornerB - (collumLength * 9)));
+
+        System.out.println("CornerA: " + cornerA);
+        System.out.println("CornerB: " + cornerB);
+        System.out.println("collumStart: " + collumStart);
+        System.out.println("collumEnd: " + collumEnd);
+        System.out.println("collumLength: " + collumLength);
+        System.out.println("rowLength: " + rowLength);
+
+        for (int x = cornerA; x < rowLength; x++) {
+            for (int y = collumStart; y < collumEnd; y++) {
+                UIShopItem shopItem = new UIShopItem();
+                inventory.setItem(x*y, UserInterfaceUtils.getBukkitItemStack(shopItem));
+                mappedInventory.put(x*y, shopItem);
+            }
+        }
     }
 
 
