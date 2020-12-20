@@ -13,6 +13,8 @@ import java.util.List;
 @Setter
 public class ShopItem implements BukkitItemStack, Clickable {
 
+    private int priority = 1000;
+
     private Material material = Material.ACACIA_BOAT;
     private String display;
     private List<String> lore;

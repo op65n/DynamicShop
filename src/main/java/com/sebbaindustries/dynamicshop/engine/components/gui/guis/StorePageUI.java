@@ -82,10 +82,10 @@ public class StorePageUI implements UserInterface {
         int collumLength = Math.abs(collumStart - collumEnd) + 1;
         int rowLength = Math.abs(cornerA - (cornerB - ((collumLength-1) * 9))) + 1;
 
-        ListUtils<ShopItem> listUtils = new ListUtils<>(category.getItems());
+        ListUtils<ShopItem> listUtils = new ListUtils<>(category.getOrderedItemList());
 
-        for (int x = cornerA; x < rowLength+cornerA; x++) {
-            for (int y = 0; y < collumEnd; y++) {
+        for (int y = 0; y < collumEnd; y++) {
+            for (int x = cornerA; x < rowLength+cornerA; x++) {
                 ShopItem item = listUtils.getNext();
                 if (item == null) continue;
                 inventory.setItem(x+(y*9), UserInterfaceUtils.getBukkitItemStack(item));
