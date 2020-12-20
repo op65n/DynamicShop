@@ -13,8 +13,10 @@ import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
 import com.sebbaindustries.dynamicshop.utils.Color;
 import com.sebbaindustries.dynamicshop.utils.UserInterfaceUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -78,8 +80,8 @@ public class StorePageUI implements UserInterface {
         int collumStart = (cornerA+1) / 9;
         int collumEnd = (cornerB+1) / 9;
 
-        int collumLength = Math.abs(collumStart - collumEnd);
-        int rowLength = Math.abs(cornerA - (cornerB - (collumLength * 9)));
+        int collumLength = Math.abs(collumStart - collumEnd) + 1;
+        int rowLength = Math.abs(cornerA - (cornerB - ((collumLength-1) * 9))) + 1;
 
         System.out.println("CornerA: " + cornerA);
         System.out.println("CornerB: " + cornerB);
@@ -90,8 +92,9 @@ public class StorePageUI implements UserInterface {
 
         for (int x = cornerA; x < rowLength; x++) {
             for (int y = collumStart; y < collumEnd; y++) {
+                System.out.println(x*y);
                 UIShopItem shopItem = new UIShopItem();
-                inventory.setItem(x*y, UserInterfaceUtils.getBukkitItemStack(shopItem));
+                inventory.setItem(x*y, new ItemStack(Material.ACACIA_BOAT));
                 mappedInventory.put(x*y, shopItem);
             }
         }
