@@ -18,6 +18,7 @@ public class UIButton implements BukkitItemStack, Clickable {
     private Material material;
     private String display;
     private List<String> lore = new ArrayList<>();
+    private int amount = 1;
 
     private int slot;
 
@@ -25,6 +26,11 @@ public class UIButton implements BukkitItemStack, Clickable {
     private ClickActions onRightClick = ClickActions.NA;
     private ClickActions onLeftClick = ClickActions.NA;
     private ClickActions onMiddleClick = ClickActions.NA;
+
+    @Override
+    public int amount() {
+        return this.amount;
+    }
 
     @Override
     public Material material() {

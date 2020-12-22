@@ -17,6 +17,12 @@ public class UIBackground implements BukkitItemStack {
     private Material material;
     private String display;
     private List<String> lore = new ArrayList<>();
+    private int amount = 1;
+
+    @Override
+    public int amount() {
+        return this.amount;
+    }
 
     @Override
     public Material material() {

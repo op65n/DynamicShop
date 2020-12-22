@@ -18,7 +18,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -58,7 +57,6 @@ public class StorePageUI implements UserInterface {
          */
         UIBackground background = cache.getBackground();
         for (int i = 0; i < cache.getSize() * 9; i++) {
-            //inventory.setItem(i, UserInterfaceUtils.getBukkitItemStack(background));
             mappedInventory.put(i, background);
         }
 
@@ -69,9 +67,8 @@ public class StorePageUI implements UserInterface {
          */
         cache.getButton().forEach(button -> {
             if (button.getSlot() > 26) {
-                button.setSlot(button.getSlot()-collapseBy);
+                button.setSlot(button.getSlot() - collapseBy);
             }
-            //inventory.setItem(button.getSlot(), UserInterfaceUtils.getBukkitItemStack(button));
             mappedInventory.put(button.getSlot(), button);
         });
 
@@ -98,6 +95,11 @@ public class StorePageUI implements UserInterface {
         InventoryHolderCache.cache(player, this);
     }
 
+    @Override
+    public void updateUISlots() {
+
+    }
+
     private void createItemsPanel() {
         int cornerA = cache.getItems().getCornerA();
         int cornerB = cache.getItems().getCornerB();
@@ -116,7 +118,10 @@ public class StorePageUI implements UserInterface {
             for (int x = cornerA; x < rowLength+cornerA; x++) {
                 ShopItem item = listUtils.getNext();
                 if (item == null) continue;
-                //inventory.setItem(x+(y*9), UserInterfaceUtils.getBukkitItemStack(item));
+                item.setOnLeftClick(cache.getItems().getOnLeftClick());
+                item.setOnRightClick(cache.getItems().getOnRightClick());
+                item.setOnMiddleClick(cache.getItems().getOnMiddleClick());
+                item.setOnClick(cache.getItems().getOnClick());
                 mappedInventory.put(x+(y*9), item);
                 itemCount++;
             }
@@ -140,11 +145,14 @@ public class StorePageUI implements UserInterface {
     public void onRightClick(int slot) {
         Object object = mappedInventory.get(slot);
         if (!UserInterfaceUtils.isClickable(object)) return;
-
         if (object instanceof UIButton) {
             Clickable button = (UIButton) object;
             buttonHandler(button.rightClick());
             return;
+        }
+        if (object instanceof ShopItem) {
+            Clickable item = (ShopItem) object;
+            itemHandler(item.rightClick(), slot);
         }
     }
 
@@ -158,6 +166,10 @@ public class StorePageUI implements UserInterface {
             buttonHandler(button.leftClick());
             return;
         }
+        if (object instanceof ShopItem) {
+            Clickable item = (ShopItem) object;
+            itemHandler(item.leftClick(), slot);
+        }
     }
 
     @Override
@@ -170,6 +182,10 @@ public class StorePageUI implements UserInterface {
             buttonHandler(button.middleClick());
             return;
         }
+        if (object instanceof ShopItem) {
+            Clickable item = (ShopItem) object;
+            itemHandler(item.middleClick(), slot);
+        }
     }
 
     private void buttonHandler(ClickActions action) {
@@ -177,6 +193,21 @@ public class StorePageUI implements UserInterface {
             case EXIT, CLOSE -> close();
             case BACK -> {
                 UserInterface ui = new MainPageUI(player);
+                ui.update();
+                ui.open();
+            }
+        }
+    }
+
+    private void itemHandler(ClickActions action, int slot) {
+        switch (action) {
+            case SELL -> {
+                UserInterface ui = new SellPageUI(player, (ShopItem) this.mappedInventory.get(slot), category);
+                ui.update();
+                ui.open();
+            }
+            case BUY -> {
+                UserInterface ui = new BuyPageUI(player, (ShopItem) this.mappedInventory.get(slot), category);
                 ui.update();
                 ui.open();
             }

@@ -6,6 +6,8 @@ public interface UserInterface {
 
     void update();
 
+    void updateUISlots();
+
     void close();
 
     void onRightClick(int slot);

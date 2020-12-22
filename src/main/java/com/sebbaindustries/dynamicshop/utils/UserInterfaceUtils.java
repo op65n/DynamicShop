@@ -14,6 +14,7 @@ public class UserInterfaceUtils {
     public static ItemStack getBukkitItemStack(BukkitItemStack bukkitItemStack) {
         // Create new ItemStack instance
         ItemStack iStack = new ItemStack(bukkitItemStack.material());
+        iStack.setAmount(bukkitItemStack.amount());
         ItemMeta iMeta = iStack.getItemMeta();
 
         /*
