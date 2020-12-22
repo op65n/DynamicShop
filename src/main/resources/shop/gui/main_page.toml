@@ -1,56 +1,39 @@
-guiName = "&3&lTrgovina"
+name = "&6&lShop"
 size = 3
 
 [background]
 material = "BLACK_STAINED_GLASS_PANE"
-displayName = " "
+display = " "
 
-# Category slot No.1
-[item.11]
-placeholder = true
-  [item.11.onLeftClick]
-  action = "OPEN"
-  [item.11.onRightClick]
-  action = "OPEN"
-  [item.11.onMiddleClick]
-  action = "STATISTICS"
+[[button]]
+material = "KNOWLEDGE_BOOK"
+display = " "
+lore = [
+  "&f&l    ● &c&lClose shop&f&l ●    &r",
+  " "
+]
+onClick = "CLOSE"
+slot = 22
 
-# Category slot No.2
-[item.12]
-placeholder = true
-  [item.12.onLeftClick]
-  action = "CLOSE"
-  [item.12.onRightClick]
-  action = "CLOSE"
-  [item.12.onMiddleClick]
-  action = "STATISTICS"
+[[category]]
+onClick = "OPEN"
+slot = 11
 
-# Category slot No.3
-[item.13]
-placeholder = true
-  [item.13.onLeftClick]
-  action = "OPEN"
-  [item.13.onRightClick]
-  action = "OPEN"
-  [item.13.onMiddleClick]
-  action = "STATISTICS"
+[[category]]
+onClick = "OPEN"
+slot = 12
 
-# Category slot No.4
-[item.14]
-placeholder = true
-  [item.14.onLeftClick]
-  action = "OPEN"
-  [item.14.onRightClick]
-  action = "OPEN"
-  [item.14.onMiddleClick]
-  action = "STATISTICS"
+[[category]]
+onClick = "OPEN"
+slot = 13
 
-# Category slot No.5
-[item.15]
-placeholder = true
-  [item.15.onLeftClick]
-  action = "OPEN"
-  [item.15.onRightClick]
-  action = "OPEN"
-  [item.15.onMiddleClick]
-  action = "STATISTICS"
+[[category]]
+onClick = "OPEN"
+slot = 14
+
+[[category]]
+onClick = "OPEN"
+slot = 15
+
+
+

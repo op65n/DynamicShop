@@ -2,9 +2,8 @@ package com.sebbaindustries.dynamicshop.global;
 
 import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.engine.DynEngine;
+import com.sebbaindustries.dynamicshop.engine.components.maintainer.ComponentManager;
 import com.sebbaindustries.dynamicshop.log.PluginLogger;
-
-import java.util.logging.Level;
 
 /**
  * @author SebbaIndustries
@@ -42,9 +41,12 @@ public class ServerPlugin {
             coreDump();
             return;
         }
-        Core.gCore().dynEngine = new DynEngine();
-        PluginLogger.log("Starting DynEngine instance!");
-        Core.gCore().dynEngine.initialize();
+        Core.gCore().setEngine(
+                new DynEngine()
+        );
+
+        Core.gCore().getEngine().initialize();
+        ComponentManager.getInstance().logAll();
     }
 
     /**

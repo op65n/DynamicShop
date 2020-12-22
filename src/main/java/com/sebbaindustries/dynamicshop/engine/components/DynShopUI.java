@@ -1,9 +1,13 @@
 package com.sebbaindustries.dynamicshop.engine.components;
 
 import com.moandjiezana.toml.Toml;
+import com.rits.cloning.Cloner;
 import com.sebbaindustries.dynamicshop.Core;
-import com.sebbaindustries.dynamicshop.engine.components.gui.cache.InventoryHolderCache;
-import com.sebbaindustries.dynamicshop.engine.components.gui.cache.UICache;
+import com.sebbaindustries.dynamicshop.engine.components.gui.cache.BuyPageUICache;
+import com.sebbaindustries.dynamicshop.engine.components.gui.cache.MainPageUICache;
+import com.sebbaindustries.dynamicshop.engine.components.gui.cache.SellPageUICache;
+import com.sebbaindustries.dynamicshop.engine.components.gui.cache.StorePageUICache;
+import com.sebbaindustries.dynamicshop.engine.components.maintainer.ComponentManager;
 import com.sebbaindustries.dynamicshop.log.PluginLogger;
 import com.sebbaindustries.dynamicshop.utils.FileManager;
 import org.jetbrains.annotations.NotNull;
@@ -12,45 +16,73 @@ public class DynShopUI {
 
     public DynShopUI() {
         load();
-        invHolder = new InventoryHolderCache();
     }
 
     public void load() {
+
+        ComponentManager.addComponent(this.getClass());
+
         /*
         main_page.toml
          */
-        mainPageCache = getUICacheFromToml(FileManager.PluginFiles.GUI_MAIN_PAGE);
+        mainPageCache = getUICacheFromToml(FileManager.PluginFiles.GUI_MAIN_PAGE, MainPageUICache.class);
 
         /*
         store_page.toml
          */
-        storePageCache = getUICacheFromToml(FileManager.PluginFiles.GUI_STORE_PAGE);
+        storePageCache = getUICacheFromToml(FileManager.PluginFiles.GUI_STORE_PAGE, StorePageUICache.class);
 
         /*
-        transaction_page.toml
+        buy_page.toml
          */
-        transactionPageCache = getUICacheFromToml(FileManager.PluginFiles.GUI_TRANSACTION_PAGE);
+        buyPageCache = getUICacheFromToml(FileManager.PluginFiles.GUI_BUY_PAGE, BuyPageUICache.class);
+
+        /*
+        sell_page.toml
+         */
+        sellPageCache = getUICacheFromToml(FileManager.PluginFiles.GUI_SELL_PAGE, SellPageUICache.class);
 
     }
 
-    private UICache getUICacheFromToml(final @NotNull FileManager.PluginFiles file) {
+    private <T> T getUICacheFromToml(final @NotNull FileManager.PluginFiles file, Class<T> tClass) {
         try {
-            return new Toml().read(Core.gCore().fileManager.getFile(file)).to(UICache.class);
+            // Toml casting to a cache, works perfect to my knowledge
+            return new Toml().read(Core.gCore().getFileManager().getFile(file)).to(tClass);
         } catch (Exception e) {
-            PluginLogger.logWarn("Error happened while reading " + file.fileName  + " please check if you have setup the plugin correctly.");
+            /*
+            This produces a big fucking wall of text, but it works okay.
+            */
+            PluginLogger.logWarn("Error happened while reading " + file.fileName + " please check if you have setup the plugin correctly.");
             e.printStackTrace();
-            PluginLogger.logWarn("Error happened while reading " + file.fileName  + " please check if you have setup the plugin correctly.");
-            successfulSetup = false;
+            PluginLogger.logWarn("Error happened while reading " + file.fileName + " please check if you have setup the plugin correctly.");
+
+            // Add failed component to the list
+            ComponentManager.addComponent(this.getClass(), "Missing files in plugins/DynamicShop/shop/categories/ directory");
             return null;
         }
     }
 
-    public UICache mainPageCache;
-    public UICache storePageCache;
-    public UICache transactionPageCache;
+    private MainPageUICache mainPageCache;
+    private StorePageUICache storePageCache;
+    private BuyPageUICache buyPageCache;
+    private SellPageUICache sellPageCache;
 
-    public InventoryHolderCache invHolder;
+    private final Cloner cloner = new Cloner();
 
-    public boolean successfulSetup = true;
+    public MainPageUICache getMainPageCache() {
+        // Java is retarded so we are forced to to this shit...
+        return cloner.deepClone(mainPageCache);
+    }
+
+    public StorePageUICache getStorePageCache() {
+        // Java is retarded so we are forced to to this shit...
+        return cloner.deepClone(storePageCache);
+    }
+
+    public BuyPageUICache getBuyPageCache() {
+        return cloner.deepClone(buyPageCache);
+    }
+
+    public SellPageUICache getSellPageCache() { return cloner.deepClone(sellPageCache); }
 
 }

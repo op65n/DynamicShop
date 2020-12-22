@@ -1,6 +1,5 @@
 package com.sebbaindustries.dynamicshop.commands.actions;
 
-import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.commands.components.CommandFactory;
 import com.sebbaindustries.dynamicshop.commands.components.ICmd;
 import com.sebbaindustries.dynamicshop.commands.components.ITab;
@@ -24,7 +23,6 @@ public class AdminShop extends CommandFactory implements ICmd, ITab {
 
     @Override
     public void execute(@NotNull CommandSender sender, @NotNull String[] args) {
-        Core.gCore().dynEngine.container.dataDump();
     }
 
     @Override

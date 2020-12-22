@@ -1,154 +1,170 @@
 package com.sebbaindustries.dynamicshop.engine.components.gui.guis;
 
 import com.sebbaindustries.dynamicshop.Core;
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIAction;
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIMetaData;
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterface;
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.UserInterfaceItem;
+import com.sebbaindustries.dynamicshop.engine.components.gui.cache.InventoryHolderCache;
+import com.sebbaindustries.dynamicshop.engine.components.gui.cache.MainPageUICache;
+import com.sebbaindustries.dynamicshop.engine.components.gui.components.*;
+import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.Clickable;
+import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.UserInterface;
+import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
 import com.sebbaindustries.dynamicshop.utils.Color;
+import com.sebbaindustries.dynamicshop.utils.UserInterfaceUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
-import java.util.HashMap;
+import java.util.*;
 
 public class MainPageUI implements UserInterface {
 
-    public MainPageUI() {
-        metaData = new UIMetaData();
-        String guiName = Core.gCore().dynEngine.shopUI.mainPageCache.guiName;
-        metaData.setTitle(Color.format(guiName));
-
-        UserInterfaceItem background = Core.gCore().dynEngine.shopUI.mainPageCache.background;
-        if (background != null) this.background = background;
-
-        inventorySlots = Core.gCore().dynEngine.shopUI.mainPageCache.item;
-        sizeGUI();
-        inventory = Bukkit.createInventory(null, metaData.getRows()*9, metaData.getTitle());
-    }
-
-    private Player player;
-    private Inventory inventory;
-    private UIMetaData metaData;
-    private HashMap<Integer, UserInterfaceItem> inventorySlots;
-    private UserInterfaceItem background = null;
-
-    private void sizeGUI() {
-        int size = Core.gCore().dynEngine.shopUI.mainPageCache.size;
-        if (size == -1) {
-            int guiRows = 1;
-            for (int position : inventorySlots.keySet()) {
-                double potentialGUISize = Math.ceil((double) position / 9.0);
-                if (guiRows < potentialGUISize) guiRows = (int) potentialGUISize;
-            }
-            metaData.setRows(guiRows);
-            return;
-        }
-        metaData.setRows(size);
-    }
-
-    @Override
-    public void open(Player player) {
-        player.openInventory(inventory);
+    public MainPageUI(Player player) {
         this.player = player;
-        Core.gCore().dynEngine.shopUI.invHolder.userInterfaceHashMap.put(player, this);
+        this.cache = Core.gCore().getEngine().instance().getShopUI().getMainPageCache();
+
+        inventory = Bukkit.createInventory(null, cache.getSize() * 9, Color.format(cache.getName()));
+
+        // Update/flush cache
+        InventoryHolderCache.cache(player, this);
     }
 
-    @Override
-    public void draw() {
-        Core.gCore().dynEngine.shopUI.invHolder.userInterfaceHashMap.put(player, this);
-    }
+    private final Player player;
+    private Inventory inventory;
+    private MainPageUICache cache;
+    private Map<Integer, Object> mappedInventory = new TreeMap<>();
+
 
     @Override
-    public void clear() {
-        Core.gCore().dynEngine.shopUI.invHolder.userInterfaceHashMap.put(player, this);
+    public void open() {
+        player.openInventory(inventory);
+        InventoryHolderCache.cache(player, this);
     }
 
     @Override
     public void update() {
-        inventory = Bukkit.createInventory(null, metaData.getRows()*9, metaData.getTitle());
-        fillBackground();
-        inventorySlots.forEach((position, item) -> inventory.setItem(position, item.getBukkitItemStack()));
-        fillCategories();
-        Core.gCore().dynEngine.shopUI.invHolder.userInterfaceHashMap.put(player, this);
-    }
-
-    private void fillCategories() {
-        //Core.gCore().dynEngine.container.getPrioritizedCategoryList().forEach(shopCategory -> inventorySlots.forEach(((position, item) -> {
-        //    if (!item.isPlaceholder()) return;
-        //    inventory.setItem(position, shopCategory.icon().getBukkitItemStack());
-        //})));
-
-        Core.gCore().dynEngine.container.getPrioritizedCategoryList().forEach(category -> {
-            inventorySlots.entrySet().stream().anyMatch(entry -> {
-                if (entry.getValue().isPlaceholder()) {
-                    inventory.setItem(entry.getKey(), category.icon().getBukkitItemStack());
-                    var itm = entry.getValue();
-                    itm.placeholder = false;
-                    inventorySlots.put(entry.getKey(), itm);
-                    return true;
-                }
-                return false;
-            });
-        });
-    }
-
-    private void fillBackground() {
-        if (this.background == null) return;
-        for (int i = 0; i < metaData.getRows()*9; i++) {
-            inventory.setItem(i, new ItemStack(background.getBukkitItemStack()));
+        /*
+        background
+         */
+        UIBackground background = cache.getBackground();
+        for (int i = 0; i < cache.getSize() * 9; i++) {
+            inventory.setItem(i, UserInterfaceUtils.getBukkitItemStack(background));
+            mappedInventory.put(i, background);
         }
+
+        /*
+        Buttons
+         */
+        cache.getButton().forEach(button -> {
+            inventory.setItem(button.getSlot(), UserInterfaceUtils.getBukkitItemStack(button));
+            mappedInventory.put(button.getSlot(), button);
+        });
+
+        /*
+        Categories
+         */
+        List<ShopCategory> categories = Core.gCore().getEngine().instance().getContainer().getPrioritizedCategoryList();
+        cache.getCategory().forEach(uiCategory -> {
+            ShopCategory category = null;
+            for (ShopCategory shopCategory : categories) {
+                category = shopCategory;
+                categories.remove(shopCategory);
+                break;
+            }
+
+            if (category == null) {
+                inventory.setItem(uiCategory.getSlot(), UserInterfaceUtils.getBukkitItemStack(new ShopCategory()));
+                mappedInventory.put(uiCategory.getSlot(), uiCategory);
+                return;
+            }
+
+            uiCategory.setCategory(category);
+
+            inventory.setItem(uiCategory.getSlot(), UserInterfaceUtils.getBukkitItemStack(category));
+            mappedInventory.put(uiCategory.getSlot(), uiCategory);
+        });
+
+
+        InventoryHolderCache.cache(player, this);
+    }
+
+    @Override
+    public void updateUISlots() {
+
     }
 
     @Override
     public void close() {
         player.closeInventory();
-        Core.gCore().dynEngine.shopUI.invHolder.userInterfaceHashMap.remove(player);
+        InventoryHolderCache.removeIfPresent(player);
     }
 
     @Override
     public void onRightClick(int slot) {
-        if (inventorySlots.get(slot) == null) return;
-        UIAction.Actions action = inventorySlots.get(slot).onRightClick.get();
-        if (action == null) return;
-        switch (action) {
-            case CLOSE -> close();
-            case OPEN -> {
-                UserInterface ui = new StorePageUI();
-                ui.update();
-                ui.open(player);
-            }
+        Object object = mappedInventory.get(slot);
+        if (!UserInterfaceUtils.isClickable(object)) return;
+
+        if (object instanceof UIButton) {
+            Clickable button = (UIButton) object;
+            buttonHandler(button.rightClick());
+            return;
+        }
+
+        if (object instanceof UICategory) {
+            Clickable category = (UICategory) object;
+            categoryHandler(category.rightClick(), slot);
         }
     }
 
     @Override
     public void onLeftClick(int slot) {
-        if (inventorySlots.get(slot) == null) return;
-        UIAction.Actions action = inventorySlots.get(slot).onLeftClick.get();
-        if (action == null) return;
-        switch (action) {
-            case CLOSE -> close();
-            case OPEN -> {
-                UserInterface ui = new StorePageUI();
-                ui.update();
-                ui.open(player);
-            }
+        Object object = mappedInventory.get(slot);
+        if (!UserInterfaceUtils.isClickable(object)) return;
+
+        if (object instanceof UIButton) {
+            Clickable button = (UIButton) object;
+            buttonHandler(button.leftClick());
+            return;
+        }
+
+        if (object instanceof UICategory) {
+            Clickable category = (UICategory) object;
+            categoryHandler(category.leftClick(), slot);
         }
     }
 
     @Override
     public void onMiddleClick(int slot) {
+        Object object = mappedInventory.get(slot);
+        if (!UserInterfaceUtils.isClickable(object)) return;
 
+        if (object instanceof UIButton) {
+            Clickable button = (UIButton) object;
+            buttonHandler(button.middleClick());
+            return;
+        }
+
+        if (object instanceof UICategory) {
+            Clickable category = (UICategory) object;
+            categoryHandler(category.middleClick(), slot);
+        }
     }
 
-    @Override
-    public void setMetaData(UIMetaData metaData) {
-        this.metaData = metaData;
+    private void buttonHandler(ClickActions action) {
+        switch (action) {
+            case EXIT, CLOSE, BACK -> close();
+        }
     }
 
-    @Override
-    public UIMetaData getMetaData() {
-        return this.metaData;
+    private void categoryHandler(ClickActions action, int slot) {
+        switch (action) {
+            case EXIT, CLOSE, BACK -> close();
+            case OPEN -> {
+                UICategory category = (UICategory) mappedInventory.get(slot);
+                if (category.getCategory() == null) return;
+                UserInterface ui = new StorePageUI(player, category.getCategory());
+                ui.update();
+                ui.open();
+            }
+        }
     }
+
 }

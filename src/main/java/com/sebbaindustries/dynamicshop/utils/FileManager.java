@@ -4,7 +4,9 @@ import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.log.PluginLogger;
 import org.apache.commons.io.FileUtils;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 
 /**
@@ -22,7 +24,9 @@ public final class FileManager {
 
         GUI_MAIN_PAGE("shop/gui/main_page.toml"),
         GUI_STORE_PAGE("shop/gui/store_page.toml"),
-        GUI_TRANSACTION_PAGE("shop/gui/transaction_page.toml"),
+        GUI_BUY_PAGE("shop/gui/buy_page.toml"),
+        GUI_SELL_PAGE("shop/gui/sell_page.toml"),
+
         ;
 
         public String fileName;

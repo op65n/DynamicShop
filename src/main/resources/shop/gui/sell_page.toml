@@ -1,0 +1,86 @@
+name = "Selling %item%"
+itemSlot = 22
+
+# Add buttons
+# Tis button Adds some amount of items from purchasded product
+# they disapear if there is not enough items.
+[[button]]
+material = "LIME_STAINED_GLASS_PANE"
+amount = 64
+display = "Set to 64"
+onClick = "ADD"
+slot = 26
+
+[[button]]
+material = "LIME_STAINED_GLASS_PANE"
+amount = 10
+display = "Add 10"
+onClick = "ADD"
+slot = 25
+
+[[button]]
+material = "LIME_STAINED_GLASS_PANE"
+amount = 1
+display = "Add 1"
+onClick = "ADD"
+slot = 24
+
+# Remove buttons
+# Tis button removes some amount of items from purchasded product
+# they disapear if there is not enough items.
+[[button]]
+material = "RED_STAINED_GLASS_PANE"
+amount = 1
+display = "Set to 1"
+onClick = "SET"
+slot = 18
+
+[[button]]
+material = "RED_STAINED_GLASS_PANE"
+amount = 10
+display = "Remove 10"
+onClick = "REMOVE"
+slot = 19
+
+[[button]]
+material = "RED_STAINED_GLASS_PANE"
+amount = 1
+display = "Remove 1"
+onClick = "REMOVE"
+slot = 20
+
+# Buy more
+#
+#
+[[button]]
+material = "LIME_STAINED_GLASS"
+amount = 64
+display = "Buy more"
+onClick = "MORE"
+slot = 41
+
+# Buy items
+#
+#
+[[button]]
+material = "POTATO"
+display = " "
+lore = [
+    "&f&l    ● &c&lSell&f&l ●    &r",
+    " "
+]
+onClick = "SELL"
+slot = 39
+
+# exit / cancel
+#
+#
+[[button]]
+material = "KNOWLEDGE_BOOK"
+display = " "
+lore = [
+    "&f&l    ● &c&lBack&f&l ●    &r",
+    " "
+]
+onClick = "BACK"
+slot = 49

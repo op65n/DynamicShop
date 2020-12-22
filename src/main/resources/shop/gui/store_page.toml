@@ -1,2 +1,24 @@
-[item.0]
-material = "GLASS"
+name = "&6&lShop -> %category%"
+size = 6
+
+[background]
+material = "BLACK_STAINED_GLASS_PANE"
+display = " "
+
+[items]
+cornerA = 10
+cornerB = 34
+collapsed = true
+onRightClick = "BUY"
+onLeftClick = "SELL"
+onMiddleClick = "SELL_ALL"
+
+[[button]]
+material = "KNOWLEDGE_BOOK"
+display = " "
+lore = [
+  "&f&l    ● &c&lBackf&l ●    &r",
+  " "
+]
+onClick = "BACK"
+slot = 49

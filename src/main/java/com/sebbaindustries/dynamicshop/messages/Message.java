@@ -35,7 +35,7 @@ public class Message {
      * @return message class instance
      */
     public static Message get() {
-        return Core.gCore().message;
+        return Core.gCore().getMessage();
     }
 
 }

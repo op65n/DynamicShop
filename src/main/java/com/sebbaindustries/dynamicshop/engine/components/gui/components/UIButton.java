@@ -1,27 +1,26 @@
-package com.sebbaindustries.dynamicshop.engine.components.shop;
+package com.sebbaindustries.dynamicshop.engine.components.gui.components;
 
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.ClickActions;
 import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.BukkitItemStack;
 import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.Clickable;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.bukkit.Material;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
 @Setter
-public class ShopItem implements BukkitItemStack, Clickable {
+@NoArgsConstructor
+public class UIButton implements BukkitItemStack, Clickable {
 
-    private int priority = 1000;
-
-    private Material material = Material.ACACIA_BOAT;
+    private Material material;
     private String display;
-    private List<String> lore;
-    private Double buyPrice;
-    private Double sellPrice;
-
+    private List<String> lore = new ArrayList<>();
     private int amount = 1;
+
+    private int slot;
 
     private ClickActions onClick = ClickActions.NA;
     private ClickActions onRightClick = ClickActions.NA;

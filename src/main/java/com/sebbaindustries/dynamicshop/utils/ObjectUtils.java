@@ -38,7 +38,7 @@ public final class ObjectUtils {
      * This will be removed soon, don't use unless necessary!
      *
      * @param fileName N/A
-     * @param object N/A
+     * @param object   N/A
      */
     @Deprecated
     public static void saveGsonFile(String fileName, Object object) {
@@ -56,8 +56,8 @@ public final class ObjectUtils {
      * This will be removed soon, don't use unless necessary!
      *
      * @param object N/A
-     * @param cl N/A
-     * @param <T> N/A
+     * @param cl     N/A
+     * @param <T>    N/A
      * @return N/A
      */
     @Deprecated
@@ -69,8 +69,8 @@ public final class ObjectUtils {
      * This will be removed soon, don't use unless necessary!
      *
      * @param fileName N/A
-     * @param cl N/A
-     * @param <T> N/A
+     * @param cl       N/A
+     * @param <T>      N/A
      * @return N/A
      */
     @Deprecated
