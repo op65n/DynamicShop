@@ -21,6 +21,18 @@ public class ShopItem implements BukkitItemStack, Clickable {
     private Double buyPrice;
     private Double sellPrice;
 
+    private int amount = 1;
+
+    private ClickActions onClick = ClickActions.NA;
+    private ClickActions onRightClick = ClickActions.NA;
+    private ClickActions onLeftClick = ClickActions.NA;
+    private ClickActions onMiddleClick = ClickActions.NA;
+
+    @Override
+    public int amount() {
+        return this.amount;
+    }
+
     @Override
     public Material material() {
         return this.material;
@@ -38,16 +50,19 @@ public class ShopItem implements BukkitItemStack, Clickable {
 
     @Override
     public ClickActions rightClick() {
-        return ClickActions.NA;
+        if (this.onRightClick == ClickActions.NA) return this.onClick;
+        return this.onRightClick;
     }
 
     @Override
     public ClickActions leftClick() {
-        return ClickActions.NA;
+        if (this.onLeftClick == ClickActions.NA) return this.onClick;
+        return this.onLeftClick;
     }
 
     @Override
     public ClickActions middleClick() {
-        return ClickActions.NA;
+        if (this.onMiddleClick == ClickActions.NA) return this.onClick;
+        return this.onMiddleClick;
     }
 }
