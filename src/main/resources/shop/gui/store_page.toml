@@ -9,8 +9,9 @@ display = " "
 cornerA = 10
 cornerB = 34
 collapsed = true
-onClick = "OPEN"
-onMiddleClick = "STATISTICS"
+onRightClick = "BUY"
+onLeftClick = "SELL"
+onMiddleClick = "SELL_ALL"
 
 [[button]]
 material = "KNOWLEDGE_BOOK"
