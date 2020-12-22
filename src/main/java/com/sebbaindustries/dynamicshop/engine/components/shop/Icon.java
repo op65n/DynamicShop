@@ -16,5 +16,6 @@ public class Icon {
     private Material material = Material.ACACIA_BOAT;
     private String display;
     private List<String> lore = new ArrayList<>();
+    private int amount = 1;
 
 }
