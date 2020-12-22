@@ -3,7 +3,9 @@ package com.sebbaindustries.dynamicshop.engine.components;
 import com.moandjiezana.toml.Toml;
 import com.rits.cloning.Cloner;
 import com.sebbaindustries.dynamicshop.Core;
+import com.sebbaindustries.dynamicshop.engine.components.gui.cache.BuyPageUICache;
 import com.sebbaindustries.dynamicshop.engine.components.gui.cache.MainPageUICache;
+import com.sebbaindustries.dynamicshop.engine.components.gui.cache.SellPageUICache;
 import com.sebbaindustries.dynamicshop.engine.components.gui.cache.StorePageUICache;
 import com.sebbaindustries.dynamicshop.engine.components.maintainer.ComponentManager;
 import com.sebbaindustries.dynamicshop.log.PluginLogger;
@@ -31,9 +33,14 @@ public class DynShopUI {
         storePageCache = getUICacheFromToml(FileManager.PluginFiles.GUI_STORE_PAGE, StorePageUICache.class);
 
         /*
-        transaction_page.toml
+        buy_page.toml
          */
-        //transactionPageCache = getUICacheFromToml(FileManager.PluginFiles.GUI_TRANSACTION_PAGE);
+        buyPageCache = getUICacheFromToml(FileManager.PluginFiles.GUI_BUY_PAGE, BuyPageUICache.class);
+
+        /*
+        sell_page.toml
+         */
+        sellPageCache = getUICacheFromToml(FileManager.PluginFiles.GUI_SELL_PAGE, SellPageUICache.class);
 
     }
 
@@ -57,7 +64,9 @@ public class DynShopUI {
 
     private MainPageUICache mainPageCache;
     private StorePageUICache storePageCache;
-    //private UICache transactionPageCache;
+    private BuyPageUICache buyPageCache;
+    private SellPageUICache sellPageCache;
+
     private final Cloner cloner = new Cloner();
 
     public MainPageUICache getMainPageCache() {
@@ -70,8 +79,10 @@ public class DynShopUI {
         return cloner.deepClone(storePageCache);
     }
 
-    //public UICache getTransactionPageCache() {
-    //    // Java is retarded so we are forced to to this shit...
-    //    return cloner.deepClone(transactionPageCache);
-    //}
+    public BuyPageUICache getBuyPageCache() {
+        return cloner.deepClone(buyPageCache);
+    }
+
+    public SellPageUICache getSellPageCache() { return cloner.deepClone(sellPageCache); }
+
 }
