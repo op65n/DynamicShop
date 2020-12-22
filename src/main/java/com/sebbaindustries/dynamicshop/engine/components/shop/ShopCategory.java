@@ -7,7 +7,6 @@ import lombok.Setter;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -25,6 +24,11 @@ public class ShopCategory implements BukkitItemStack {
         List<ShopItem> sorted = new ArrayList<>(items);
         sorted.sort(Comparator.comparing(ShopItem::getPriority));
         return sorted;
+    }
+
+    @Override
+    public int amount() {
+        return icon.getAmount();
     }
 
     @Override
