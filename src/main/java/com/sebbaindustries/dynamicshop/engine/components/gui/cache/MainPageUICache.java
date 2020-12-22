@@ -14,7 +14,7 @@ import java.util.List;
 public class MainPageUICache {
 
     private String name = "$NULL";
-    private int size = -1;
+    private int size = 6;
 
     private UIBackground background;
     private List<UIButton> button = new ArrayList<>();
