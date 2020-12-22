@@ -24,7 +24,9 @@ public final class FileManager {
 
         GUI_MAIN_PAGE("shop/gui/main_page.toml"),
         GUI_STORE_PAGE("shop/gui/store_page.toml"),
-        GUI_TRANSACTION_PAGE("shop/gui/transaction_page.toml"),
+        GUI_BUY_PAGE("shop/gui/buy_page.toml"),
+        GUI_SELL_PAGE("shop/gui/sell_page.toml"),
+
         ;
 
         public String fileName;
