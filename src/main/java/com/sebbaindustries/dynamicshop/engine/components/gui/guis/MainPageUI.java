@@ -87,6 +87,11 @@ public class MainPageUI implements UserInterface {
     }
 
     @Override
+    public void updateUISlots() {
+
+    }
+
+    @Override
     public void close() {
         player.closeInventory();
         InventoryHolderCache.removeIfPresent(player);
