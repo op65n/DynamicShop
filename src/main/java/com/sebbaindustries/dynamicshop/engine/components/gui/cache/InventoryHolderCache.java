@@ -1,6 +1,7 @@
 package com.sebbaindustries.dynamicshop.engine.components.gui.cache;
 
 import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.UserInterface;
+import com.sebbaindustries.dynamicshop.log.DevLogger;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -18,11 +19,15 @@ public class InventoryHolderCache {
     }
 
     public static void removeIfPresent(Player player) {
-        if (isPresent(player)) userInterfaceHashMap.remove(player);
+        if (isPresent(player)) {
+            userInterfaceHashMap.remove(player);
+            DevLogger.log("Removed " + player + " from UI cache.");
+        }
     }
 
     public static void cache(Player player, UserInterface ui) {
         userInterfaceHashMap.put(player, ui);
+        DevLogger.log("Added " + player + " to UI cache.");
     }
 
 }
