@@ -17,8 +17,8 @@ onMiddleClick = "SELL_ALL"
 material = "KNOWLEDGE_BOOK"
 display = " "
 lore = [
-  "&f&l    ● &c&lBackf&l ●    &r",
-  " "
+    "&f&l    ● &c&lBack&f&l ●    &r",
+    " "
 ]
 onClick = "BACK"
 slot = 49
