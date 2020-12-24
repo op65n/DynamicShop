@@ -37,6 +37,7 @@ rsync -avP $FILENAME "${REMOTE}":"${BUILD_DIR}"
 
 ssh ${REMOTE} "
 cd /tmp/ &&
+rm -rf ${BASENAME} &&
 tar -xvf $FILENAME &&
 cd ${BASENAME} &&
 ./build.sh ${BUILD_FLAGS}
