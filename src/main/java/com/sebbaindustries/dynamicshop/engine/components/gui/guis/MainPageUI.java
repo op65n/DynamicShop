@@ -3,7 +3,10 @@ package com.sebbaindustries.dynamicshop.engine.components.gui.guis;
 import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.engine.components.gui.cache.InventoryHolderCache;
 import com.sebbaindustries.dynamicshop.engine.components.gui.cache.MainPageUICache;
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.*;
+import com.sebbaindustries.dynamicshop.engine.components.gui.components.ClickActions;
+import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIBackground;
+import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIButton;
+import com.sebbaindustries.dynamicshop.engine.components.gui.components.UICategory;
 import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.Clickable;
 import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.UserInterface;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
@@ -11,9 +14,12 @@ import com.sebbaindustries.dynamicshop.utils.Color;
 import com.sebbaindustries.dynamicshop.utils.UserInterfaceUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class MainPageUI implements UserInterface {
 
@@ -28,9 +34,9 @@ public class MainPageUI implements UserInterface {
     }
 
     private final Player player;
-    private Inventory inventory;
-    private MainPageUICache cache;
-    private Map<Integer, Object> mappedInventory = new TreeMap<>();
+    private final Inventory inventory;
+    private final MainPageUICache cache;
+    private final Map<Integer, Object> mappedInventory = new TreeMap<>();
 
 
     @Override
@@ -87,7 +93,7 @@ public class MainPageUI implements UserInterface {
     }
 
     @Override
-    public void updateUISlots() {
+    public void updateUISlots(boolean updateCurrent) {
 
     }
 
@@ -98,53 +104,27 @@ public class MainPageUI implements UserInterface {
     }
 
     @Override
-    public void onRightClick(int slot) {
+    public void onClick(int slot, ClickType clickType) {
         Object object = mappedInventory.get(slot);
         if (!UserInterfaceUtils.isClickable(object)) return;
 
         if (object instanceof UIButton) {
             Clickable button = (UIButton) object;
-            buttonHandler(button.rightClick());
+            switch (clickType) {
+                case RIGHT -> buttonHandler(button.rightClick());
+                case LEFT -> buttonHandler(button.leftClick());
+                case MIDDLE -> buttonHandler(button.middleClick());
+            }
             return;
         }
 
         if (object instanceof UICategory) {
             Clickable category = (UICategory) object;
-            categoryHandler(category.rightClick(), slot);
-        }
-    }
-
-    @Override
-    public void onLeftClick(int slot) {
-        Object object = mappedInventory.get(slot);
-        if (!UserInterfaceUtils.isClickable(object)) return;
-
-        if (object instanceof UIButton) {
-            Clickable button = (UIButton) object;
-            buttonHandler(button.leftClick());
-            return;
-        }
-
-        if (object instanceof UICategory) {
-            Clickable category = (UICategory) object;
-            categoryHandler(category.leftClick(), slot);
-        }
-    }
-
-    @Override
-    public void onMiddleClick(int slot) {
-        Object object = mappedInventory.get(slot);
-        if (!UserInterfaceUtils.isClickable(object)) return;
-
-        if (object instanceof UIButton) {
-            Clickable button = (UIButton) object;
-            buttonHandler(button.middleClick());
-            return;
-        }
-
-        if (object instanceof UICategory) {
-            Clickable category = (UICategory) object;
-            categoryHandler(category.middleClick(), slot);
+            switch (clickType) {
+                case RIGHT -> categoryHandler(category.rightClick(), slot);
+                case LEFT -> categoryHandler(category.leftClick(), slot);
+                case MIDDLE -> categoryHandler(category.middleClick(), slot);
+            }
         }
     }
 
