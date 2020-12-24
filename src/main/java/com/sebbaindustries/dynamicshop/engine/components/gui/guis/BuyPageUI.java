@@ -4,9 +4,7 @@ import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.engine.components.gui.cache.BuyPageUICache;
 import com.sebbaindustries.dynamicshop.engine.components.gui.cache.InventoryHolderCache;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.ClickActions;
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIBackground;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIButton;
-import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.BukkitItemStack;
 import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.Clickable;
 import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.UserInterface;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
@@ -15,6 +13,7 @@ import com.sebbaindustries.dynamicshop.utils.Color;
 import com.sebbaindustries.dynamicshop.utils.UserInterfaceUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 
 import java.util.Map;
@@ -34,13 +33,13 @@ public class BuyPageUI implements UserInterface {
         InventoryHolderCache.cache(player, this);
     }
 
-    private Player player;
+    private final Player player;
     private Inventory inventory;
-    private BuyPageUICache cache;
+    private final BuyPageUICache cache;
     private Map<Integer, Object> mappedInventory = new TreeMap<>();
-    private ShopItem selectedItem;
+    private final ShopItem selectedItem;
     private int itemAmount = 1;
-    private ShopCategory backPage;
+    private final ShopCategory backPage;
 
     @Override
     public void open() {
@@ -50,67 +49,47 @@ public class BuyPageUI implements UserInterface {
 
     @Override
     public void update() {
-        /*
-        background
-         */
-        // TODO: Background an all UI's
-        UIBackground background = cache.getBackground();
-        if (background != null && background.getMaterial() != null) {
-            for (int i = 0; i < cache.getSize() * 9; i++) {
-                inventory.setItem(i, UserInterfaceUtils.getBukkitItemStack(background));
-                mappedInventory.put(i, background);
-            }
-        }
+        updateUISlots(false);
 
-        /*
-        Buttons
-         */
-        cache.getButton().forEach(button -> {
-            inventory.setItem(button.getSlot(), UserInterfaceUtils.getBukkitItemStack(button));
-            mappedInventory.put(button.getSlot(), button);
-        });
-
-        /*
-        Item
-         */
-        selectedItem.setAmount(itemAmount);
-        mappedInventory.put(cache.getItemSlot(), selectedItem);
-
-        int newSize = 0;
-
-        for (Map.Entry<Integer, Object> entry : mappedInventory.entrySet()) {
-            if (entry.getValue() instanceof UIBackground) continue;
-            if (newSize < entry.getKey()) newSize = entry.getKey();
-        }
-
-        newSize = (int) Math.ceil((double) newSize / 9.0);
-
-        cache.setSize(newSize);
+        cache.setSize(UserInterfaceUtils.calculateInventorySize(mappedInventory));
 
         inventory = Bukkit.createInventory(null, cache.getSize() * 9, Color.format(cache.getName()));
-        mappedInventory.forEach((slot, item) -> {
-            if (slot > cache.getSize()*9-1) return;
-            if (item instanceof BukkitItemStack) {
-                BukkitItemStack bukkitItemStack = (BukkitItemStack) item;
-                inventory.setItem(slot, UserInterfaceUtils.getBukkitItemStack(bukkitItemStack));
-            }
-        });
+        UserInterfaceUtils.setupInventory(inventory, mappedInventory, cache.getSize());
 
-        player.openInventory(inventory);
         InventoryHolderCache.cache(player, this);
     }
 
     @Override
-    public void updateUISlots() {
+    public void updateUISlots(boolean updateCurrent) {
+        mappedInventory.clear();
+
+        /*
+        background
+         */
+        mappedInventory = UserInterfaceUtils.createBackground(cache.getBackground(), cache.getSize());
+
+        /*
+        buttons
+         */
+        cache.getButton().forEach(button -> {
+            if (button.getOnClick() == ClickActions.SET && button.getAmount() == itemAmount) return;
+            if (button.getOnClick() == ClickActions.ADD && button.getAmount() + itemAmount > selectedItem.getMaterial().getMaxStackSize())
+                return;
+            if (button.getOnClick() == ClickActions.REMOVE && itemAmount - button.getAmount() < 1) return;
+            mappedInventory.put(button.getSlot(), button);
+        });
+
+        /*
+        item
+         */
         selectedItem.setAmount(itemAmount);
         mappedInventory.put(cache.getItemSlot(), selectedItem);
-        mappedInventory.forEach((slot, item) -> {
-            if (slot > cache.getSize()*9-1) return;
-            if (item instanceof BukkitItemStack) {
-                BukkitItemStack bukkitItemStack = (BukkitItemStack) item;
-                player.getOpenInventory().setItem(slot, UserInterfaceUtils.getBukkitItemStack(bukkitItemStack));
-            }
-        });
+
+        InventoryHolderCache.cache(player, this);
+
+        if (!updateCurrent) return;
+        UserInterfaceUtils.clearUI(player);
+        UserInterfaceUtils.fillInventory(player, mappedInventory, cache.getSize());
         player.updateInventory();
     }
 
@@ -121,34 +100,16 @@ public class BuyPageUI implements UserInterface {
     }
 
     @Override
-    public void onRightClick(int slot) {
+    public void onClick(int slot, ClickType clickType) {
         Object object = mappedInventory.get(slot);
         if (!UserInterfaceUtils.isClickable(object)) return;
         if (object instanceof UIButton) {
             Clickable button = (UIButton) object;
-            buttonHandler(button.rightClick(), slot);
-            return;
-        }
-    }
-
-    @Override
-    public void onLeftClick(int slot) {
-        Object object = mappedInventory.get(slot);
-        if (!UserInterfaceUtils.isClickable(object)) return;
-        if (object instanceof UIButton) {
-            Clickable button = (UIButton) object;
-            buttonHandler(button.leftClick(), slot);
-            return;
-        }
-    }
-
-    @Override
-    public void onMiddleClick(int slot) {
-        Object object = mappedInventory.get(slot);
-        if (!UserInterfaceUtils.isClickable(object)) return;
-        if (object instanceof UIButton) {
-            Clickable button = (UIButton) object;
-            buttonHandler(button.middleClick(), slot);
+            switch (clickType) {
+                case RIGHT -> buttonHandler(button.rightClick(), slot);
+                case LEFT -> buttonHandler(button.leftClick(), slot);
+                case MIDDLE -> buttonHandler(button.middleClick(), slot);
+            }
             return;
         }
     }
@@ -166,19 +127,19 @@ public class BuyPageUI implements UserInterface {
                 if (button.getAmount() + itemAmount <= button.getMaterial().getMaxStackSize()) {
                     itemAmount += button.getAmount();
                 }
-                updateUISlots();
+                updateUISlots(true);
             }
             case REMOVE -> {
                 UIButton button = (UIButton) mappedInventory.get(slot);
                 if (itemAmount - button.getAmount() > 0) {
                     itemAmount -= button.getAmount();
                 }
-                updateUISlots();
+                updateUISlots(true);
             }
             case SET -> {
                 UIButton button = (UIButton) mappedInventory.get(slot);
                 itemAmount = button.getAmount();
-                updateUISlots();
+                updateUISlots(true);
             }
         }
     }
