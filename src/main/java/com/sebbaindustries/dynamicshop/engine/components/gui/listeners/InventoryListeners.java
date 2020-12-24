@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.jetbrains.annotations.NotNull;
@@ -26,9 +27,9 @@ public class InventoryListeners implements @NotNull Listener {
             e.setCancelled(true);
             UserInterface ui = InventoryHolderCache.cached().get(player);
             // Preform click actions
-            if (e.isLeftClick()) ui.onLeftClick(e.getRawSlot());
-            if (e.isRightClick()) ui.onRightClick(e.getRawSlot());
-            if (e.getClick().isCreativeAction()) ui.onMiddleClick(e.getRawSlot());
+            if (e.isLeftClick()) ui.onClick(e.getRawSlot(), ClickType.LEFT);
+            if (e.isRightClick()) ui.onClick(e.getRawSlot(), ClickType.RIGHT);
+            if (e.getClick().isCreativeAction()) ui.onClick(e.getRawSlot(), ClickType.MIDDLE);
         }
     }
 
