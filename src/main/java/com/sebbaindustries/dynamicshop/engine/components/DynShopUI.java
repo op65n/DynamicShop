@@ -83,6 +83,8 @@ public class DynShopUI {
         return cloner.deepClone(buyPageCache);
     }
 
-    public SellPageUICache getSellPageCache() { return cloner.deepClone(sellPageCache); }
+    public SellPageUICache getSellPageCache() {
+        return cloner.deepClone(sellPageCache);
+    }
 
 }

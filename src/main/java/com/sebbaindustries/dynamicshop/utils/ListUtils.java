@@ -10,7 +10,7 @@ public class ListUtils<T> {
         this.list = new Cloner().deepClone(list);
     }
 
-    private List<T> list;
+    private final List<T> list;
 
     public T getNext() {
         if (list.isEmpty()) return null;

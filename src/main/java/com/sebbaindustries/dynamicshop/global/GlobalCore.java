@@ -2,7 +2,6 @@ package com.sebbaindustries.dynamicshop.global;
 
 import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.commands.CommandManager;
-import com.sebbaindustries.dynamicshop.engine.DynEngine;
 import com.sebbaindustries.dynamicshop.engine.Engine;
 import com.sebbaindustries.dynamicshop.engine.structure.DirectoryStructure;
 import com.sebbaindustries.dynamicshop.log.PluginLogger;
@@ -15,7 +14,8 @@ import lombok.Setter;
  * @author SebbaIndustries
  * @version 1.0
  */
-@Getter @Setter
+@Getter
+@Setter
 public class GlobalCore {
 
     public final Core core;

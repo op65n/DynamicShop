@@ -1,19 +1,16 @@
 package com.sebbaindustries.dynamicshop.engine.components.gui.interfaces;
 
+import org.bukkit.event.inventory.ClickType;
+
 public interface UserInterface {
 
     void open();
 
     void update();
 
-    void updateUISlots();
+    void updateUISlots(boolean updateCurrent);
 
     void close();
 
-    void onRightClick(int slot);
-
-    void onLeftClick(int slot);
-
-    void onMiddleClick(int slot);
-
+    void onClick(int slot, ClickType clickType);
 }

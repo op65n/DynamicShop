@@ -6,10 +6,11 @@ import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
 import com.sebbaindustries.dynamicshop.engine.structure.DirectoryStructure;
 import com.sebbaindustries.dynamicshop.log.PluginLogger;
 import com.sebbaindustries.dynamicshop.utils.FileUtils;
-import lombok.Getter;
 
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 public class DynShopContainer {
 
@@ -61,7 +62,7 @@ public class DynShopContainer {
         });
     }
 
-    private List<ShopCategory> categories = new ArrayList<>();
+    private final List<ShopCategory> categories = new ArrayList<>();
 
     /**
      * Returns sorted list of categories based on priority value, base priority

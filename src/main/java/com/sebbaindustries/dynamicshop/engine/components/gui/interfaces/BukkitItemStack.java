@@ -7,8 +7,11 @@ import java.util.List;
 public interface BukkitItemStack {
 
     int amount();
+
     Material material();
+
     String display();
+
     List<String> lore();
 
 }

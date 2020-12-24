@@ -13,8 +13,10 @@ import lombok.Getter;
 
 public class DynEngine implements Engine {
 
-    @Getter private DynShopContainer container;
-    @Getter private DynShopUI shopUI;
+    @Getter
+    private DynShopContainer container;
+    @Getter
+    private DynShopUI shopUI;
 
     @Override
     public String codename() {

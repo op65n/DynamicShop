@@ -5,7 +5,9 @@ import com.sebbaindustries.dynamicshop.engine.components.gui.components.ClickAct
 public interface Clickable {
 
     ClickActions rightClick();
+
     ClickActions leftClick();
+
     ClickActions middleClick();
 
 }
