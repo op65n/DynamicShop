@@ -16,6 +16,7 @@ import com.sebbaindustries.dynamicshop.utils.ListUtils;
 import com.sebbaindustries.dynamicshop.utils.UserInterfaceUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 
 import java.util.Map;
@@ -37,9 +38,9 @@ public class StorePageUI implements UserInterface {
     private final Player player;
     private Inventory inventory;
 
-    private StorePageUICache cache;
-    private ShopCategory category;
-    private Map<Integer, Object> mappedInventory = new TreeMap<>();
+    private final StorePageUICache cache;
+    private final ShopCategory category;
+    private final Map<Integer, Object> mappedInventory = new TreeMap<>();
 
     int collapseBy = 0;
 
@@ -85,7 +86,7 @@ public class StorePageUI implements UserInterface {
 
         inventory = Bukkit.createInventory(null, cache.getSize() * 9, Color.format(cache.getName()));
         mappedInventory.forEach((slot, item) -> {
-            if (slot > cache.getSize()*9-1) return;
+            if (slot > cache.getSize() * 9 - 1) return;
             if (item instanceof BukkitItemStack) {
                 BukkitItemStack bukkitItemStack = (BukkitItemStack) item;
                 inventory.setItem(slot, UserInterfaceUtils.getBukkitItemStack(bukkitItemStack));
@@ -96,7 +97,7 @@ public class StorePageUI implements UserInterface {
     }
 
     @Override
-    public void updateUISlots() {
+    public void updateUISlots(boolean updateCurrent) {
 
     }
 
@@ -104,25 +105,25 @@ public class StorePageUI implements UserInterface {
         int cornerA = cache.getItems().getCornerA();
         int cornerB = cache.getItems().getCornerB();
 
-        int columnStart = (cornerA+1) / 9;
-        int columnEnd = (cornerB+1) / 9;
+        int columnStart = (cornerA + 1) / 9;
+        int columnEnd = (cornerB + 1) / 9;
 
         int columnLength = Math.abs(columnStart - columnEnd) + 1;
-        int rowLength = Math.abs(cornerA - (cornerB - ((columnLength-1) * 9))) + 1;
+        int rowLength = Math.abs(cornerA - (cornerB - ((columnLength - 1) * 9))) + 1;
 
         ListUtils<ShopItem> listUtils = new ListUtils<>(category.getOrderedItemList());
 
         int itemCount = 0;
 
         for (int y = 0; y < columnEnd; y++) {
-            for (int x = cornerA; x < rowLength+cornerA; x++) {
+            for (int x = cornerA; x < rowLength + cornerA; x++) {
                 ShopItem item = listUtils.getNext();
                 if (item == null) continue;
                 item.setOnLeftClick(cache.getItems().getOnLeftClick());
                 item.setOnRightClick(cache.getItems().getOnRightClick());
                 item.setOnMiddleClick(cache.getItems().getOnMiddleClick());
                 item.setOnClick(cache.getItems().getOnClick());
-                mappedInventory.put(x+(y*9), item);
+                mappedInventory.put(x + (y * 9), item);
                 itemCount++;
             }
         }
@@ -142,49 +143,25 @@ public class StorePageUI implements UserInterface {
     }
 
     @Override
-    public void onRightClick(int slot) {
+    public void onClick(int slot, ClickType clickType) {
         Object object = mappedInventory.get(slot);
         if (!UserInterfaceUtils.isClickable(object)) return;
         if (object instanceof UIButton) {
             Clickable button = (UIButton) object;
-            buttonHandler(button.rightClick());
+            switch (clickType) {
+                case RIGHT -> buttonHandler(button.rightClick());
+                case LEFT -> buttonHandler(button.leftClick());
+                case MIDDLE -> buttonHandler(button.middleClick());
+            }
             return;
         }
         if (object instanceof ShopItem) {
             Clickable item = (ShopItem) object;
-            itemHandler(item.rightClick(), slot);
-        }
-    }
-
-    @Override
-    public void onLeftClick(int slot) {
-        Object object = mappedInventory.get(slot);
-        if (!UserInterfaceUtils.isClickable(object)) return;
-
-        if (object instanceof UIButton) {
-            Clickable button = (UIButton) object;
-            buttonHandler(button.leftClick());
-            return;
-        }
-        if (object instanceof ShopItem) {
-            Clickable item = (ShopItem) object;
-            itemHandler(item.leftClick(), slot);
-        }
-    }
-
-    @Override
-    public void onMiddleClick(int slot) {
-        Object object = mappedInventory.get(slot);
-        if (!UserInterfaceUtils.isClickable(object)) return;
-
-        if (object instanceof UIButton) {
-            Clickable button = (UIButton) object;
-            buttonHandler(button.middleClick());
-            return;
-        }
-        if (object instanceof ShopItem) {
-            Clickable item = (ShopItem) object;
-            itemHandler(item.middleClick(), slot);
+            switch (clickType) {
+                case RIGHT -> itemHandler(item.rightClick(), slot);
+                case LEFT -> itemHandler(item.leftClick(), slot);
+                case MIDDLE -> itemHandler(item.middleClick(), slot);
+            }
         }
     }
 
