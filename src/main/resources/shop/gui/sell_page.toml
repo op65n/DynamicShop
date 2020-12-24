@@ -8,7 +8,7 @@ itemSlot = 22
 material = "LIME_STAINED_GLASS_PANE"
 amount = 64
 display = "Set to 64"
-onClick = "ADD"
+onClick = "SET"
 slot = 26
 
 [[button]]
