@@ -3,6 +3,7 @@ package com.sebbaindustries.dynamicshop.utils;
 import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIBackground;
 import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.BukkitItemStack;
 import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.Clickable;
+import com.sebbaindustries.dynamicshop.engine.components.shop.ShopItem;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 public class UserInterfaceUtils {
 
@@ -89,6 +91,26 @@ public class UserInterfaceUtils {
             }
         });
         return inventory;
+    }
+
+    public static ShopItem applyItemPlaceholders(ShopItem shopItem) {
+        String display = shopItem.getDisplay();
+        display = display.replace("%item%", shopItem.getMaterial().name());
+        shopItem.setDisplay(display);
+
+        if (shopItem.getLore() != null && !shopItem.getLore().isEmpty()) {
+            List<String> lore = shopItem.getLore().stream()
+                    .map(l4e -> l4e.replace("%buy_price%", String.valueOf(shopItem.getBuyPrice() * shopItem.amount())))
+                    .map(l4e -> l4e.replace("%buy_price_single%", String.valueOf(shopItem.getBuyPrice())))
+                    .map(l4e -> l4e.replace("%sell_price%", String.valueOf(shopItem.getSellPrice() * shopItem.amount())))
+                    .map(l4e -> l4e.replace("%sell_price_single%", String.valueOf(shopItem.getSellPrice())))
+                    .map(l4e -> l4e.replace("%currency%", "€"))
+                    .map(Color::format)
+                    .collect(Collectors.toList());
+            shopItem.setLore(lore);
+        }
+
+        return shopItem;
     }
 
 }
