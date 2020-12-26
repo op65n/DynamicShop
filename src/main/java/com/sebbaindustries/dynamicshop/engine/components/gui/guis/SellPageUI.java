@@ -37,8 +37,7 @@ public class SellPageUI implements UserInterface {
     private Inventory inventory;
     private final SellPageUICache cache;
     private Map<Integer, Object> mappedInventory = new TreeMap<>();
-    private final ShopItem selectedItem;
-    private int itemAmount = 1;
+    private ShopItem selectedItem;
     private final ShopCategory backPage;
 
     @Override
@@ -72,18 +71,19 @@ public class SellPageUI implements UserInterface {
         buttons
          */
         cache.getButton().forEach(button -> {
-            if (button.getOnClick() == ClickActions.SET && button.getAmount() == itemAmount) return;
-            if (button.getOnClick() == ClickActions.ADD && button.getAmount() + itemAmount > selectedItem.getMaterial().getMaxStackSize())
-                return;
-            if (button.getOnClick() == ClickActions.REMOVE && itemAmount - button.getAmount() < 1) return;
+            if (button.getOnClick() == ClickActions.SET && button.getAmount() == selectedItem.getAmount()) return;
+            if (button.getOnClick() == ClickActions.ADD && button.getAmount() + selectedItem.getAmount() > selectedItem.getMaterial().getMaxStackSize()) return;
+            if (button.getOnClick() == ClickActions.REMOVE && selectedItem.getAmount() - button.getAmount() < 1) return;
             mappedInventory.put(button.getSlot(), button);
         });
 
         /*
         item
          */
-        selectedItem.setAmount(itemAmount);
-        mappedInventory.put(cache.getItemSlot(), selectedItem);
+        selectedItem.setDisplay(Color.format(cache.getItem().getDisplay()));
+        selectedItem.setLore(cache.getItem().getColoredLore());
+        UserInterfaceUtils.applyItemPlaceholders(selectedItem);
+        mappedInventory.put(cache.getItem().getSlot(), selectedItem);
 
         InventoryHolderCache.cache(player, this);
 
@@ -124,21 +124,21 @@ public class SellPageUI implements UserInterface {
             }
             case ADD -> {
                 UIButton button = (UIButton) mappedInventory.get(slot);
-                if (button.getAmount() + itemAmount <= button.getMaterial().getMaxStackSize()) {
-                    itemAmount += button.getAmount();
+                if (button.getAmount() + selectedItem.getAmount() <= button.getMaterial().getMaxStackSize()) {
+                    selectedItem.setAmount(selectedItem.getAmount() + button.getAmount());
                 }
                 updateUISlots(true);
             }
             case REMOVE -> {
                 UIButton button = (UIButton) mappedInventory.get(slot);
-                if (itemAmount - button.getAmount() > 0) {
-                    itemAmount -= button.getAmount();
+                if (selectedItem.getAmount() - button.getAmount() > 0) {
+                    selectedItem.setAmount(selectedItem.getAmount() - button.getAmount());
                 }
                 updateUISlots(true);
             }
             case SET -> {
                 UIButton button = (UIButton) mappedInventory.get(slot);
-                itemAmount = button.getAmount();
+                selectedItem.setAmount(button.getAmount());
                 updateUISlots(true);
             }
         }
