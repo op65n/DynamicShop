@@ -1,0 +1,25 @@
+
+[logging]
+normal = true
+dev = true
+
+[database]
+ip = "127.0.0.1"
+port = "3306"
+driverClassName= "com.mysql.jdbc.Driver"
+database = "dynshop"
+user = ":/"
+passwd = ":/"
+
+[fallback]
+ip = "127.0.0.1"
+port = "3306"
+driverClassName= "com.mysql.jdbc.Driver"
+database = "fallback_dynshop"
+user = ":/"
+passwd = ":/"
+
+[cache]
+maxsize = 1000
+ttl = 120
+interval = 10

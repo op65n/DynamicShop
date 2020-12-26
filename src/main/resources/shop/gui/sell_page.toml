@@ -1,5 +1,12 @@
 name = "Selling %item%"
-itemSlot = 22
+
+[item]
+slot = 22
+display = "&r&3%item%"
+lore = [
+    "&r&6Sell price&7: &f%sell_price%%currency%",
+    "&r&2Single item sell price&7: &f%sell_price_single%%currency%"
+]
 
 # Add buttons
 # Tis button Adds some amount of items from purchasded product
