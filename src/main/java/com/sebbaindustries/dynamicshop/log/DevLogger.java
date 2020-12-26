@@ -9,6 +9,8 @@ import java.util.logging.Logger;
  */
 public class DevLogger {
 
+    public static boolean devLogger = false;
+
     private static final Logger logger = Logger.getLogger("DynShopDEV");
 
     /**
@@ -18,6 +20,7 @@ public class DevLogger {
      */
     @SuppressWarnings("unused")
     public static void log(String message) {
+        if (!devLogger) return;
         logger.log(Level.INFO, message);
     }
 
@@ -28,6 +31,7 @@ public class DevLogger {
      */
     @SuppressWarnings("unused")
     public static void logSevere(String message) {
+        if (!devLogger) return;
         logger.log(Level.SEVERE, message);
     }
 
@@ -38,6 +42,7 @@ public class DevLogger {
      */
     @SuppressWarnings("unused")
     public static void logWarn(String message) {
+        if (!devLogger) return;
         logger.log(Level.WARNING, message);
     }
 
