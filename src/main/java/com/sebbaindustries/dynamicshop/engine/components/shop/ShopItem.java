@@ -16,10 +16,10 @@ public class ShopItem implements BukkitItemStack, Clickable {
     private int priority = 1000;
 
     private Material material = Material.ACACIA_BOAT;
-    private String display;
+    private String display = "%item%";
     private List<String> lore;
-    private Double buyPrice;
-    private Double sellPrice;
+    private Double buyPrice = 0.00;
+    private Double sellPrice = 0.00;
 
     private int amount = 1;
 
