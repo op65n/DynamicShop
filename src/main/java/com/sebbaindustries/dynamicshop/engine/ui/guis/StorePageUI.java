@@ -29,7 +29,7 @@ public class StorePageUI implements UserInterface {
         this.cache = Core.gCore().getEngine().ui().getStorePageCache();
         this.category = category;
 
-        inventory = Bukkit.createInventory(null, cache.getSize() * 9, Color.format(cache.getName()));
+        inventory = Bukkit.createInventory(null, cache.size() * 9, Color.format(cache.name()));
 
         // Update/flush cache
         InventoryHolderCache.cache(player, this);
@@ -53,54 +53,49 @@ public class StorePageUI implements UserInterface {
 
     @Override
     public void update() {
-         /*
-        background
-         */
-        UIBackground background = cache.getBackground();
-        for (int i = 0; i < cache.getSize() * 9; i++) {
-            mappedInventory.put(i, background);
-        }
+        updateUISlots(false);
 
         createItemsPanel();
 
-        /*
-        Buttons
-         */
-        cache.getButton().forEach(button -> {
-            if (button.getSlot() > 26) {
-                button.setSlot(button.getSlot() - collapseBy);
-            }
-            mappedInventory.put(button.getSlot(), button);
-        });
+        cache.setSize(UserInterfaceUtils.calculateInventorySize(mappedInventory));
 
-        int newSize = 0;
-
-        for (Map.Entry<Integer, Object> entry : mappedInventory.entrySet()) {
-            if (entry.getValue() instanceof UIBackground) continue;
-            if (newSize < entry.getKey()) newSize = entry.getKey();
-        }
-
-        newSize = (int) Math.ceil((double) newSize / 9.0);
-
-        cache.setSize(newSize);
-
-        inventory = Bukkit.createInventory(null, cache.getSize() * 9, Color.format(cache.getName()));
-        mappedInventory.forEach((slot, item) -> {
-            if (slot > cache.getSize() * 9 - 1) return;
-            if (item instanceof BukkitItemStack) {
-                BukkitItemStack bukkitItemStack = (BukkitItemStack) item;
-                inventory.setItem(slot, UserInterfaceUtils.getBukkitItemStack(bukkitItemStack));
-            }
-        });
+        inventory = Bukkit.createInventory(null, cache.size() * 9, Color.format(cache.name()));
+        UserInterfaceUtils.setupInventory(inventory, mappedInventory, cache.size());
 
         InventoryHolderCache.cache(player, this);
     }
 
     @Override
     public void updateUISlots(boolean updateCurrent) {
+        /*
+        background
+         */
+        UserInterfaceUtils.createBackground(mappedInventory, cache.background(), cache.size());
 
+        /*
+        panel
+         */
+        createItemsPanel();
+
+        /*
+        buttons
+         */
+        cache.buttons().forEach(button -> {
+            if (button.getSlot() > 26) {
+                button.setSlot(button.getSlot() - collapseBy);
+            }
+            mappedInventory.put(button.getSlot(), button);
+        });
+
+        if (!updateCurrent) return;
+        UserInterfaceUtils.clearUI(player);
+        UserInterfaceUtils.fillInventory(player, mappedInventory, cache.size());
+        player.updateInventory();
     }
 
+    /*
+    Blackbox
+     */
     private void createItemsPanel() {
         int cornerA = cache.getItems().getCornerA();
         int cornerB = cache.getItems().getCornerB();
