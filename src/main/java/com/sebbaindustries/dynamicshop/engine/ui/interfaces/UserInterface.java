@@ -1,4 +1,4 @@
-package com.sebbaindustries.dynamicshop.engine.components.gui.interfaces;
+package com.sebbaindustries.dynamicshop.engine.ui.interfaces;
 
 import org.bukkit.event.inventory.ClickType;
 

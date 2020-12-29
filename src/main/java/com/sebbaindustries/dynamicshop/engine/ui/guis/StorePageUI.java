@@ -1,14 +1,14 @@
-package com.sebbaindustries.dynamicshop.engine.components.gui.guis;
+package com.sebbaindustries.dynamicshop.engine.ui.guis;
 
 import com.sebbaindustries.dynamicshop.Core;
-import com.sebbaindustries.dynamicshop.engine.components.gui.cache.InventoryHolderCache;
-import com.sebbaindustries.dynamicshop.engine.components.gui.cache.StorePageUICache;
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.ClickActions;
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIBackground;
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIButton;
-import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.BukkitItemStack;
-import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.Clickable;
-import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.UserInterface;
+import com.sebbaindustries.dynamicshop.engine.ui.cache.InventoryHolderCache;
+import com.sebbaindustries.dynamicshop.engine.ui.cache.StorePageUICache;
+import com.sebbaindustries.dynamicshop.engine.ui.components.ClickActions;
+import com.sebbaindustries.dynamicshop.engine.ui.components.UIBackground;
+import com.sebbaindustries.dynamicshop.engine.ui.components.UIButton;
+import com.sebbaindustries.dynamicshop.engine.ui.interfaces.BukkitItemStack;
+import com.sebbaindustries.dynamicshop.engine.ui.interfaces.Clickable;
+import com.sebbaindustries.dynamicshop.engine.ui.interfaces.UserInterface;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopItem;
 import com.sebbaindustries.dynamicshop.utils.Color;
@@ -26,7 +26,7 @@ public class StorePageUI implements UserInterface {
 
     public StorePageUI(Player player, ShopCategory category) {
         this.player = player;
-        this.cache = Core.gCore().getEngine().instance().getShopUI().getStorePageCache();
+        this.cache = Core.gCore().getEngine().ui().getStorePageCache();
         this.category = category;
 
         inventory = Bukkit.createInventory(null, cache.getSize() * 9, Color.format(cache.getName()));

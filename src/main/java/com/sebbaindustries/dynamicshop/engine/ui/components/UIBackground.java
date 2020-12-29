@@ -1,6 +1,6 @@
-package com.sebbaindustries.dynamicshop.engine.components.gui.components;
+package com.sebbaindustries.dynamicshop.engine.ui.components;
 
-import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.BukkitItemStack;
+import com.sebbaindustries.dynamicshop.engine.ui.interfaces.BukkitItemStack;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

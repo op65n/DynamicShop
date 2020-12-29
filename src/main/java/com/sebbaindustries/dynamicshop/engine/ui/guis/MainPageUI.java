@@ -1,16 +1,18 @@
-package com.sebbaindustries.dynamicshop.engine.components.gui.guis;
+package com.sebbaindustries.dynamicshop.engine.ui.guis;
 
 import com.sebbaindustries.dynamicshop.Core;
-import com.sebbaindustries.dynamicshop.engine.components.gui.cache.InventoryHolderCache;
-import com.sebbaindustries.dynamicshop.engine.components.gui.cache.MainPageUICache;
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.ClickActions;
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIBackground;
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIButton;
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.UICategory;
-import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.Clickable;
-import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.UserInterface;
+import com.sebbaindustries.dynamicshop.engine.ui.cache.InventoryHolderCache;
+import com.sebbaindustries.dynamicshop.engine.ui.cache.MainPageUICache;
+import com.sebbaindustries.dynamicshop.engine.ui.components.ClickActions;
+import com.sebbaindustries.dynamicshop.engine.ui.components.UIBackground;
+import com.sebbaindustries.dynamicshop.engine.ui.components.UIButton;
+import com.sebbaindustries.dynamicshop.engine.ui.components.UICategory;
+import com.sebbaindustries.dynamicshop.engine.ui.interfaces.BaseUI;
+import com.sebbaindustries.dynamicshop.engine.ui.interfaces.Clickable;
+import com.sebbaindustries.dynamicshop.engine.ui.interfaces.UserInterface;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
 import com.sebbaindustries.dynamicshop.utils.Color;
+import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 import com.sebbaindustries.dynamicshop.utils.UserInterfaceUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -25,18 +27,18 @@ public class MainPageUI implements UserInterface {
 
     public MainPageUI(Player player) {
         this.player = player;
-        this.cache = Core.gCore().getEngine().instance().getShopUI().getMainPageCache();
+        this.cache = Core.gCore().getEngine().ui().getMainPageCache();
 
-        inventory = Bukkit.createInventory(null, cache.getSize() * 9, Color.format(cache.getName()));
+        inventory = Bukkit.createInventory(null, cache.size() * 9, Color.format(cache.name()));
 
         // Update/flush cache
         InventoryHolderCache.cache(player, this);
     }
 
     private final Player player;
-    private final Inventory inventory;
-    private final MainPageUICache cache;
-    private final Map<Integer, Object> mappedInventory = new TreeMap<>();
+    private Inventory inventory;
+    private final BaseUI cache;
+    private Map<Integer, Object> mappedInventory = new TreeMap<>();
 
 
     @Override
@@ -47,53 +49,45 @@ public class MainPageUI implements UserInterface {
 
     @Override
     public void update() {
-        /*
-        background
-         */
-        UIBackground background = cache.getBackground();
-        for (int i = 0; i < cache.getSize() * 9; i++) {
-            inventory.setItem(i, UserInterfaceUtils.getBukkitItemStack(background));
-            mappedInventory.put(i, background);
-        }
+        updateUISlots(false);
 
-        /*
-        Buttons
-         */
-        cache.getButton().forEach(button -> {
-            inventory.setItem(button.getSlot(), UserInterfaceUtils.getBukkitItemStack(button));
-            mappedInventory.put(button.getSlot(), button);
-        });
+        cache.setSize(UserInterfaceUtils.calculateInventorySize(mappedInventory));
 
-        /*
-        Categories
-         */
-        List<ShopCategory> categories = Core.gCore().getEngine().instance().getContainer().getPrioritizedCategoryList();
-        cache.getCategory().forEach(uiCategory -> {
-            ShopCategory category = null;
-            for (ShopCategory shopCategory : categories) {
-                category = shopCategory;
-                categories.remove(shopCategory);
-                break;
-            }
-
-            if (category == null) {
-                inventory.setItem(uiCategory.getSlot(), UserInterfaceUtils.getBukkitItemStack(new ShopCategory()));
-                mappedInventory.put(uiCategory.getSlot(), uiCategory);
-                return;
-            }
-
-            uiCategory.setCategory(category);
-
-            inventory.setItem(uiCategory.getSlot(), UserInterfaceUtils.getBukkitItemStack(category));
-            mappedInventory.put(uiCategory.getSlot(), uiCategory);
-        });
-
+        inventory = Bukkit.createInventory(null, cache.size() * 9, Color.format(cache.name()));
+        UserInterfaceUtils.setupInventory(inventory, mappedInventory, cache.size());
 
         InventoryHolderCache.cache(player, this);
     }
 
     @Override
     public void updateUISlots(boolean updateCurrent) {
+        mappedInventory.clear();
+
+        /*
+        background
+         */
+        UserInterfaceUtils.createBackground(mappedInventory, cache.background(), cache.size());
+
+        /*
+        buttons
+         */
+        cache.buttons().forEach(button -> mappedInventory.put(button.getSlot(), button));
+
+        /*
+        Categories
+         */
+        List<ShopCategory> categoryCache = Core.gCore().getEngine().container().getPrioritizedCategoryList();
+        ((MainPageUICache) cache).getCategory().forEach(uiCategory -> {
+            if (categoryCache == null || categoryCache.isEmpty() || categoryCache.get(0) == null) return;
+            uiCategory.setCategory(categoryCache.get(0));
+            mappedInventory.put(uiCategory.getSlot(), uiCategory);
+            categoryCache.remove(0);
+        });
+
+        if (!updateCurrent) return;
+        UserInterfaceUtils.clearUI(player);
+        UserInterfaceUtils.fillInventory(player, mappedInventory, cache.size());
+        player.updateInventory();
 
     }
 

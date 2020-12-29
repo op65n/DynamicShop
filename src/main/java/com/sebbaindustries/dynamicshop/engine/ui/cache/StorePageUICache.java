@@ -1,8 +1,8 @@
-package com.sebbaindustries.dynamicshop.engine.components.gui.cache;
+package com.sebbaindustries.dynamicshop.engine.ui.cache;
 
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.ItemsPanel;
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIBackground;
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIButton;
+import com.sebbaindustries.dynamicshop.engine.ui.components.ItemsPanel;
+import com.sebbaindustries.dynamicshop.engine.ui.components.UIBackground;
+import com.sebbaindustries.dynamicshop.engine.ui.components.UIButton;
 import lombok.Getter;
 import lombok.Setter;
 

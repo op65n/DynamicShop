@@ -1,20 +1,19 @@
-package com.sebbaindustries.dynamicshop.engine.components;
+package com.sebbaindustries.dynamicshop.engine.ui;
 
 import com.moandjiezana.toml.Toml;
 import com.rits.cloning.Cloner;
 import com.sebbaindustries.dynamicshop.Core;
-import com.sebbaindustries.dynamicshop.engine.components.gui.cache.BuyPageUICache;
-import com.sebbaindustries.dynamicshop.engine.components.gui.cache.MainPageUICache;
-import com.sebbaindustries.dynamicshop.engine.components.gui.cache.SellPageUICache;
-import com.sebbaindustries.dynamicshop.engine.components.gui.cache.StorePageUICache;
+import com.sebbaindustries.dynamicshop.engine.ui.cache.BuyPageUICache;
+import com.sebbaindustries.dynamicshop.engine.ui.cache.MainPageUICache;
+import com.sebbaindustries.dynamicshop.engine.ui.cache.SellPageUICache;
+import com.sebbaindustries.dynamicshop.engine.ui.cache.StorePageUICache;
 import com.sebbaindustries.dynamicshop.engine.components.maintainer.ComponentManager;
-import com.sebbaindustries.dynamicshop.log.PluginLogger;
 import com.sebbaindustries.dynamicshop.utils.FileManager;
 import org.jetbrains.annotations.NotNull;
 
-public class DynShopUI {
+public class ShopUI {
 
-    public DynShopUI() {
+    public ShopUI() {
         load();
     }
 
@@ -52,9 +51,9 @@ public class DynShopUI {
             /*
             This produces a big fucking wall of text, but it works okay.
             */
-            PluginLogger.logWarn("Error happened while reading " + file.fileName + " please check if you have setup the plugin correctly.");
+            Core.engineLogger.logWarn("Error happened while reading " + file.fileName + " please check if you have setup the plugin correctly.");
             e.printStackTrace();
-            PluginLogger.logWarn("Error happened while reading " + file.fileName + " please check if you have setup the plugin correctly.");
+            Core.engineLogger.logWarn("Error happened while reading " + file.fileName + " please check if you have setup the plugin correctly.");
 
             // Add failed component to the list
             ComponentManager.addComponent(this.getClass(), "Missing files in plugins/DynamicShop/shop/categories/ directory");
@@ -80,10 +79,12 @@ public class DynShopUI {
     }
 
     public BuyPageUICache getBuyPageCache() {
+        // Java is retarded so we are forced to to this shit...
         return cloner.deepClone(buyPageCache);
     }
 
     public SellPageUICache getSellPageCache() {
+        // Java is retarded so we are forced to to this shit...
         return cloner.deepClone(sellPageCache);
     }
 

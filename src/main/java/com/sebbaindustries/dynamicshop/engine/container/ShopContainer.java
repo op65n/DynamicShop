@@ -1,10 +1,10 @@
-package com.sebbaindustries.dynamicshop.engine.components;
+package com.sebbaindustries.dynamicshop.engine.container;
 
 import com.moandjiezana.toml.Toml;
+import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.engine.components.maintainer.ComponentManager;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
 import com.sebbaindustries.dynamicshop.engine.structure.DirectoryStructure;
-import com.sebbaindustries.dynamicshop.log.PluginLogger;
 import com.sebbaindustries.dynamicshop.utils.FileUtils;
 
 import java.io.File;
@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class DynShopContainer {
+public class ShopContainer {
 
-    public DynShopContainer() {
+    public ShopContainer() {
         load();
     }
 
@@ -24,7 +24,7 @@ public class DynShopContainer {
         // Check if there are files inside directory, if there are no files terminate the startup sequence
         List<String> files = FileUtils.getCategoryFilePaths();
         if (files == null || files.isEmpty()) {
-            PluginLogger.logWarn("Plugin is not configured, maintenance mode is turned on!");
+            Core.engineLogger.logWarn("Plugin is not configured, maintenance mode is turned on!");
             // Add failed component to the list
             ComponentManager.addComponent(this.getClass(), "Missing files in plugins/DynamicShop/shop/categories/ directory");
             return;
@@ -47,15 +47,15 @@ public class DynShopContainer {
                 ).to(ShopCategory.class);
 
                 categories.add(category);
-                PluginLogger.log("File " + fileName + " loaded successfully!");
+                Core.engineLogger.log("File " + fileName + " loaded successfully!");
 
             } catch (Exception e) {
                 /*
                 This produces a big fucking wall of text, but it works okay.
                  */
-                PluginLogger.logWarn("Error happened while reading " + fileName + " please check if you have setup the plugin correctly.");
+                Core.engineLogger.logWarn("Error happened while reading " + fileName + " please check if you have setup the plugin correctly.");
                 e.printStackTrace();
-                PluginLogger.logWarn("Error happened while reading " + fileName + " please check if you have setup the plugin correctly.");
+                Core.engineLogger.logWarn("Error happened while reading " + fileName + " please check if you have setup the plugin correctly.");
                 // Add failed component to the list
                 ComponentManager.addComponent(this.getClass(), "Error in plugins/DynamicShop/shop/categories/ directory inside " + fileName + "file");
             }

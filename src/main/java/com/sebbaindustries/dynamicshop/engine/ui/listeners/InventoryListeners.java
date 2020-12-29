@@ -1,7 +1,7 @@
-package com.sebbaindustries.dynamicshop.engine.components.gui.listeners;
+package com.sebbaindustries.dynamicshop.engine.ui.listeners;
 
-import com.sebbaindustries.dynamicshop.engine.components.gui.cache.InventoryHolderCache;
-import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.UserInterface;
+import com.sebbaindustries.dynamicshop.engine.ui.cache.InventoryHolderCache;
+import com.sebbaindustries.dynamicshop.engine.ui.interfaces.UserInterface;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

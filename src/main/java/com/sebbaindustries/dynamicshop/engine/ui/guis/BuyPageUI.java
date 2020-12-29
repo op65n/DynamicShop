@@ -1,12 +1,14 @@
-package com.sebbaindustries.dynamicshop.engine.components.gui.guis;
+package com.sebbaindustries.dynamicshop.engine.ui.guis;
 
 import com.sebbaindustries.dynamicshop.Core;
-import com.sebbaindustries.dynamicshop.engine.components.gui.cache.InventoryHolderCache;
-import com.sebbaindustries.dynamicshop.engine.components.gui.cache.SellPageUICache;
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.ClickActions;
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIButton;
-import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.Clickable;
-import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.UserInterface;
+import com.sebbaindustries.dynamicshop.engine.ui.cache.BuyPageUICache;
+import com.sebbaindustries.dynamicshop.engine.ui.cache.InventoryHolderCache;
+import com.sebbaindustries.dynamicshop.engine.ui.cache.SellPageUICache;
+import com.sebbaindustries.dynamicshop.engine.ui.components.ClickActions;
+import com.sebbaindustries.dynamicshop.engine.ui.components.UIButton;
+import com.sebbaindustries.dynamicshop.engine.ui.interfaces.BaseUI;
+import com.sebbaindustries.dynamicshop.engine.ui.interfaces.Clickable;
+import com.sebbaindustries.dynamicshop.engine.ui.interfaces.UserInterface;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopItem;
 import com.sebbaindustries.dynamicshop.utils.Color;
@@ -19,15 +21,15 @@ import org.bukkit.inventory.Inventory;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class SellPageUI implements UserInterface {
+public class BuyPageUI implements UserInterface {
 
-    public SellPageUI(Player player, ShopItem item, ShopCategory backPage) {
+    public BuyPageUI(Player player, ShopItem item, ShopCategory backPage) {
         this.player = player;
-        this.cache = Core.gCore().getEngine().instance().getShopUI().getSellPageCache();
+        this.cache = Core.gCore().getEngine().ui().getBuyPageCache();
         this.selectedItem = item;
         this.backPage = backPage;
 
-        inventory = Bukkit.createInventory(null, cache.getSize() * 9, Color.format(cache.getName()));
+        inventory = Bukkit.createInventory(null, cache.size() * 9, Color.format(cache.name()));
 
         // Update/flush cache
         InventoryHolderCache.cache(player, this);
@@ -35,7 +37,7 @@ public class SellPageUI implements UserInterface {
 
     private final Player player;
     private Inventory inventory;
-    private final SellPageUICache cache;
+    private final BaseUI cache;
     private Map<Integer, Object> mappedInventory = new TreeMap<>();
     private ShopItem selectedItem;
     private final ShopCategory backPage;
@@ -52,8 +54,8 @@ public class SellPageUI implements UserInterface {
 
         cache.setSize(UserInterfaceUtils.calculateInventorySize(mappedInventory));
 
-        inventory = Bukkit.createInventory(null, cache.getSize() * 9, Color.format(cache.getName()));
-        UserInterfaceUtils.setupInventory(inventory, mappedInventory, cache.getSize());
+        inventory = Bukkit.createInventory(null, cache.size() * 9, Color.format(cache.name()));
+        UserInterfaceUtils.setupInventory(inventory, mappedInventory, cache.size());
 
         InventoryHolderCache.cache(player, this);
     }
@@ -65,31 +67,23 @@ public class SellPageUI implements UserInterface {
         /*
         background
          */
-        mappedInventory = UserInterfaceUtils.createBackground(cache.getBackground(), cache.getSize());
+        UserInterfaceUtils.createBackground(mappedInventory, cache.background(), cache.size());
 
         /*
         buttons
          */
-        cache.getButton().forEach(button -> {
-            if (button.getOnClick() == ClickActions.SET && button.getAmount() == selectedItem.getAmount()) return;
-            if (button.getOnClick() == ClickActions.ADD && button.getAmount() + selectedItem.getAmount() > selectedItem.getMaterial().getMaxStackSize()) return;
-            if (button.getOnClick() == ClickActions.REMOVE && selectedItem.getAmount() - button.getAmount() < 1) return;
-            mappedInventory.put(button.getSlot(), button);
-        });
+        UserInterfaceUtils.mapButtons(mappedInventory, cache, selectedItem);
 
         /*
         item
          */
-        selectedItem.setDisplay(Color.format(cache.getItem().getDisplay()));
-        selectedItem.setLore(cache.getItem().getColoredLore());
-        UserInterfaceUtils.applyItemPlaceholders(selectedItem);
-        mappedInventory.put(cache.getItem().getSlot(), selectedItem);
+        UserInterfaceUtils.mapItem(mappedInventory, selectedItem, ((BuyPageUICache) cache).getItem());
 
         InventoryHolderCache.cache(player, this);
 
         if (!updateCurrent) return;
         UserInterfaceUtils.clearUI(player);
-        UserInterfaceUtils.fillInventory(player, mappedInventory, cache.getSize());
+        UserInterfaceUtils.fillInventory(player, mappedInventory, cache.size());
         player.updateInventory();
     }
 
@@ -141,6 +135,13 @@ public class SellPageUI implements UserInterface {
                 selectedItem.setAmount(button.getAmount());
                 updateUISlots(true);
             }
+            case BUY -> {
+                // TODO: Add buying implementation
+                UserInterface ui = new StorePageUI(player, backPage);
+                ui.update();
+                ui.open();
+            }
         }
     }
+
 }
