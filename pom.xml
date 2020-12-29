@@ -26,7 +26,7 @@ SOFTWARE.
     <name>DynamicShop</name>
     <groupId>com.sebbaindustries</groupId>
     <artifactId>DynamicShop</artifactId>
-    <version>0.0.1</version>
+    <version>1.0.0-R0.1-Alpha</version>
     <description>Dynamic shop Minecraft 1.16.x plugin with advanced capabilities, based on the real economy. </description>
 
     <properties>
