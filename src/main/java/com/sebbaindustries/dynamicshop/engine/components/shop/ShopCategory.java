@@ -15,6 +15,8 @@ import java.util.List;
 @NoArgsConstructor
 public class ShopCategory implements BukkitItemStack {
 
+    private String fileName = "$NULL";
+
     private int priority = 1000;
     private Icon icon = new Icon();
 
