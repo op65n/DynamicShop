@@ -1,8 +1,8 @@
 package com.sebbaindustries.dynamicshop.engine.components.shop;
 
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.ClickActions;
-import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.BukkitItemStack;
-import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.Clickable;
+import com.sebbaindustries.dynamicshop.engine.ui.components.ClickActions;
+import com.sebbaindustries.dynamicshop.engine.ui.interfaces.BukkitItemStack;
+import com.sebbaindustries.dynamicshop.engine.ui.interfaces.Clickable;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Material;

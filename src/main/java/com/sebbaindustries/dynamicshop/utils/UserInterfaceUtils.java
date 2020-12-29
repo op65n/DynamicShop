@@ -1,8 +1,11 @@
 package com.sebbaindustries.dynamicshop.utils;
 
-import com.sebbaindustries.dynamicshop.engine.components.gui.components.UIBackground;
-import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.BukkitItemStack;
-import com.sebbaindustries.dynamicshop.engine.components.gui.interfaces.Clickable;
+import com.sebbaindustries.dynamicshop.engine.ui.components.ClickActions;
+import com.sebbaindustries.dynamicshop.engine.ui.components.DisplayItem;
+import com.sebbaindustries.dynamicshop.engine.ui.components.UIBackground;
+import com.sebbaindustries.dynamicshop.engine.ui.interfaces.BaseUI;
+import com.sebbaindustries.dynamicshop.engine.ui.interfaces.BukkitItemStack;
+import com.sebbaindustries.dynamicshop.engine.ui.interfaces.Clickable;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopItem;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -46,14 +49,12 @@ public class UserInterfaceUtils {
         return object instanceof Clickable;
     }
 
-    public static Map<Integer, Object> createBackground(UIBackground background, final int cache) {
-        Map<Integer, Object> mappedInventory = new TreeMap<>();
+    public static void createBackground(Map<Integer, Object> mappedInventory, UIBackground background, final int cache) {
         if (background != null && background.getMaterial() != null) {
             for (int i = 0; i < cache * 9; i++) {
                 mappedInventory.put(i, background);
             }
         }
-        return mappedInventory;
     }
 
     public static void clearUI(Player player) {
@@ -82,7 +83,7 @@ public class UserInterfaceUtils {
         player.updateInventory();
     }
 
-    public static Inventory setupInventory(Inventory inventory, final Map<Integer, Object> mappedInventory, final int cache) {
+    public static void setupInventory(Inventory inventory, final Map<Integer, Object> mappedInventory, final int cache) {
         mappedInventory.forEach((slot, item) -> {
             if (slot > cache * 9 - 1) return;
             if (item instanceof BukkitItemStack) {
@@ -90,10 +91,12 @@ public class UserInterfaceUtils {
                 inventory.setItem(slot, UserInterfaceUtils.getBukkitItemStack(bukkitItemStack));
             }
         });
-        return inventory;
     }
 
-    public static ShopItem applyItemPlaceholders(ShopItem shopItem) {
+    public static ShopItem applyItemPlaceholders(ShopItem shopItem, DisplayItem displayItem) {
+        shopItem.setDisplay(Color.format(displayItem.getDisplay()));
+        shopItem.setLore(displayItem.getColoredLore());
+
         String display = shopItem.getDisplay();
         display = display.replace("%item%", shopItem.getMaterial().name());
         shopItem.setDisplay(display);
@@ -111,6 +114,20 @@ public class UserInterfaceUtils {
         }
 
         return shopItem;
+    }
+
+    public static void mapButtons(Map<Integer, Object> mappedInventory, BaseUI cache, ShopItem selectedItem) {
+        cache.buttons().forEach(button -> {
+            if (button.getOnClick() == ClickActions.SET && button.getAmount() == selectedItem.getAmount()) return;
+            if (button.getOnClick() == ClickActions.ADD && button.getAmount() + selectedItem.getAmount() > selectedItem.getMaterial().getMaxStackSize()) return;
+            if (button.getOnClick() == ClickActions.REMOVE && selectedItem.getAmount() - button.getAmount() < 1) return;
+            mappedInventory.put(button.getSlot(), button);
+        });
+    }
+
+    public static void mapItem(Map<Integer, Object> mappedInventory, ShopItem selectedItem, DisplayItem displayItem) {
+        applyItemPlaceholders(selectedItem, displayItem);
+        mappedInventory.put(displayItem.getSlot(), selectedItem);
     }
 
 }
