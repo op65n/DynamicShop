@@ -51,9 +51,12 @@ public class ServerPlugin {
 
         Core.pluginLogger.log("=============================================");
         Core.pluginLogger.log("-----[           Dynamic Shop          ]-----");
-        Core.engineLogger.log("Codename: " + EngineUtils.getCodename());
-        Core.engineLogger.log("Version: " + EngineUtils.getVersion());
-        Core.pluginLogger.log("Loaded categories: %categories%");
+        Core.pluginLogger.log("Version: " + EngineUtils.getVersion());
+        Core.engineLogger.log("Engine Codename: " + EngineUtils.getCodename());
+        Core.pluginLogger.log("Loaded categories: " + Core.gCore().getEngine().container().getPrioritizedCategoryList().size());
+        Core.gCore().getEngine().container().getPrioritizedCategoryList().forEach(
+                category -> Core.pluginLogger.log(" - " + category.getFileName() + " with " + category.getItems().size() + " items")
+        );
         Core.engineLogger.log(Color.format("Color: &r■&0■&1■&2■&3■&4■&5■&6■&7■&8■&9■&a■&b■&c■&d■&e■&f■"));
         Core.pluginLogger.log("=============================================");
     }
