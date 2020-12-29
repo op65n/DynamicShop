@@ -1,6 +1,6 @@
 #!/bin/bash
 FILENAME="DynamicShop.tar.gz"
-REMOTE="work@sebbaindustries.com"
+REMOTE="work@op65n.tech"
 BUILD_DIR="/tmp"
 
 CURRENT=$(pwd)
@@ -31,6 +31,8 @@ tar \
 --exclude="${BASENAME}/LICENSE" \
 --exclude="${BASENAME}/*.iml" \
 --exclude="${BASENAME}/remote.sh" \
+--exclude="${BASENAME}/src/test" \
+--exclude="${BASENAME}/*.log" \
 -czvf $FILENAME "${BASENAME}"/
 
 rsync -avP $FILENAME "${REMOTE}":"${BUILD_DIR}"
@@ -42,5 +44,7 @@ tar -xvf $FILENAME &&
 cd ${BASENAME} &&
 ./build.sh ${BUILD_FLAGS}
 "
+
+rm $FILENAME
 
 echo "Done!"
