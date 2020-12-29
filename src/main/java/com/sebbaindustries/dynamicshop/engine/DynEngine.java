@@ -3,30 +3,18 @@ package com.sebbaindustries.dynamicshop.engine;
 import com.moandjiezana.toml.Toml;
 import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.commands.CommandManager;
-import com.sebbaindustries.dynamicshop.engine.components.DynShopContainer;
-import com.sebbaindustries.dynamicshop.engine.components.DynShopUI;
-import com.sebbaindustries.dynamicshop.engine.components.gui.listeners.InventoryListeners;
+import com.sebbaindustries.dynamicshop.engine.container.ShopContainer;
+import com.sebbaindustries.dynamicshop.engine.ui.ShopUI;
+import com.sebbaindustries.dynamicshop.engine.ui.listeners.InventoryListeners;
 import com.sebbaindustries.dynamicshop.messages.Message;
 import com.sebbaindustries.dynamicshop.utils.FileManager;
-import lombok.Getter;
 
-
+@Engine.Codename("Leptir")
+@Engine.Version("1.0.0-R0.1-Alpha")
 public class DynEngine implements Engine {
 
-    @Getter
-    private DynShopContainer container;
-    @Getter
-    private DynShopUI shopUI;
-
-    @Override
-    public String codename() {
-        return "Leptir";
-    }
-
-    @Override
-    public String version() {
-        return "1.0.0-R0.1";
-    }
+    private ShopContainer container;
+    private ShopUI shopUI;
 
     @Override
     public long uptime() {
@@ -42,15 +30,14 @@ public class DynEngine implements Engine {
                 new Toml().read(Core.gCore().getFileManager().getFile(FileManager.PluginFiles.MESSAGES)).to(Message.class)
         );
 
-        this.container = new DynShopContainer();
-        this.shopUI = new DynShopUI();
+        this.container = new ShopContainer();
+        this.shopUI = new ShopUI();
 
         /*
         GUI listeners
          */
         Core.gCore().core.getServer().getPluginManager().registerEvents(new InventoryListeners(), Core.gCore().core);
 
-        engine = this;
         uptime = System.currentTimeMillis();
     }
 
@@ -64,13 +51,17 @@ public class DynEngine implements Engine {
 
     }
 
-    private static long uptime = -1L;
+    private long uptime = -1L;
 
-    private static DynEngine engine;
 
     @Override
-    public DynEngine instance() {
-        return engine;
+    public ShopContainer container() {
+        return container;
+    }
+
+    @Override
+    public ShopUI ui() {
+        return shopUI;
     }
 
 
