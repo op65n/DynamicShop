@@ -45,6 +45,7 @@ public class ShopContainer {
                 ShopCategory category = new Toml().read(
                         new File(DirectoryStructure.Directory.CATEGORIES.path + fileName)
                 ).to(ShopCategory.class);
+                category.setFileName(fileName.replace(".toml", ""));
 
                 categories.add(category);
                 Core.engineLogger.log("File " + fileName + " loaded successfully!");
