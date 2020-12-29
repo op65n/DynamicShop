@@ -3,7 +3,8 @@ package com.sebbaindustries.dynamicshop.global;
 import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.engine.DynEngine;
 import com.sebbaindustries.dynamicshop.engine.components.maintainer.ComponentManager;
-import com.sebbaindustries.dynamicshop.log.PluginLogger;
+import com.sebbaindustries.dynamicshop.utils.Color;
+import com.sebbaindustries.dynamicshop.utils.EngineUtils;
 
 /**
  * @author SebbaIndustries
@@ -18,7 +19,7 @@ public class ServerPlugin {
     }
 
     private void coreDump() {
-        PluginLogger.logSevere("Plugin core dumped due to illegal access of ServerPlugin class!");
+        Core.engineLogger.logSevere("Plugin core dumped due to illegal access of ServerPlugin class!");
         throw new IllegalAccessError("Plugin core dumped due to illegal access of ServerPlugin class!");
     }
 
@@ -30,7 +31,7 @@ public class ServerPlugin {
     public final void load(Core core) {
         this.core = core;
         Core.globalCore = new GlobalCore(core);
-        PluginLogger.log("GlobalCore class instance created, initializing plugin modules!");
+        Core.pluginLogger.log("GlobalCore class instance created, initializing plugin modules!");
     }
 
     /**
@@ -47,6 +48,14 @@ public class ServerPlugin {
 
         Core.gCore().getEngine().initialize();
         ComponentManager.getInstance().logAll();
+
+        Core.pluginLogger.log("=============================================");
+        Core.pluginLogger.log("-----[           Dynamic Shop          ]-----");
+        Core.engineLogger.log("Codename: " + EngineUtils.getCodename());
+        Core.engineLogger.log("Version: " + EngineUtils.getVersion());
+        Core.pluginLogger.log("Loaded categories: %categories%");
+        Core.engineLogger.log(Color.format("Color: &r■&0■&1■&2■&3■&4■&5■&6■&7■&8■&9■&a■&b■&c■&d■&e■&f■"));
+        Core.pluginLogger.log("=============================================");
     }
 
     /**

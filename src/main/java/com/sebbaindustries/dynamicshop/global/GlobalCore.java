@@ -4,7 +4,6 @@ import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.commands.CommandManager;
 import com.sebbaindustries.dynamicshop.engine.Engine;
 import com.sebbaindustries.dynamicshop.engine.structure.DirectoryStructure;
-import com.sebbaindustries.dynamicshop.log.PluginLogger;
 import com.sebbaindustries.dynamicshop.messages.Message;
 import com.sebbaindustries.dynamicshop.utils.FileManager;
 import lombok.Getter;
@@ -38,9 +37,9 @@ public class GlobalCore {
      * Terminates AdvancedAFK detection engine
      */
     public void terminate() {
-        PluginLogger.log("Terminating plugin, please wait!");
+        Core.engineLogger.log("Terminating plugin, please wait!");
 
-        PluginLogger.log("Plugin was successfully terminated!");
+        Core.engineLogger.log("Plugin was successfully terminated!");
     }
 
 }

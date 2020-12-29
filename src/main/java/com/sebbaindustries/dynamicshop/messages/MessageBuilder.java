@@ -1,6 +1,6 @@
 package com.sebbaindustries.dynamicshop.messages;
 
-import com.sebbaindustries.dynamicshop.log.PluginLogger;
+import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.utils.Color;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -199,7 +199,7 @@ public class MessageBuilder {
          */
         public MessageBuilder.MessageBuilderComponents applyCommonPlaceholders() {
             if (recipient == Recipient.CONSOLE) {
-                PluginLogger.logWarn("Console cannot use applyCommonPlaceholders method!");
+                Core.pluginLogger.logWarn("Console cannot use applyCommonPlaceholders method!");
                 return this;
             }
             Arrays.stream(Placeholder.values()).forEach(placeholder -> {

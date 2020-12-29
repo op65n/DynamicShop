@@ -1,6 +1,6 @@
 package com.sebbaindustries.dynamicshop.engine.components.maintainer;
 
-import com.sebbaindustries.dynamicshop.log.PluginLogger;
+import com.sebbaindustries.dynamicshop.Core;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,14 +17,14 @@ public class ComponentManager {
     public void logFailed() {
         components.forEach(component -> {
             if (component.isSetupSuccessful()) return;
-            PluginLogger.logWarn("Component " + component.getModuleName() + " failed on status with reason: " + component.getReason());
+            Core.engineLogger.logWarn("Component " + component.getModuleName() + " failed on status with reason: " + component.getReason());
         });
     }
 
     public void logSuccessful() {
         components.forEach(component -> {
             if (!component.isSetupSuccessful()) return;
-            PluginLogger.log("Component " + component.getModuleName() + " started successfully!");
+            Core.engineLogger.log("Component " + component.getModuleName() + " started successfully!");
         });
     }
 

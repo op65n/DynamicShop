@@ -1,7 +1,6 @@
 package com.sebbaindustries.dynamicshop.utils;
 
 import com.sebbaindustries.dynamicshop.Core;
-import com.sebbaindustries.dynamicshop.log.PluginLogger;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -57,7 +56,7 @@ public final class FileManager {
 
             // the stream holding the file content
             if (inputStream == null) {
-                PluginLogger.logWarn("File " + file.fileName + " not found inside plugin jar, please contact the plugin developer!");
+                Core.engineLogger.logWarn("File " + file.fileName + " not found inside plugin jar, please contact the plugin developer!");
                 return;
             }
 
@@ -65,7 +64,7 @@ public final class FileManager {
                 // thanks Apache Utils!
                 FileUtils.copyInputStreamToFile(inputStream, pluginFile);
             } catch (IOException e) {
-                PluginLogger.logSevere("Encountered an error while trying to generate " + file.fileName + "!");
+                Core.engineLogger.logSevere("Encountered an error while trying to generate " + file.fileName + "!");
                 e.printStackTrace();
             }
         });
@@ -80,7 +79,7 @@ public final class FileManager {
     public File getFile(PluginFiles file) {
         File pluginFile = new File(Core.gCore().core.getDataFolder(), file.fileName);
         if (!pluginFile.exists()) {
-            PluginLogger.logSevere("File " + file.fileName + " not found!");
+            Core.engineLogger.logSevere("File " + file.fileName + " not found!");
             return null;
         }
         return pluginFile;

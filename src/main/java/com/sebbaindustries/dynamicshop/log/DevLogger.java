@@ -1,49 +1,38 @@
 package com.sebbaindustries.dynamicshop.log;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  * @author SebbaIndustries
  * @version 1.0
  */
-public class DevLogger {
+public class DevLogger implements ILog {
 
-    public static boolean devLogger = false;
-
-    private static final Logger logger = Logger.getLogger("DynShopDEV");
-
-    /**
-     * Logs normal #INFO style message to the console
-     *
-     * @param message String message, color will be default
-     */
-    @SuppressWarnings("unused")
-    public static void log(String message) {
-        if (!devLogger) return;
-        logger.log(Level.INFO, message);
+    public DevLogger(String prefix) {
+        this.prefix = prefix + " ";
     }
 
-    /**
-     * Logs severe #ERROR style message to the console
-     *
-     * @param message String message, color will be red
-     */
-    @SuppressWarnings("unused")
-    public static void logSevere(String message) {
-        if (!devLogger) return;
-        logger.log(Level.SEVERE, message);
+    private final String prefix;
+    private boolean enabled = true;
+
+    @Override
+    public void log(String message) {
+        if (!enabled) return;
+        ILog.super.log(prefix + message);
     }
 
-    /**
-     * Logs warning #WARN style message to the console
-     *
-     * @param message String message, color will be yellow
-     */
-    @SuppressWarnings("unused")
-    public static void logWarn(String message) {
-        if (!devLogger) return;
-        logger.log(Level.WARNING, message);
+    @Override
+    public void logWarn(String message) {
+        if (!enabled) return;
+        ILog.super.logWarn(prefix + message);
+    }
+
+    @Override
+    public void logSevere(String message) {
+        if (!enabled) return;
+        ILog.super.logSevere(prefix + message);
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 
 }

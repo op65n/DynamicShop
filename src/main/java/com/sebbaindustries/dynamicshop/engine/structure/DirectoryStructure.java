@@ -1,6 +1,6 @@
 package com.sebbaindustries.dynamicshop.engine.structure;
 
-import com.sebbaindustries.dynamicshop.log.PluginLogger;
+import com.sebbaindustries.dynamicshop.Core;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,7 +43,7 @@ public class DirectoryStructure {
         if (new File(directory.path).isDirectory()) return;
         try {
             Files.createDirectory(Paths.get(directory.path));
-            PluginLogger.log("Created " + directory.path + " directory!");
+            Core.engineLogger.log("Created " + directory.path + " directory!");
         } catch (IOException e) {
             e.printStackTrace();
         }
