@@ -11,10 +11,10 @@ public class DirectoryStructure {
 
     public enum Directory {
         BASE("plugins/DynamicShop/"),
-        SHOP("plugins/DynamicShop/shop/"),
-        GUI("plugins/DynamicShop/shop/gui/"),
-        STATISTICS("plugins/DynamicShop/shop/statistics/"),
-        CATEGORIES("plugins/DynamicShop/shop/categories/"),
+        GUI("plugins/DynamicShop/gui/"),
+        STATISTICS("plugins/DynamicShop/statistics/"),
+        CATEGORIES("plugins/DynamicShop/categories/"),
+        CACHE("plugins/DynamicShop/.cache/")
         ;
 
         public String path;
@@ -33,10 +33,10 @@ public class DirectoryStructure {
      */
     public void generateDirectoryStructure() {
         createMissing(Directory.BASE);
-        createMissing(Directory.SHOP);
         createMissing(Directory.GUI);
         createMissing(Directory.STATISTICS);
         createMissing(Directory.CATEGORIES);
+        createMissing(Directory.CACHE);
     }
 
     private void createMissing(Directory directory) {

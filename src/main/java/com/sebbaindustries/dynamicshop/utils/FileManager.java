@@ -19,12 +19,10 @@ public final class FileManager {
         MESSAGES("messages.toml"),
         README("README.md"),
 
-        SHOP_CONFIGURATION("shop/shop_configuration.toml"),
-
-        GUI_MAIN_PAGE("shop/gui/main_page.toml"),
-        GUI_STORE_PAGE("shop/gui/store_page.toml"),
-        GUI_BUY_PAGE("shop/gui/buy_page.toml"),
-        GUI_SELL_PAGE("shop/gui/sell_page.toml"),
+        GUI_MAIN_PAGE("gui/main_page.toml"),
+        GUI_STORE_PAGE("gui/store_page.toml"),
+        GUI_BUY_PAGE("gui/buy_page.toml"),
+        GUI_SELL_PAGE("gui/sell_page.toml"),
 
         ;
 

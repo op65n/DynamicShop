@@ -1,4 +1,0 @@
-[pricing]
-rate = 1.0005
-formatting = "##.###"
-rounding = "CEIL, FLOOR, NONE"
