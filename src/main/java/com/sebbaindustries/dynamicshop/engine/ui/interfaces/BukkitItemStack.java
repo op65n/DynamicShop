@@ -14,4 +14,8 @@ public interface BukkitItemStack {
 
     List<String> lore();
 
+    String texture();
+
+    byte[] base64();
+
 }

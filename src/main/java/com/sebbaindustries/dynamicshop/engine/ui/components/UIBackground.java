@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 
 @Getter
@@ -18,6 +19,8 @@ public class UIBackground implements BukkitItemStack {
     private String display;
     private List<String> lore = new ArrayList<>();
     private int amount = 1;
+    private String texture = null;
+    private String base64 = null;
 
     @Override
     public int amount() {
@@ -37,5 +40,16 @@ public class UIBackground implements BukkitItemStack {
     @Override
     public List<String> lore() {
         return this.lore;
+    }
+
+    @Override
+    public String texture() {
+        return this.texture;
+    }
+
+    @Override
+    public byte[] base64() {
+        if (base64 == null) return null;
+        return Base64.getDecoder().decode(this.base64);
     }
 }

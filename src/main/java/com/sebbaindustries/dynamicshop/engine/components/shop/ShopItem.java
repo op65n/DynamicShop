@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Material;
 
+import java.util.Base64;
 import java.util.List;
 
 @Getter
@@ -20,6 +21,8 @@ public class ShopItem implements BukkitItemStack, Clickable {
     private List<String> lore;
     private Double buyPrice = 0.00;
     private Double sellPrice = 0.00;
+    private String texture = null;
+    private String base64 = null;
 
     private int amount = 1;
 
@@ -46,6 +49,17 @@ public class ShopItem implements BukkitItemStack, Clickable {
     @Override
     public List<String> lore() {
         return this.lore;
+    }
+
+    @Override
+    public String texture() {
+        return this.texture;
+    }
+
+    @Override
+    public byte[] base64() {
+        if (base64 == null) return null;
+        return Base64.getDecoder().decode(this.base64);
     }
 
     @Override

@@ -7,6 +7,7 @@ import com.sebbaindustries.dynamicshop.engine.ui.interfaces.BaseUI;
 import com.sebbaindustries.dynamicshop.engine.ui.interfaces.BukkitItemStack;
 import com.sebbaindustries.dynamicshop.engine.ui.interfaces.Clickable;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopItem;
+import com.sebbaindustries.dynamicshop.helpers.SkullHelper;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -22,8 +23,20 @@ public class UserInterfaceUtils {
 
 
     public static ItemStack getBukkitItemStack(BukkitItemStack bukkitItemStack) {
-        // Create new ItemStack instance
-        ItemStack iStack = new ItemStack(bukkitItemStack.material());
+        ItemStack iStack = null;
+
+        if (bukkitItemStack.base64() != null) {
+            iStack = new ItemStack(ItemStack.deserializeBytes(bukkitItemStack.base64()));
+        }
+
+        if (bukkitItemStack.texture() != null) {
+            iStack = SkullHelper.getCustomSkull64(bukkitItemStack.texture());
+        }
+
+        if (iStack == null) {
+            iStack = new ItemStack(bukkitItemStack.material());
+        }
+
         iStack.setAmount(bukkitItemStack.amount());
         ItemMeta iMeta = iStack.getItemMeta();
 

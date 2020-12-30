@@ -7,6 +7,7 @@ import lombok.Setter;
 import org.bukkit.Material;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Comparator;
 import java.util.List;
 
@@ -46,5 +47,16 @@ public class ShopCategory implements BukkitItemStack {
     @Override
     public List<String> lore() {
         return icon.getLore();
+    }
+
+    @Override
+    public String texture() {
+        return icon.getTexture();
+    }
+
+    @Override
+    public byte[] base64() {
+        if (icon.getBase64() == null) return null;
+        return Base64.getDecoder().decode(icon.getBase64());
     }
 }

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.bukkit.Material;
 
+import java.util.Base64;
 import java.util.List;
 
 @Getter
@@ -59,5 +60,16 @@ public class UICategory implements BukkitItemStack, Clickable {
     @Override
     public List<String> lore() {
         return category.lore();
+    }
+
+    @Override
+    public String texture() {
+        return category.texture();
+    }
+
+    @Override
+    public byte[] base64() {
+        if (category.base64() == null) return null;
+        return Base64.getDecoder().decode(category.base64());
     }
 }
