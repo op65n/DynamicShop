@@ -1,7 +1,6 @@
 package com.sebbaindustries.dynamicshop.utils;
 
 import com.sebbaindustries.dynamicshop.Core;
-import com.sebbaindustries.dynamicshop.log.PluginLogger;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -14,27 +13,6 @@ import java.util.Arrays;
  * @version 1.0
  */
 public final class FileManager {
-
-    public enum PluginFiles {
-        CONFIGURATION("configuration.toml"),
-        MESSAGES("messages.toml"),
-        README("README.md"),
-
-        SHOP_CONFIGURATION("shop/shop_configuration.toml"),
-
-        GUI_MAIN_PAGE("shop/gui/main_page.toml"),
-        GUI_STORE_PAGE("shop/gui/store_page.toml"),
-        GUI_BUY_PAGE("shop/gui/buy_page.toml"),
-        GUI_SELL_PAGE("shop/gui/sell_page.toml"),
-
-        ;
-
-        public String fileName;
-
-        PluginFiles(String fileName) {
-            this.fileName = fileName;
-        }
-    }
 
     public FileManager(Core core) {
         generateMissingFiles(core);
@@ -57,7 +35,7 @@ public final class FileManager {
 
             // the stream holding the file content
             if (inputStream == null) {
-                PluginLogger.logWarn("File " + file.fileName + " not found inside plugin jar, please contact the plugin developer!");
+                Core.engineLogger.logWarn("File " + file.fileName + " not found inside plugin jar, please contact the plugin developer!");
                 return;
             }
 
@@ -65,7 +43,7 @@ public final class FileManager {
                 // thanks Apache Utils!
                 FileUtils.copyInputStreamToFile(inputStream, pluginFile);
             } catch (IOException e) {
-                PluginLogger.logSevere("Encountered an error while trying to generate " + file.fileName + "!");
+                Core.engineLogger.logSevere("Encountered an error while trying to generate " + file.fileName + "!");
                 e.printStackTrace();
             }
         });
@@ -80,10 +58,29 @@ public final class FileManager {
     public File getFile(PluginFiles file) {
         File pluginFile = new File(Core.gCore().core.getDataFolder(), file.fileName);
         if (!pluginFile.exists()) {
-            PluginLogger.logSevere("File " + file.fileName + " not found!");
+            Core.engineLogger.logSevere("File " + file.fileName + " not found!");
             return null;
         }
         return pluginFile;
+    }
+
+    public enum PluginFiles {
+        CONFIGURATION("configuration.toml"),
+        MESSAGES("messages.toml"),
+        README("README.md"),
+
+        GUI_MAIN_PAGE("gui/main_page.toml"),
+        GUI_STORE_PAGE("gui/store_page.toml"),
+        GUI_BUY_PAGE("gui/buy_page.toml"),
+        GUI_SELL_PAGE("gui/sell_page.toml"),
+
+        ;
+
+        public String fileName;
+
+        PluginFiles(String fileName) {
+            this.fileName = fileName;
+        }
     }
 
 }

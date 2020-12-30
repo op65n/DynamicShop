@@ -17,5 +17,7 @@ public class Icon {
     private String display;
     private List<String> lore = new ArrayList<>();
     private int amount = 1;
+    private String texture = null;
+    private String base64 = null;
 
 }

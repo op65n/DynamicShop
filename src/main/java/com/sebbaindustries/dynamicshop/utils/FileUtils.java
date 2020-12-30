@@ -2,7 +2,6 @@ package com.sebbaindustries.dynamicshop.utils;
 
 import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.engine.structure.DirectoryStructure;
-import com.sebbaindustries.dynamicshop.log.PluginLogger;
 
 import java.io.File;
 import java.util.Arrays;
@@ -30,7 +29,7 @@ public final class FileUtils {
     public static List<String> getCategoryFilePaths() {
         File categoryDirectory = new File(DirectoryStructure.Directory.CATEGORIES.path);
         if (!categoryDirectory.isDirectory()) {
-            PluginLogger.logSevere("Can't find " + DirectoryStructure.Directory.CATEGORIES.path + " directory!");
+            Core.engineLogger.logSevere("Can't find " + DirectoryStructure.Directory.CATEGORIES.path + " directory!");
             return null;
         }
         return Arrays.asList(categoryDirectory.list());

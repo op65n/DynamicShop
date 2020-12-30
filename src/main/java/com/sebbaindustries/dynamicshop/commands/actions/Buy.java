@@ -31,6 +31,7 @@ public class Buy extends CommandFactory implements ICmd, ITab {
             return;
         }
         Player player = (Player) sender;
+
     }
 
     @Override

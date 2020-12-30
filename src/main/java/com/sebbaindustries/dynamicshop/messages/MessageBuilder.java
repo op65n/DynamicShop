@@ -1,6 +1,6 @@
 package com.sebbaindustries.dynamicshop.messages;
 
-import com.sebbaindustries.dynamicshop.log.PluginLogger;
+import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.utils.Color;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -15,43 +15,10 @@ import java.util.List;
  */
 public class MessageBuilder {
 
-    public enum Placeholder {
-        PLAYER("%player%", true),
-        BALANCE("%balance%", false),
-        AMOUNT("%amount%", false),
-        PRICE_BUY("%price_buy%", false),
-        PRICE_SELL("%price_sell%", false),
-        MATERIAL_NAME("%material%", false),
-        ERROR("%error%", false),
-
-        ;
-
-        public String get;
-        public boolean isCommon;
-
-        Placeholder(String placeholder, boolean common) {
-            this.get = placeholder;
-            this.isCommon = common;
-        }
-    }
-
-    private enum MessageType {
-        NORMAL,
-        MULTILINE,
-        ;
-    }
-
-    private enum Recipient {
-        CONSOLE,
-        PLAYER,
-        ;
-    }
-
     private MessageType type;
     private Recipient recipient;
     private List<String> multilineMessage = new ArrayList<>();
     private String message = "$NULL";
-
     private Player player;
     private CommandSender sender;
 
@@ -131,6 +98,38 @@ public class MessageBuilder {
         sender.sendMessage(message);
     }
 
+    public enum Placeholder {
+        PLAYER("%player%", true),
+        BALANCE("%balance%", false),
+        AMOUNT("%amount%", false),
+        PRICE_BUY("%price_buy%", false),
+        PRICE_SELL("%price_sell%", false),
+        MATERIAL_NAME("%material%", false),
+        ERROR("%error%", false),
+
+        ;
+
+        public String get;
+        public boolean isCommon;
+
+        Placeholder(String placeholder, boolean common) {
+            this.get = placeholder;
+            this.isCommon = common;
+        }
+    }
+
+    private enum MessageType {
+        NORMAL,
+        MULTILINE,
+        ;
+    }
+
+    private enum Recipient {
+        CONSOLE,
+        PLAYER,
+        ;
+    }
+
     /**
      * @author SebbaIndustries
      * @version 1.0
@@ -199,7 +198,7 @@ public class MessageBuilder {
          */
         public MessageBuilder.MessageBuilderComponents applyCommonPlaceholders() {
             if (recipient == Recipient.CONSOLE) {
-                PluginLogger.logWarn("Console cannot use applyCommonPlaceholders method!");
+                Core.pluginLogger.logWarn("Console cannot use applyCommonPlaceholders method!");
                 return this;
             }
             Arrays.stream(Placeholder.values()).forEach(placeholder -> {

@@ -1,3 +1,10 @@
 # By SebbaIndustries, this file is incompleete!
 
 noPermission = "&cYou lack security clearance! This incident will be reported to the general."
+
+[no_permission]
+message = "No."
+onHover = "Hello there!"
+onClickAction = "COPY"
+onClickMessage = "No! No! No!"
+

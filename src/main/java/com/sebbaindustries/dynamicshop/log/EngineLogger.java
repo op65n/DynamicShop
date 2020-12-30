@@ -1,21 +1,17 @@
 package com.sebbaindustries.dynamicshop.log;
 
-/**
- * @author SebbaIndustries
- * @version 1.0
- */
-public class DevLogger implements ILog {
+public class EngineLogger implements ILog {
 
     private final String prefix;
     private boolean enabled = true;
-    public DevLogger(String prefix) {
+    public EngineLogger(String prefix) {
         this.prefix = prefix + " ";
     }
 
     @Override
     public void log(String message) {
         if (!enabled) return;
-        ILog.super.log(prefix + message);
+        ILog.super.log(message);
     }
 
     @Override

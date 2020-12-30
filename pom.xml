@@ -26,7 +26,7 @@ SOFTWARE.
     <name>DynamicShop</name>
     <groupId>com.sebbaindustries</groupId>
     <artifactId>DynamicShop</artifactId>
-    <version>0.0.1</version>
+    <version>1.0.0-R0.1-Alpha</version>
     <description>Dynamic shop Minecraft 1.16.x plugin with advanced capabilities, based on the real economy. </description>
 
     <properties>
@@ -90,9 +90,25 @@ SOFTWARE.
             <id>papermc</id>
             <url>https://papermc.io/repo/repository/maven-public/</url>
         </repository>
+        <repository>
+            <id>mojang</id>
+            <name>Mojang's Repository</name>
+            <url>https://libraries.minecraft.net/</url>
+        </repository>
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>com.mojang</groupId>
+            <artifactId>authlib</artifactId>
+            <version>1.5.21</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+            <version>2.7.1</version>
+        </dependency>
         <dependency>
             <groupId>io.github.kostaskougios</groupId>
             <artifactId>cloning</artifactId>
@@ -132,11 +148,6 @@ SOFTWARE.
             <artifactId>commons-io</artifactId>
             <version>2.8.0</version>
         </dependency>
-        <!--<dependency>
-            <groupId>com.owlike</groupId>
-            <artifactId>genson</artifactId>
-            <version>1.6</version>
-        </dependency>-->
     </dependencies>
 
 </project>
