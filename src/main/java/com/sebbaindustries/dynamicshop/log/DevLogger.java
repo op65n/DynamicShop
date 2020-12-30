@@ -6,12 +6,11 @@ package com.sebbaindustries.dynamicshop.log;
  */
 public class DevLogger implements ILog {
 
+    private final String prefix;
+    private boolean enabled = true;
     public DevLogger(String prefix) {
         this.prefix = prefix + " ";
     }
-
-    private final String prefix;
-    private boolean enabled = true;
 
     @Override
     public void log(String message) {

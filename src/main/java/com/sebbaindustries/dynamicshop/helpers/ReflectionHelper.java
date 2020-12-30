@@ -18,17 +18,17 @@ public class ReflectionHelper {
     /*
      * Cache of NMS classes that we've searched for
      */
-    private static Map<String, Class<?>> loadedNMSClasses = new HashMap<>();
+    private static final Map<String, Class<?>> loadedNMSClasses = new HashMap<>();
 
     /*
      * Cache of OBS classes that we've searched for
      */
-    private static Map<String, Class<?>> loadedOBCClasses = new HashMap<>();
+    private static final Map<String, Class<?>> loadedOBCClasses = new HashMap<>();
 
     /*
      * Cache of methods that we've found in particular classes
      */
-    private static Map<Class<?>, Map<String, Method>> loadedMethods = new HashMap<>();
+    private static final Map<Class<?>, Map<String, Method>> loadedMethods = new HashMap<>();
 
 
     /**
@@ -131,12 +131,9 @@ public class ReflectionHelper {
     /**
      * Retrieve a field accessor for a specific field type and name.
      *
-     * @param target
-     *            the target type
-     * @param name
-     *            the name of the field, or NULL to ignore
-     * @param fieldType
-     *            a compatible field type
+     * @param target    the target type
+     * @param name      the name of the field, or NULL to ignore
+     * @param fieldType a compatible field type
      * @return the field accessor
      */
     public static <T> FieldAccessor<T> getField(Class<?> target, String name, Class<T> fieldType) {
@@ -195,37 +192,32 @@ public class ReflectionHelper {
     /**
      * An interface for retrieving the field content.
      *
-     * @param <T>
-     *            field type
+     * @param <T> field type
      */
     public interface FieldAccessor<T> {
         /**
          * Retrieve the content of a field.
          *
-         * @param target
-         *            the target object, or NULL for a static field
+         * @param target the target object, or NULL for a static field
          * @return the value of the field
          */
-        public T get(Object target);
+        T get(Object target);
 
         /**
          * Set the content of a field.
          *
-         * @param target
-         *            the target object, or NULL for a static field
-         * @param value
-         *            the new value of the field
+         * @param target the target object, or NULL for a static field
+         * @param value  the new value of the field
          */
-        public void set(Object target, Object value);
+        void set(Object target, Object value);
 
         /**
          * Determine if the given object has this field.
          *
-         * @param target
-         *            the object to test
+         * @param target the object to test
          * @return TRUE if it does, FALSE otherwise
          */
-        public boolean hasField(Object target);
+        boolean hasField(Object target);
     }
 
 }

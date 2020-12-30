@@ -9,21 +9,6 @@ import java.nio.file.Paths;
 
 public class DirectoryStructure {
 
-    public enum Directory {
-        BASE("plugins/DynamicShop/"),
-        GUI("plugins/DynamicShop/gui/"),
-        STATISTICS("plugins/DynamicShop/statistics/"),
-        CATEGORIES("plugins/DynamicShop/categories/"),
-        CACHE("plugins/DynamicShop/.cache/")
-        ;
-
-        public String path;
-
-        Directory(String path) {
-            this.path = path;
-        }
-    }
-
     public DirectoryStructure() {
         generateDirectoryStructure();
     }
@@ -46,6 +31,20 @@ public class DirectoryStructure {
             Core.engineLogger.log("Created " + directory.path + " directory!");
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public enum Directory {
+        BASE("plugins/DynamicShop/"),
+        GUI("plugins/DynamicShop/gui/"),
+        STATISTICS("plugins/DynamicShop/statistics/"),
+        CATEGORIES("plugins/DynamicShop/categories/"),
+        CACHE("plugins/DynamicShop/.cache/");
+
+        public String path;
+
+        Directory(String path) {
+            this.path = path;
         }
     }
 }

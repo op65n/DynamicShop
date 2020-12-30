@@ -1,16 +1,14 @@
 package com.sebbaindustries.dynamicshop.engine.ui.guis;
 
 import com.sebbaindustries.dynamicshop.Core;
+import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
+import com.sebbaindustries.dynamicshop.engine.components.shop.ShopItem;
 import com.sebbaindustries.dynamicshop.engine.ui.cache.InventoryHolderCache;
 import com.sebbaindustries.dynamicshop.engine.ui.cache.StorePageUICache;
 import com.sebbaindustries.dynamicshop.engine.ui.components.ClickActions;
-import com.sebbaindustries.dynamicshop.engine.ui.components.UIBackground;
 import com.sebbaindustries.dynamicshop.engine.ui.components.UIButton;
-import com.sebbaindustries.dynamicshop.engine.ui.interfaces.BukkitItemStack;
 import com.sebbaindustries.dynamicshop.engine.ui.interfaces.Clickable;
 import com.sebbaindustries.dynamicshop.engine.ui.interfaces.UserInterface;
-import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
-import com.sebbaindustries.dynamicshop.engine.components.shop.ShopItem;
 import com.sebbaindustries.dynamicshop.utils.Color;
 import com.sebbaindustries.dynamicshop.utils.ListUtils;
 import com.sebbaindustries.dynamicshop.utils.UserInterfaceUtils;
@@ -24,6 +22,13 @@ import java.util.TreeMap;
 
 public class StorePageUI implements UserInterface {
 
+    private final Player player;
+    private final StorePageUICache cache;
+    private final ShopCategory category;
+    private final Map<Integer, Object> mappedInventory = new TreeMap<>();
+    int collapseBy = 0;
+    private Inventory inventory;
+
     public StorePageUI(Player player, ShopCategory category) {
         this.player = player;
         this.cache = Core.gCore().getEngine().ui().getStorePageCache();
@@ -34,16 +39,6 @@ public class StorePageUI implements UserInterface {
         // Update/flush cache
         InventoryHolderCache.cache(player, this);
     }
-
-    private final Player player;
-    private Inventory inventory;
-
-    private final StorePageUICache cache;
-    private final ShopCategory category;
-    private final Map<Integer, Object> mappedInventory = new TreeMap<>();
-
-    int collapseBy = 0;
-
 
     @Override
     public void open() {

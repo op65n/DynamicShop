@@ -15,6 +15,7 @@ public class DynEngine implements Engine {
 
     private ShopContainer container;
     private ShopUI shopUI;
+    private long uptime = -1L;
 
     @Override
     public long uptime() {
@@ -50,9 +51,6 @@ public class DynEngine implements Engine {
     public void reload() {
 
     }
-
-    private long uptime = -1L;
-
 
     @Override
     public ShopContainer container() {

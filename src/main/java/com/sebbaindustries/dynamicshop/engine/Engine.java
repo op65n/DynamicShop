@@ -3,7 +3,9 @@ package com.sebbaindustries.dynamicshop.engine;
 import com.sebbaindustries.dynamicshop.engine.container.ShopContainer;
 import com.sebbaindustries.dynamicshop.engine.ui.ShopUI;
 
-import java.lang.annotation.*;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 public interface Engine {
 

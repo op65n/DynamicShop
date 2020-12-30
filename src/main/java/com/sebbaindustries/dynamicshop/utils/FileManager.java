@@ -14,25 +14,6 @@ import java.util.Arrays;
  */
 public final class FileManager {
 
-    public enum PluginFiles {
-        CONFIGURATION("configuration.toml"),
-        MESSAGES("messages.toml"),
-        README("README.md"),
-
-        GUI_MAIN_PAGE("gui/main_page.toml"),
-        GUI_STORE_PAGE("gui/store_page.toml"),
-        GUI_BUY_PAGE("gui/buy_page.toml"),
-        GUI_SELL_PAGE("gui/sell_page.toml"),
-
-        ;
-
-        public String fileName;
-
-        PluginFiles(String fileName) {
-            this.fileName = fileName;
-        }
-    }
-
     public FileManager(Core core) {
         generateMissingFiles(core);
     }
@@ -81,6 +62,25 @@ public final class FileManager {
             return null;
         }
         return pluginFile;
+    }
+
+    public enum PluginFiles {
+        CONFIGURATION("configuration.toml"),
+        MESSAGES("messages.toml"),
+        README("README.md"),
+
+        GUI_MAIN_PAGE("gui/main_page.toml"),
+        GUI_STORE_PAGE("gui/store_page.toml"),
+        GUI_BUY_PAGE("gui/buy_page.toml"),
+        GUI_SELL_PAGE("gui/sell_page.toml"),
+
+        ;
+
+        public String fileName;
+
+        PluginFiles(String fileName) {
+            this.fileName = fileName;
+        }
     }
 
 }

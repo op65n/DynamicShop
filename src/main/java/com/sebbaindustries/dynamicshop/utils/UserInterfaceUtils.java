@@ -1,12 +1,12 @@
 package com.sebbaindustries.dynamicshop.utils;
 
+import com.sebbaindustries.dynamicshop.engine.components.shop.ShopItem;
 import com.sebbaindustries.dynamicshop.engine.ui.components.ClickActions;
 import com.sebbaindustries.dynamicshop.engine.ui.components.DisplayItem;
 import com.sebbaindustries.dynamicshop.engine.ui.components.UIBackground;
 import com.sebbaindustries.dynamicshop.engine.ui.interfaces.BaseUI;
 import com.sebbaindustries.dynamicshop.engine.ui.interfaces.BukkitItemStack;
 import com.sebbaindustries.dynamicshop.engine.ui.interfaces.Clickable;
-import com.sebbaindustries.dynamicshop.engine.components.shop.ShopItem;
 import com.sebbaindustries.dynamicshop.helpers.SkullHelper;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -16,7 +16,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public class UserInterfaceUtils {
@@ -132,7 +131,8 @@ public class UserInterfaceUtils {
     public static void mapButtons(Map<Integer, Object> mappedInventory, BaseUI cache, ShopItem selectedItem) {
         cache.buttons().forEach(button -> {
             if (button.getOnClick() == ClickActions.SET && button.getAmount() == selectedItem.getAmount()) return;
-            if (button.getOnClick() == ClickActions.ADD && button.getAmount() + selectedItem.getAmount() > selectedItem.getMaterial().getMaxStackSize()) return;
+            if (button.getOnClick() == ClickActions.ADD && button.getAmount() + selectedItem.getAmount() > selectedItem.getMaterial().getMaxStackSize())
+                return;
             if (button.getOnClick() == ClickActions.REMOVE && selectedItem.getAmount() - button.getAmount() < 1) return;
             mappedInventory.put(button.getSlot(), button);
         });

@@ -3,16 +3,21 @@ package com.sebbaindustries.dynamicshop.engine.ui;
 import com.moandjiezana.toml.Toml;
 import com.rits.cloning.Cloner;
 import com.sebbaindustries.dynamicshop.Core;
+import com.sebbaindustries.dynamicshop.engine.components.maintainer.ComponentManager;
 import com.sebbaindustries.dynamicshop.engine.ui.cache.BuyPageUICache;
 import com.sebbaindustries.dynamicshop.engine.ui.cache.MainPageUICache;
 import com.sebbaindustries.dynamicshop.engine.ui.cache.SellPageUICache;
 import com.sebbaindustries.dynamicshop.engine.ui.cache.StorePageUICache;
-import com.sebbaindustries.dynamicshop.engine.components.maintainer.ComponentManager;
 import com.sebbaindustries.dynamicshop.utils.FileManager;
 import org.jetbrains.annotations.NotNull;
 
 public class ShopUI {
 
+    private final Cloner cloner = new Cloner();
+    private MainPageUICache mainPageCache;
+    private StorePageUICache storePageCache;
+    private BuyPageUICache buyPageCache;
+    private SellPageUICache sellPageCache;
     public ShopUI() {
         load();
     }
@@ -60,13 +65,6 @@ public class ShopUI {
             return null;
         }
     }
-
-    private MainPageUICache mainPageCache;
-    private StorePageUICache storePageCache;
-    private BuyPageUICache buyPageCache;
-    private SellPageUICache sellPageCache;
-
-    private final Cloner cloner = new Cloner();
 
     public MainPageUICache getMainPageCache() {
         // Java is retarded so we are forced to to this shit...

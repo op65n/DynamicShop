@@ -15,43 +15,10 @@ import java.util.List;
  */
 public class MessageBuilder {
 
-    public enum Placeholder {
-        PLAYER("%player%", true),
-        BALANCE("%balance%", false),
-        AMOUNT("%amount%", false),
-        PRICE_BUY("%price_buy%", false),
-        PRICE_SELL("%price_sell%", false),
-        MATERIAL_NAME("%material%", false),
-        ERROR("%error%", false),
-
-        ;
-
-        public String get;
-        public boolean isCommon;
-
-        Placeholder(String placeholder, boolean common) {
-            this.get = placeholder;
-            this.isCommon = common;
-        }
-    }
-
-    private enum MessageType {
-        NORMAL,
-        MULTILINE,
-        ;
-    }
-
-    private enum Recipient {
-        CONSOLE,
-        PLAYER,
-        ;
-    }
-
     private MessageType type;
     private Recipient recipient;
     private List<String> multilineMessage = new ArrayList<>();
     private String message = "$NULL";
-
     private Player player;
     private CommandSender sender;
 
@@ -129,6 +96,38 @@ public class MessageBuilder {
             return;
         }
         sender.sendMessage(message);
+    }
+
+    public enum Placeholder {
+        PLAYER("%player%", true),
+        BALANCE("%balance%", false),
+        AMOUNT("%amount%", false),
+        PRICE_BUY("%price_buy%", false),
+        PRICE_SELL("%price_sell%", false),
+        MATERIAL_NAME("%material%", false),
+        ERROR("%error%", false),
+
+        ;
+
+        public String get;
+        public boolean isCommon;
+
+        Placeholder(String placeholder, boolean common) {
+            this.get = placeholder;
+            this.isCommon = common;
+        }
+    }
+
+    private enum MessageType {
+        NORMAL,
+        MULTILINE,
+        ;
+    }
+
+    private enum Recipient {
+        CONSOLE,
+        PLAYER,
+        ;
     }
 
     /**

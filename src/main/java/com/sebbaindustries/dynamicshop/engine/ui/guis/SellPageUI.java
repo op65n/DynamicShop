@@ -1,6 +1,8 @@
 package com.sebbaindustries.dynamicshop.engine.ui.guis;
 
 import com.sebbaindustries.dynamicshop.Core;
+import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
+import com.sebbaindustries.dynamicshop.engine.components.shop.ShopItem;
 import com.sebbaindustries.dynamicshop.engine.ui.cache.InventoryHolderCache;
 import com.sebbaindustries.dynamicshop.engine.ui.cache.SellPageUICache;
 import com.sebbaindustries.dynamicshop.engine.ui.components.ClickActions;
@@ -8,8 +10,6 @@ import com.sebbaindustries.dynamicshop.engine.ui.components.UIButton;
 import com.sebbaindustries.dynamicshop.engine.ui.interfaces.BaseUI;
 import com.sebbaindustries.dynamicshop.engine.ui.interfaces.Clickable;
 import com.sebbaindustries.dynamicshop.engine.ui.interfaces.UserInterface;
-import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
-import com.sebbaindustries.dynamicshop.engine.components.shop.ShopItem;
 import com.sebbaindustries.dynamicshop.utils.Color;
 import com.sebbaindustries.dynamicshop.utils.UserInterfaceUtils;
 import org.bukkit.Bukkit;
@@ -22,6 +22,12 @@ import java.util.TreeMap;
 
 public class SellPageUI implements UserInterface {
 
+    private final Player player;
+    private final BaseUI cache;
+    private final ShopCategory backPage;
+    private Inventory inventory;
+    private final Map<Integer, Object> mappedInventory = new TreeMap<>();
+    private final ShopItem selectedItem;
     public SellPageUI(Player player, ShopItem item, ShopCategory backPage) {
         this.player = player;
         this.cache = Core.gCore().getEngine().ui().getSellPageCache();
@@ -33,13 +39,6 @@ public class SellPageUI implements UserInterface {
         // Update/flush cache
         InventoryHolderCache.cache(player, this);
     }
-
-    private final Player player;
-    private Inventory inventory;
-    private final BaseUI cache;
-    private Map<Integer, Object> mappedInventory = new TreeMap<>();
-    private ShopItem selectedItem;
-    private final ShopCategory backPage;
 
     @Override
     public void open() {

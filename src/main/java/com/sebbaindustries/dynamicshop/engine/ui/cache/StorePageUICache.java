@@ -13,7 +13,7 @@ import java.util.List;
 
 public class StorePageUICache implements BaseUI {
 
-    private String name = "$NULL";
+    private final String name = "$NULL";
     private int size = 6;
 
     private UIBackground background;
@@ -22,7 +22,7 @@ public class StorePageUICache implements BaseUI {
     @Setter
     private ItemsPanel items;
 
-    private List<UIButton> button = new ArrayList<>();
+    private final List<UIButton> button = new ArrayList<>();
 
     @Override
     public String name() {

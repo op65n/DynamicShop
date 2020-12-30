@@ -1,18 +1,16 @@
 package com.sebbaindustries.dynamicshop.engine.ui.guis;
 
 import com.sebbaindustries.dynamicshop.Core;
+import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
 import com.sebbaindustries.dynamicshop.engine.ui.cache.InventoryHolderCache;
 import com.sebbaindustries.dynamicshop.engine.ui.cache.MainPageUICache;
 import com.sebbaindustries.dynamicshop.engine.ui.components.ClickActions;
-import com.sebbaindustries.dynamicshop.engine.ui.components.UIBackground;
 import com.sebbaindustries.dynamicshop.engine.ui.components.UIButton;
 import com.sebbaindustries.dynamicshop.engine.ui.components.UICategory;
 import com.sebbaindustries.dynamicshop.engine.ui.interfaces.BaseUI;
 import com.sebbaindustries.dynamicshop.engine.ui.interfaces.Clickable;
 import com.sebbaindustries.dynamicshop.engine.ui.interfaces.UserInterface;
-import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
 import com.sebbaindustries.dynamicshop.utils.Color;
-import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 import com.sebbaindustries.dynamicshop.utils.UserInterfaceUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -25,6 +23,10 @@ import java.util.TreeMap;
 
 public class MainPageUI implements UserInterface {
 
+    private final Player player;
+    private final BaseUI cache;
+    private Inventory inventory;
+    private final Map<Integer, Object> mappedInventory = new TreeMap<>();
     public MainPageUI(Player player) {
         this.player = player;
         this.cache = Core.gCore().getEngine().ui().getMainPageCache();
@@ -34,12 +36,6 @@ public class MainPageUI implements UserInterface {
         // Update/flush cache
         InventoryHolderCache.cache(player, this);
     }
-
-    private final Player player;
-    private Inventory inventory;
-    private final BaseUI cache;
-    private Map<Integer, Object> mappedInventory = new TreeMap<>();
-
 
     @Override
     public void open() {

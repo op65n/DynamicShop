@@ -14,6 +14,8 @@ import java.util.List;
 
 public class ShopContainer {
 
+    private final List<ShopCategory> categories = new ArrayList<>();
+
     public ShopContainer() {
         load();
     }
@@ -62,8 +64,6 @@ public class ShopContainer {
             }
         });
     }
-
-    private final List<ShopCategory> categories = new ArrayList<>();
 
     /**
      * Returns sorted list of categories based on priority value, base priority
