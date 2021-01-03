@@ -1,10 +1,8 @@
 # By SebbaIndustries, this file is incompleete!
 
-noPermission = "&cYou lack security clearance! This incident will be reported to the general."
+no_permission = "&cYou lack security clearance! This incident will be reported to the general."
 
-[no_permission]
-message = "No."
-onHover = "Hello there!"
-onClickAction = "COPY"
-onClickMessage = "No! No! No!"
+console_cannot_execute = "&cConsole can't execute this command, if you think this is wrong... too bad I don't care."
+
+json_message = '{"message":"&cHello there!", "onHover":"&bClick me!", "clickAction":"copy", "onClick":"You copied this!"}'
 
