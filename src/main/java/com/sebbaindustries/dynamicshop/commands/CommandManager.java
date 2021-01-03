@@ -5,6 +5,8 @@ import com.sebbaindustries.dynamicshop.commands.actions.*;
 import com.sebbaindustries.dynamicshop.commands.components.CommandFactory;
 import com.sebbaindustries.dynamicshop.commands.components.ICmd;
 import com.sebbaindustries.dynamicshop.commands.components.ITab;
+import com.sebbaindustries.dynamicshop.messages.IMessage;
+import com.sebbaindustries.dynamicshop.messages.Message;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -59,18 +61,16 @@ public class CommandManager implements CommandExecutor, TabCompleter {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
-        commands.forEach(cmd -> {
-            if (cmd.command().equalsIgnoreCase(label)) {
-                if (cmd.permission() == null) {
-                    ((ICmd) cmd).execute(sender, args);
-                    return;
-                }
-                if (!sender.hasPermission(cmd.permission())) {
-                    //sender.sendMessage(Messages.get("no_permission"));
-                    return;
-                }
+        commands.stream().filter(cmd -> cmd.command().equalsIgnoreCase(label)).forEach(cmd -> {
+            if (cmd.permission() == null) {
                 ((ICmd) cmd).execute(sender, args);
+                return;
             }
+            if (!sender.hasPermission(cmd.permission())) {
+                IMessage.builder().recipient(sender).message(Message.get().no_permission).applyCommonPlaceholders().send();
+                return;
+            }
+            ((ICmd) cmd).execute(sender, args);
         });
 
         return true;
@@ -87,12 +87,10 @@ public class CommandManager implements CommandExecutor, TabCompleter {
      */
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        for (CommandFactory cmd : commands) {
-            if (cmd.command().equalsIgnoreCase(label)) {
-                List<String> tab = ((ITab) cmd).complete(sender, args);
-                return StringUtil.copyPartialMatches(args[args.length - 1], tab, new ArrayList<>(tab.size()));
-            }
-        }
-        return null;
+        return commands.stream().filter(cmd -> cmd.command().equalsIgnoreCase(label))
+                .map(cmd -> ((ITab) cmd).complete(sender, args))
+                .findFirst()
+                .map(tab -> StringUtil.copyPartialMatches(args[args.length - 1], tab, new ArrayList<>(tab.size())))
+                .orElse(null);
     }
 }
