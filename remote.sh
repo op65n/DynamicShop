@@ -32,6 +32,7 @@ tar \
 --exclude="${BASENAME}/*.iml" \
 --exclude="${BASENAME}/remote.sh" \
 --exclude="${BASENAME}/src/test" \
+--exclude="${BASENAME}/database" \
 --exclude="${BASENAME}/*.log" \
 -czvf $FILENAME "${BASENAME}"/
 
