@@ -3,10 +3,13 @@ package com.sebbaindustries.dynamicshop.engine;
 import com.moandjiezana.toml.Toml;
 import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.commands.CommandManager;
+import com.sebbaindustries.dynamicshop.database.DBSetup;
+import com.sebbaindustries.dynamicshop.database.DataSource;
 import com.sebbaindustries.dynamicshop.engine.container.ShopContainer;
 import com.sebbaindustries.dynamicshop.engine.ui.ShopUI;
 import com.sebbaindustries.dynamicshop.engine.ui.listeners.InventoryListeners;
 import com.sebbaindustries.dynamicshop.messages.Message;
+import com.sebbaindustries.dynamicshop.settings.Configuration;
 import com.sebbaindustries.dynamicshop.utils.FileManager;
 
 @Engine.Codename("Leptir")
@@ -15,6 +18,7 @@ public class DynEngine implements Engine {
 
     private ShopContainer container;
     private ShopUI shopUI;
+    private Configuration configuration;
     private long uptime = -1L;
 
     @Override
@@ -30,6 +34,7 @@ public class DynEngine implements Engine {
         Core.gCore().setMessage(
                 new Toml().read(Core.gCore().getFileManager().getFile(FileManager.PluginFiles.MESSAGES)).to(Message.class)
         );
+        this.configuration = new Toml().read(Core.gCore().getFileManager().getFile(FileManager.PluginFiles.CONFIGURATION)).to(Configuration.class);
 
         this.container = new ShopContainer();
         this.shopUI = new ShopUI();
@@ -40,6 +45,13 @@ public class DynEngine implements Engine {
         Core.gCore().core.getServer().getPluginManager().registerEvents(new InventoryListeners(), Core.gCore().core);
 
         uptime = System.currentTimeMillis();
+
+        DataSource.setup(configuration.getDatabase());
+
+        DBSetup dbs = new DBSetup();
+        dbs.create();
+
+
     }
 
     @Override
