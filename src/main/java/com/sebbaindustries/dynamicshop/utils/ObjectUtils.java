@@ -52,7 +52,7 @@ public final class ObjectUtils {
     @Deprecated
     public static void saveGsonFile(String fileName, Object object) {
         try {
-            Writer writer = new FileWriter(Core.gCore().core.getDataFolder() + "/" + fileName + ".json", StandardCharsets.UTF_8);
+            Writer writer = new FileWriter(Core.gCore().core.getDataFolder() + "/" + fileName, StandardCharsets.UTF_8);
             gson.toJson(object, writer);
             writer.flush();
             writer.close();
@@ -86,7 +86,7 @@ public final class ObjectUtils {
     public static <T> T getGsonFile(String fileName, Class<T> cl) {
         JsonReader reader;
         try {
-            reader = new JsonReader(new FileReader(Core.gCore().core.getDataFolder() + "/" + fileName + ".json", StandardCharsets.UTF_8));
+            reader = new JsonReader(new FileReader(Core.gCore().core.getDataFolder() + "/" + fileName, StandardCharsets.UTF_8));
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -104,7 +104,7 @@ public final class ObjectUtils {
     public static JsonObject getJson(String fileName) {
         JsonReader reader;
         try {
-            reader = new JsonReader(new FileReader(Core.gCore().core.getDataFolder() + "/" + fileName + ".json", StandardCharsets.UTF_8));
+            reader = new JsonReader(new FileReader(Core.gCore().core.getDataFolder() + "/" + fileName, StandardCharsets.UTF_8));
         } catch (IOException e) {
             e.printStackTrace();
             return null;

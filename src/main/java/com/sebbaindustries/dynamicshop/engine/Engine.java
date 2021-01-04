@@ -11,7 +11,7 @@ public interface Engine {
 
     long uptime();
 
-    void initialize();
+    boolean initialize();
 
     void terminate();
 

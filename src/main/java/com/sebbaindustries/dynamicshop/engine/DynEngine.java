@@ -5,16 +5,21 @@ import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.commands.CommandManager;
 import com.sebbaindustries.dynamicshop.database.DBSetup;
 import com.sebbaindustries.dynamicshop.database.DataSource;
+import com.sebbaindustries.dynamicshop.engine.cache.LocalCache;
 import com.sebbaindustries.dynamicshop.engine.container.ShopContainer;
 import com.sebbaindustries.dynamicshop.engine.ui.ShopUI;
 import com.sebbaindustries.dynamicshop.engine.ui.listeners.InventoryListeners;
 import com.sebbaindustries.dynamicshop.messages.Message;
 import com.sebbaindustries.dynamicshop.settings.Configuration;
 import com.sebbaindustries.dynamicshop.utils.FileManager;
+import com.sebbaindustries.dynamicshop.utils.FileUtils;
+import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 
 @Engine.Codename("Leptir")
 @Engine.Version("1.0.0-R0.1-Alpha")
 public class DynEngine implements Engine {
+
+    private final LocalCache _lCache = new LocalCache();
 
     private ShopContainer container;
     private ShopUI shopUI;
@@ -27,7 +32,18 @@ public class DynEngine implements Engine {
     }
 
     @Override
-    public void initialize() {
+    public boolean initialize() {
+        initLCache();
+        System.out.println(ObjectUtils.deserializeObjectToString(_lCache));
+        if (_lCache.getStartupInfo().isInitStartup()) {
+            Core.engineLogger.logWarn("DynamicShop requires initial configuration before you cen use it!");
+            Core.engineLogger.logWarn("Please visit https://op65n.tech to read the wiki!");
+            Core.engineLogger.logWarn("DynamicShop requires initial configuration before you cen use it!");
+            _lCache.getStartupInfo().setInitStartup(false);
+            Core.gCore().core.getPluginLoader().disablePlugin(Core.gCore().core);
+            return false;
+        }
+
         Core.gCore().setCommandManager(
                 new CommandManager(Core.gCore().core)
         );
@@ -51,12 +67,20 @@ public class DynEngine implements Engine {
         DBSetup dbs = new DBSetup();
         dbs.create();
 
+        return true;
+    }
 
+    private void initLCache() {
+        if (!FileUtils.fileExists(".cache/startup_info.json")) {
+            System.out.println("Creating cache");
+            ObjectUtils.saveGsonFile(".cache/startup_info.json", _lCache.getStartupInfo());
+        }
+        _lCache.setStartupInfo(ObjectUtils.getGsonFile(".cache/startup_info.json", LocalCache.StartupInfo.class));
     }
 
     @Override
     public void terminate() {
-
+        ObjectUtils.saveGsonFile(".cache/startup_info.json", _lCache.getStartupInfo());
     }
 
     @Override

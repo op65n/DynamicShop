@@ -46,7 +46,7 @@ public class ServerPlugin {
                 new DynEngine()
         );
 
-        Core.gCore().getEngine().initialize();
+        if (!Core.gCore().getEngine().initialize()) return;
         ComponentManager.getInstance().logAll();
 
         Core.pluginLogger.log("=============================================");
