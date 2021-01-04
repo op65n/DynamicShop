@@ -4,6 +4,7 @@ public class EngineLogger implements ILog {
 
     private final String prefix;
     private boolean enabled = true;
+
     public EngineLogger(String prefix) {
         this.prefix = prefix + " ";
     }

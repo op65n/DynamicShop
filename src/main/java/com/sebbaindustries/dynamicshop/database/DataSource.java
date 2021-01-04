@@ -7,14 +7,14 @@ import com.zaxxer.hikari.HikariDataSource;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.SQLInvalidAuthorizationSpecException;
 
 public abstract class DataSource {
 
     private static final HikariConfig config = new HikariConfig();
     private static HikariDataSource hds;
 
-    private DataSource() {}
+    private DataSource() {
+    }
 
     public static Connection connection() throws SQLException {
         return hds.getConnection();

@@ -25,9 +25,10 @@ public class BuyPageUI implements UserInterface {
     private final Player player;
     private final BaseUI cache;
     private final ShopCategory backPage;
-    private Inventory inventory;
     private final Map<Integer, Object> mappedInventory = new TreeMap<>();
     private final ShopItem selectedItem;
+    private Inventory inventory;
+
     public BuyPageUI(Player player, ShopItem item, ShopCategory backPage) {
         this.player = player;
         this.cache = Core.gCore().getEngine().ui().getBuyPageCache();

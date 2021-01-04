@@ -15,9 +15,7 @@ import com.sebbaindustries.dynamicshop.settings.Configuration;
 import com.sebbaindustries.dynamicshop.utils.FileManager;
 import com.sebbaindustries.dynamicshop.utils.FileUtils;
 import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
-import org.bukkit.block.Sign;
 
-import java.sql.SQLInvalidAuthorizationSpecException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,7 +59,6 @@ public class DynEngine implements Engine {
         syncLCache();
 
         this.shopUI = new ShopUI();
-
 
 
         uptime = System.currentTimeMillis();

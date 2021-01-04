@@ -2,9 +2,6 @@ package com.sebbaindustries.dynamicshop.messages;
 
 import com.sebbaindustries.dynamicshop.Core;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @author SebbaIndustries
  * @version 1.0

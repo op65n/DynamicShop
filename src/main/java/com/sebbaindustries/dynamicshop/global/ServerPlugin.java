@@ -5,7 +5,6 @@ import com.sebbaindustries.dynamicshop.engine.DynEngine;
 import com.sebbaindustries.dynamicshop.engine.components.maintainer.ComponentManager;
 import com.sebbaindustries.dynamicshop.utils.Color;
 import com.sebbaindustries.dynamicshop.utils.EngineUtils;
-import lombok.Getter;
 
 /**
  * @author SebbaIndustries

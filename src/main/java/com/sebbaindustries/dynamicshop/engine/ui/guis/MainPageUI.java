@@ -25,8 +25,9 @@ public class MainPageUI implements UserInterface {
 
     private final Player player;
     private final BaseUI cache;
-    private Inventory inventory;
     private final Map<Integer, Object> mappedInventory = new TreeMap<>();
+    private Inventory inventory;
+
     public MainPageUI(Player player) {
         this.player = player;
         this.cache = Core.gCore().getEngine().ui().getMainPageCache();

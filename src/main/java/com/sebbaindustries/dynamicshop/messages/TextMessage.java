@@ -6,9 +6,9 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class TextMessage implements IMessage {
-    
-    private String message;
+
     private final CommandSender sender;
+    private String message;
 
     public TextMessage(String message, CommandSender sender) {
         this.sender = sender;

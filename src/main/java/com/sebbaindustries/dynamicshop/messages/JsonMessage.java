@@ -12,6 +12,12 @@ import org.bukkit.entity.Player;
 
 public class JsonMessage implements IMessage {
 
+    private final CommandSender sender;
+    private final HoverEvent.Action hoverAction = HoverEvent.Action.SHOW_TEXT;
+    private String message = null;
+    private String hoverMessage = null;
+    private String clickMessage = null;
+    private ClickEvent.Action clickAction;
     public JsonMessage(String jsonString, CommandSender sender) {
         this.sender = sender;
         JsonObject object = ObjectUtils.getJsonString(jsonString);
@@ -47,14 +53,6 @@ public class JsonMessage implements IMessage {
         }
 
     }
-
-    private final CommandSender sender;
-    private String message = null;
-    private String hoverMessage = null;
-    private String clickMessage = null;
-
-    private final HoverEvent.Action hoverAction = HoverEvent.Action.SHOW_TEXT;
-    private ClickEvent.Action clickAction;
 
     @Override
     public IMessage applyCommonPlaceholders() {

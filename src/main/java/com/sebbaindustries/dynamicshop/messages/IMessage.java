@@ -1,8 +1,10 @@
 package com.sebbaindustries.dynamicshop.messages;
 
-import org.bukkit.entity.Player;
-
 public interface IMessage {
+
+    static MessageBuilder builder() {
+        return new MessageBuilder();
+    }
 
     IMessage applyCommonPlaceholders();
 
@@ -15,9 +17,5 @@ public interface IMessage {
     IMessage placeholder(String placeholder, Boolean replacement);
 
     void send();
-
-    static MessageBuilder builder() {
-        return new MessageBuilder();
-    }
 
 }

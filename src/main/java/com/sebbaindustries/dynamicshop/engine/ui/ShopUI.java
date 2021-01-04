@@ -18,6 +18,7 @@ public class ShopUI {
     private StorePageUICache storePageCache;
     private BuyPageUICache buyPageCache;
     private SellPageUICache sellPageCache;
+
     public ShopUI() {
         load();
     }
