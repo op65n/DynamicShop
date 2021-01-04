@@ -1,11 +1,13 @@
 package com.sebbaindustries.dynamicshop.database;
 
+import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.settings.Configuration;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.SQLInvalidAuthorizationSpecException;
 
 public abstract class DataSource {
 
@@ -18,15 +20,24 @@ public abstract class DataSource {
         return hds.getConnection();
     }
 
-    public static void setup(Configuration.DB dbc) {
-        config.setJdbcUrl("jdbc:" + dbc.jdbc + "://" + dbc.ip + ":" + dbc.port + "/" + dbc.database);
-        config.setDriverClassName(dbc.driver);
-        config.setUsername(dbc.username);
-        config.setPassword(dbc.passwd);
+    public static boolean setup(Configuration.DB dbc) {
+        try {
+            config.setJdbcUrl("jdbc:" + dbc.jdbc + "://" + dbc.ip + ":" + dbc.port + "/" + dbc.database);
+            config.setDriverClassName(dbc.driver);
+            config.setUsername(dbc.username);
+            config.setPassword(dbc.passwd);
 
-        if (dbc.properties != null && !dbc.properties.isEmpty())
-            dbc.properties.forEach((key, value) -> config.addDataSourceProperty("dataSource." + key, value));
+            if (dbc.properties != null && !dbc.properties.isEmpty())
+                dbc.properties.forEach((key, value) -> config.addDataSourceProperty("dataSource." + key, value));
 
-        hds = new HikariDataSource(config);
+            hds = new HikariDataSource(config);
+            return true;
+        } catch (Exception e) {
+            Core.engineLogger.logSevere("There was an error with database configuration, please fix the error");
+            e.printStackTrace();
+            Core.pluginLogger.logSevere("Terminating due to unexpected exception!");
+            return false;
+        }
     }
+
 }

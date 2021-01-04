@@ -8,6 +8,7 @@ import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class JsonMessage implements IMessage {
 
@@ -57,26 +58,36 @@ public class JsonMessage implements IMessage {
 
     @Override
     public IMessage applyCommonPlaceholders() {
+        if (sender instanceof Player) {
+            Player player = (Player) sender;
+            message = message.replaceAll("%player%", player.getName());
+            message = message.replaceAll("%player_display%", player.getDisplayName());
+            message = message.replaceAll("%player_balance%", "$NULL");
+        }
         return this;
     }
 
     @Override
     public IMessage placeholder(String placeholder, String replacement) {
+        message = message.replaceAll(placeholder, replacement);
         return this;
     }
 
     @Override
     public IMessage placeholder(String placeholder, Integer replacement) {
+        message = message.replaceAll(placeholder, String.valueOf(replacement));
         return this;
     }
 
     @Override
     public IMessage placeholder(String placeholder, Double replacement) {
+        message = message.replaceAll(placeholder, String.valueOf(replacement));
         return this;
     }
 
     @Override
     public IMessage placeholder(String placeholder, Boolean replacement) {
+        message = message.replaceAll(placeholder, String.valueOf(replacement));
         return this;
     }
 
@@ -92,14 +103,5 @@ public class JsonMessage implements IMessage {
         }
         sender.sendMessage(msg);
     }
-
-
-    //public void send(Player player) {
-    //    TextComponent msg = new TextComponent("&6Your Text");
-//
-    //    msg.setHoverEvent(new HoverEvent(HoverEvent.Action., new Text("Visit the Spigot website!")));
-    //    msg.setClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, "/yourcommand"));
-    //    player.sendMessage(msg);
-    //}
 
 }

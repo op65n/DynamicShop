@@ -5,6 +5,7 @@ import com.sebbaindustries.dynamicshop.engine.DynEngine;
 import com.sebbaindustries.dynamicshop.engine.components.maintainer.ComponentManager;
 import com.sebbaindustries.dynamicshop.utils.Color;
 import com.sebbaindustries.dynamicshop.utils.EngineUtils;
+import lombok.Getter;
 
 /**
  * @author SebbaIndustries
@@ -46,7 +47,10 @@ public class ServerPlugin {
                 new DynEngine()
         );
 
-        if (!Core.gCore().getEngine().initialize()) return;
+        if (!Core.gCore().getEngine().initialize()) {
+            core.getPluginLoader().disablePlugin(core);
+            return;
+        }
         ComponentManager.getInstance().logAll();
 
         Core.pluginLogger.log("=============================================");

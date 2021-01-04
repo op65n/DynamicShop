@@ -2,6 +2,7 @@ package com.sebbaindustries.dynamicshop.messages;
 
 import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 /**
  * @author SebbaIndustries
@@ -18,7 +19,7 @@ public class MessageBuilder {
 
     public class MessageCreator {
         public IMessage message(final String message) {
-            if (ObjectUtils.isValidJson(message)) return new JsonMessage(message, sender);
+            if (ObjectUtils.isValidJson(message) && sender instanceof Player) return new JsonMessage(message, sender);
             return new TextMessage(message, sender);
         }
     }

@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 
 public interface ILog {
 
-    Logger logger = Logger.getLogger("DynShop");
+    Logger logger = Logger.getLogger("DynamicShop");
 
     default void log(String message) {
         logger.log(Level.INFO, message);
