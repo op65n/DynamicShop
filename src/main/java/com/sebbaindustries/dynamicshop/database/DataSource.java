@@ -2,15 +2,17 @@ package com.sebbaindustries.dynamicshop.database;
 
 import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.settings.Configuration;
+import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public abstract class DataSource {
 
-    private static final HikariConfig config = new HikariConfig();
     private static HikariDataSource hds;
 
     private DataSource() {
@@ -22,13 +24,22 @@ public abstract class DataSource {
 
     public static boolean setup(Configuration.DB dbc) {
         try {
+            Properties props = new Properties();
+            if (dbc.properties != null && !dbc.properties.isEmpty()) {
+                dbc.properties.forEach((key, value) -> {
+                    Core.devLogger.log("dataSource." + key + " = " + value);
+                    props.setProperty("dataSource." + key, value);
+                });
+            }
+            props.put("dataSource.logWriter", new PrintWriter(System.out));
+
+            HikariConfig config = new HikariConfig(props);
+
+            config.setPoolName("DynShopPool");
             config.setJdbcUrl("jdbc:" + dbc.jdbc + "://" + dbc.ip + ":" + dbc.port + "/" + dbc.database);
             config.setDriverClassName(dbc.driver);
             config.setUsername(dbc.username);
             config.setPassword(dbc.passwd);
-
-            if (dbc.properties != null && !dbc.properties.isEmpty())
-                dbc.properties.forEach((key, value) -> config.addDataSourceProperty("dataSource." + key, value));
 
             hds = new HikariDataSource(config);
             return true;
