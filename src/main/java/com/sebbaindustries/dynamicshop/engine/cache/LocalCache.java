@@ -29,7 +29,7 @@ public class LocalCache {
     @Setter
     @NoArgsConstructor
     public static class CategoryFileInfo {
-        List<ShopCategory> categories = new ArrayList<>();
+        private List<ShopCategory> categories = new ArrayList<>();
     }
 
 }
