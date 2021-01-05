@@ -16,6 +16,7 @@ public class ShopItem implements BukkitItemStack, Clickable {
 
     private int priority = 1000;
 
+    int ID = -1;
     private Material material = Material.ACACIA_BOAT;
     private String display = "%item%";
     private List<String> lore;
