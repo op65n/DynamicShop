@@ -8,6 +8,7 @@ import com.sebbaindustries.dynamicshop.database.DataSource;
 import com.sebbaindustries.dynamicshop.engine.cache.LocalCache;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
 import com.sebbaindustries.dynamicshop.engine.container.ShopContainer;
+import com.sebbaindustries.dynamicshop.engine.task.Task;
 import com.sebbaindustries.dynamicshop.engine.ui.ShopUI;
 import com.sebbaindustries.dynamicshop.engine.ui.listeners.InventoryListeners;
 import com.sebbaindustries.dynamicshop.messages.Message;
@@ -16,8 +17,7 @@ import com.sebbaindustries.dynamicshop.utils.FileManager;
 import com.sebbaindustries.dynamicshop.utils.FileUtils;
 import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Engine.Codename("Leptir")
 @Engine.Version("1.0.0-R0.1-Alpha")
@@ -27,6 +27,8 @@ public class DynEngine implements Engine {
 
     private ShopContainer container;
     private ShopUI shopUI;
+    private DBSetup dbs;
+
     private Configuration configuration;
     private long uptime = -1L;
 
@@ -52,11 +54,13 @@ public class DynEngine implements Engine {
         }
         _lCache.getStartupInfo().setDbReady(true);
 
-        DBSetup dbs = new DBSetup();
-        dbs.create();
+        dbs = new DBSetup();
 
         this.container = new ShopContainer();
-        syncLCache();
+        Task.async(() -> {
+            dbs.createTables();
+            syncLCache();
+        });
 
         this.shopUI = new ShopUI();
 
@@ -90,18 +94,30 @@ public class DynEngine implements Engine {
     }
 
     private void syncLCache() {
-        List<ShopCategory> added = new ArrayList<>();
-        for (var category : container.getPrioritizedCategoryList()) {
-            boolean categoryFound = false;
-            for (var cachedCategory : _lCache.getCategoryFileInfo().getCategories()) {
-                if (cachedCategory.getFileName().equals(category.getFileName())) {
-                    categoryFound = true;
-                }
+        Collection<ShopCategory> cached = _lCache.getCategoryFileInfo().getCategories();
+        Collection<ShopCategory> loaded = container.getPrioritizedCategoryList();
+
+        Collection<ShopCategory> differentCached = new HashSet<>(loaded);
+        Collection<ShopCategory> differentLoaded = new HashSet<>(cached);
+
+        cached.forEach(cachedEntry -> loaded.forEach(loadedEntry -> {
+            if (loadedEntry.getFileName().equals(cachedEntry.getFileName())) {
+                differentCached.remove(loadedEntry);
+                differentLoaded.remove(cachedEntry);
             }
-            if (!categoryFound) added.add(category);
-        }
-        System.out.println(ObjectUtils.deserializeObjectToString(added));
-        added.forEach(_lCache.getCategoryFileInfo().getCategories()::add);
+        }));
+
+
+        Core.engineLogger.logWarn("Different cached");
+        differentCached.forEach(category -> System.out.println(category.getFileName()));
+        dbs.createCategories(new ArrayList<>(differentCached));
+
+
+        Core.engineLogger.logWarn("Different loaded");
+        differentLoaded.forEach(loadedCategoryName -> System.out.println(loadedCategoryName.getFileName()));
+
+        _lCache.getCategoryFileInfo().setCategories(new ArrayList<>(container.getPrioritizedCategoryList()));
+
     }
 
     @Override
