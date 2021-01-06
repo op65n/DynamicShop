@@ -17,7 +17,7 @@ import java.util.List;
 public class ShopCategory implements BukkitItemStack {
 
     private String fileName = "$NULL";
-
+    private int ID = -1;
     private int priority = 1000;
     private Icon icon = new Icon();
 

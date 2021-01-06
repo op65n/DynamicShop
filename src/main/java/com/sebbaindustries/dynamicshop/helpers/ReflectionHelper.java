@@ -11,25 +11,21 @@ import java.util.Map;
 public class ReflectionHelper {
 
     /*
-     * The server version string to location NMS & OBC classes
-     */
-    private static String versionString;
-
-    /*
      * Cache of NMS classes that we've searched for
      */
     private static final Map<String, Class<?>> loadedNMSClasses = new HashMap<>();
-
     /*
      * Cache of OBS classes that we've searched for
      */
     private static final Map<String, Class<?>> loadedOBCClasses = new HashMap<>();
-
     /*
      * Cache of methods that we've found in particular classes
      */
     private static final Map<Class<?>, Map<String, Method>> loadedMethods = new HashMap<>();
-
+    /*
+     * The server version string to location NMS & OBC classes
+     */
+    private static String versionString;
 
     /**
      * Gets the version string for NMS & OBC class paths

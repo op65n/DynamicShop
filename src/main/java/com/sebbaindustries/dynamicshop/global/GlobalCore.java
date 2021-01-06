@@ -38,8 +38,8 @@ public class GlobalCore {
      */
     public void terminate() {
         Core.engineLogger.log("Terminating plugin, please wait!");
-
-        Core.engineLogger.log("Plugin was successfully terminated!");
+        engine.terminate();
+        Core.engineLogger.log("Plugin was terminated!");
     }
 
 }

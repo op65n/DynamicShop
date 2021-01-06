@@ -4,20 +4,25 @@ normal = true
 dev = true
 
 [database]
-ip = "127.0.0.1"
-port = "3306"
-driverClassName= "com.mysql.jdbc.Driver"
-database = "dynshop"
-user = ":/"
-passwd = ":/"
+ip = '127.0.0.1'
+port = '3306'
+jdbc = 'mariadb'
+driver = 'org.mariadb.jdbc.Driver'
+database = 'dynamic_shop'
+username = ':/'
+passwd = ':/'
 
-[fallback]
-ip = "127.0.0.1"
-port = "3306"
-driverClassName= "com.mysql.jdbc.Driver"
-database = "fallback_dynshop"
-user = ":/"
-passwd = ":/"
+[database.properties]
+cachePrepStmts = true
+prepStmtCacheSize = 250
+prepStmtCacheSqlLimit = 2048
+useServerPrepStmts = true
+useLocalSessionState = true
+rewriteBatchedStatements = true
+cacheResultSetMetadata = true
+cacheServerConfiguration = true
+elideSetAutoCommits = true
+maintainTimeStats = false
 
 [cache]
 maxsize = 1000

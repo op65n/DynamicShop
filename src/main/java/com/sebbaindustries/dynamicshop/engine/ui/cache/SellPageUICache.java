@@ -14,16 +14,12 @@ import java.util.List;
 public class SellPageUICache implements BaseUI {
 
     private final String name = "$NULL";
-
+    private final List<UIButton> button = new ArrayList<>();
     private int size = 6;
-
     @Getter
     @Setter
     private DisplayItem item;
-
     private UIBackground background;
-
-    private final List<UIButton> button = new ArrayList<>();
 
     @Override
     public String name() {

@@ -3,6 +3,10 @@ target
 .idea
 src/test/
 target/
+build
+.gradle
+gradle/
+
 
 pom.xml.tag
 pom.xml.releaseBackup

@@ -14,13 +14,9 @@ import java.util.List;
 public class MainPageUICache implements BaseUI {
 
     private final String name = "$NULL";
-
-    private int size = 6;
-
-    private UIBackground background;
-
     private final List<UIButton> button = new ArrayList<>();
-
+    private int size = 6;
+    private UIBackground background;
     @Getter
     @Setter
     private List<UICategory> category = new ArrayList<>();

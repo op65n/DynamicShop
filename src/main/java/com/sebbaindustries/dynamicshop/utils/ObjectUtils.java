@@ -33,6 +33,15 @@ public final class ObjectUtils {
         return gson.toJson(object);
     }
 
+    public static boolean isValidJson(String s) {
+        try {
+            gson.fromJson(s, Object.class);
+            return true;
+        } catch (com.google.gson.JsonSyntaxException e) {
+            return false;
+        }
+    }
+
 
     /**
      * This will be removed soon, don't use unless necessary!
@@ -43,7 +52,7 @@ public final class ObjectUtils {
     @Deprecated
     public static void saveGsonFile(String fileName, Object object) {
         try {
-            Writer writer = new FileWriter(Core.gCore().core.getDataFolder() + "/" + fileName + ".js", StandardCharsets.UTF_8);
+            Writer writer = new FileWriter(Core.gCore().core.getDataFolder() + "/" + fileName, StandardCharsets.UTF_8);
             gson.toJson(object, writer);
             writer.flush();
             writer.close();
@@ -77,7 +86,7 @@ public final class ObjectUtils {
     public static <T> T getGsonFile(String fileName, Class<T> cl) {
         JsonReader reader;
         try {
-            reader = new JsonReader(new FileReader(Core.gCore().core.getDataFolder() + "/" + fileName + ".js", StandardCharsets.UTF_8));
+            reader = new JsonReader(new FileReader(Core.gCore().core.getDataFolder() + "/" + fileName, StandardCharsets.UTF_8));
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -95,12 +104,18 @@ public final class ObjectUtils {
     public static JsonObject getJson(String fileName) {
         JsonReader reader;
         try {
-            reader = new JsonReader(new FileReader(Core.gCore().core.getDataFolder() + "/" + fileName + ".js", StandardCharsets.UTF_8));
+            reader = new JsonReader(new FileReader(Core.gCore().core.getDataFolder() + "/" + fileName, StandardCharsets.UTF_8));
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
         JsonElement jsonElement = new JsonParser().parse(reader);
+        return jsonElement.getAsJsonObject();
+    }
+
+
+    public static JsonObject getJsonString(String s) {
+        JsonElement jsonElement = new JsonParser().parse(s);
         return jsonElement.getAsJsonObject();
     }
 }

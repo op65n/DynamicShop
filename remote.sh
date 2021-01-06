@@ -32,7 +32,13 @@ tar \
 --exclude="${BASENAME}/*.iml" \
 --exclude="${BASENAME}/remote.sh" \
 --exclude="${BASENAME}/src/test" \
+--exclude="${BASENAME}/database" \
+--exclude="${BASENAME}/.scripts" \
 --exclude="${BASENAME}/*.log" \
+--exclude="${BASENAME}/*.bat" \
+--exclude="${BASENAME}/build" \
+--exclude="${BASENAME}/.gradle" \
+--exclude="${BASENAME}/gradle" \
 -czvf $FILENAME "${BASENAME}"/
 
 rsync -avP $FILENAME "${REMOTE}":"${BUILD_DIR}"

@@ -1,0 +1,65 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+plugins {
+    id 'java'
+    id 'maven-publish'
+    id "com.github.johnrengelman.shadow" version "6.0.0"
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://oss.sonatype.org/content/groups/public/'
+    }
+
+    maven {
+        url 'https://papermc.io/repo/repository/maven-public/'
+    }
+
+    maven {
+        url 'https://libraries.minecraft.net/'
+    }
+
+    maven {
+        url 'https://repo.maven.apache.org/maven2/'
+    }
+
+}
+
+dependencies {
+    implementation 'com.zaxxer:HikariCP:3.4.5'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.1'
+    implementation 'io.github.kostaskougios:cloning:1.10.3'
+    implementation 'org.jetbrains:annotations:20.1.0'
+    implementation 'com.moandjiezana.toml:toml4j:0.7.2'
+    implementation 'commons-io:commons-io:2.8.0'
+
+    annotationProcessor 'org.projectlombok:lombok:1.18.16'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.16'
+
+    testImplementation 'junit:junit:4.13.1'
+    testCompileOnly 'org.projectlombok:lombok:1.18.16'
+
+    compileOnly 'com.mojang:authlib:1.5.21'
+    compileOnly 'org.projectlombok:lombok:1.18.16'
+    compileOnly 'com.destroystokyo.paper:paper-api:1.16.4-R0.1-SNAPSHOT'
+}
+
+group = 'com.sebbaindustries'
+version = '1.0.0-R0.1-Alpha'
+def projectName = 'DynamicShop'
+java.sourceCompatibility = JavaVersion.VERSION_15
+
+shadowJar {
+    archiveFileName.set("${projectName}-${project.version}.jar")
+}
+
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        filter ReplaceTokens, tokens: [version: version]
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}

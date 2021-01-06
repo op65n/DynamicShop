@@ -3,11 +3,10 @@
 PLUGIN="DynamicShop"
 PLUGIN_DESTINATION="/home/work/minecraft/latest-paper/plugins"
 
-mvn
+/opt/gradle/gradle-6.7.1/bin/gradle build
+/opt/gradle/gradle-6.7.1/bin/gradle shadowJar
 
-cd target || exit
-rm *-sources.jar
-rm original-*.jar
+cd build/libs || exit
 
 cp *.jar ${PLUGIN_DESTINATION}/${PLUGIN}.jar
 

@@ -35,20 +35,27 @@ Download DynamicShop here: <a href="#">TODO setup download site</a>
 ## Features
 
 Directory structure:
-- DynamicShop
-  * `README.md`
-  * `configuration.toml`
-  * `messages.js`
-  - shop
-    * `shop_configuration.toml`
-    - categories
-      * `%item_name%.js`
-    - statistics
-      * `%item_name%_stat.js`
-    - gui
-      * `main.js`
-      * `store_page.toml`
-      * `transaction_page.toml`
+```
+DynamicShop
+├── messages.toml
+├── configuration.toml
+│
+├── categories
+│   ├── blocks.toml
+│   ├── drops.toml
+│   ├── food.toml
+│   ├── miscellaneous.toml
+│   └── ores.toml
+│
+├── gui
+│   ├── buy_page.toml
+│   ├── main_page.toml
+│   ├── sell_page.toml
+│   └── store_page.toml
+│
+└── statistics
+
+```
 
 ## Commands & permissions
 
