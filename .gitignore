@@ -5,7 +5,6 @@ src/test/
 target/
 build
 .gradle
-gradle/
 
 
 pom.xml.tag
@@ -34,7 +33,6 @@ buildNumber.properties
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.nar
 *.ear
