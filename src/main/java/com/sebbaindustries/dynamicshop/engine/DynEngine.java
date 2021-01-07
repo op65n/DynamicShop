@@ -27,7 +27,6 @@ public class DynEngine implements Engine {
 
     private ShopContainer container;
     private ShopUI shopUI;
-    private DBSetup dbs;
 
     private Configuration configuration;
     private long uptime = -1L;
@@ -39,7 +38,7 @@ public class DynEngine implements Engine {
 
     @Override
     public boolean initialize() {
-        initLCache();
+        _lCache.init();
         if (_lCache.getStartupInfo().isInitStartup()) {
             Core.engineLogger.logWarn("DynamicShop requires initial configuration before you cen use it!");
             Core.engineLogger.logWarn("Please visit https://op65n.tech to read the wiki!");
@@ -54,13 +53,7 @@ public class DynEngine implements Engine {
         }
         _lCache.getStartupInfo().setDbReady(true);
 
-        dbs = new DBSetup();
-
         this.container = new ShopContainer();
-        Task.async(() -> {
-            dbs.createTables();
-            syncLCache();
-        });
 
         this.shopUI = new ShopUI();
 
@@ -81,59 +74,30 @@ public class DynEngine implements Engine {
         return true;
     }
 
-    private void initLCache() {
-        if (!FileUtils.fileExists(".cache/startup_info.json")) {
-            ObjectUtils.saveGsonFile(".cache/startup_info.json", _lCache.getStartupInfo());
-        }
-        _lCache.setStartupInfo(ObjectUtils.getGsonFile(".cache/startup_info.json", LocalCache.StartupInfo.class));
-
-        if (!FileUtils.fileExists(".cache/category_file_info.json")) {
-            ObjectUtils.saveGsonFile(".cache/category_file_info.json", _lCache.getCategoryFileInfo());
-        }
-        _lCache.setCategoryFileInfo(ObjectUtils.getGsonFile(".cache/category_file_info.json", LocalCache.CategoryFileInfo.class));
-    }
-
-    private void syncLCache() {
-        Collection<ShopCategory> cached = _lCache.getCategoryFileInfo().getCategories();
-        Collection<ShopCategory> loaded = container.getPrioritizedCategoryList();
-
-        Collection<ShopCategory> differentCached = new HashSet<>(loaded);
-        Collection<ShopCategory> differentLoaded = new HashSet<>(cached);
-
-        cached.forEach(cachedEntry -> loaded.forEach(loadedEntry -> {
-            if (loadedEntry.getFileName().equals(cachedEntry.getFileName())) {
-                differentCached.remove(loadedEntry);
-                differentLoaded.remove(cachedEntry);
-            }
-        }));
-
-
-        Core.engineLogger.logWarn("Different cached");
-        differentCached.forEach(category -> System.out.println(category.getFileName()));
-        dbs.createCategories(new ArrayList<>(differentCached));
-
-
-        Core.engineLogger.logWarn("Different loaded");
-        differentLoaded.forEach(loadedCategoryName -> System.out.println(loadedCategoryName.getFileName()));
-
-        _lCache.getCategoryFileInfo().setCategories(new ArrayList<>(container.getPrioritizedCategoryList()));
-
-    }
-
     @Override
     public void terminate() {
         ObjectUtils.saveGsonFile(".cache/startup_info.json", _lCache.getStartupInfo());
         ObjectUtils.saveGsonFile(".cache/category_file_info.json", _lCache.getCategoryFileInfo());
+        ObjectUtils.saveGsonFile(".cache/id_info.json", _lCache.getIdInfo());
     }
 
     @Override
     public void reload() {
-
+        Task.async(() -> {
+            if (!_lCache.getStartupInfo().isDbReady()) return;
+            DBSetup.createTables();
+            _lCache.syncLCache();
+        });
     }
 
     @Override
     public ShopContainer container() {
         return container;
+    }
+
+    @Override
+    public LocalCache _LCACHE() {
+        return _lCache;
     }
 
     @Override
