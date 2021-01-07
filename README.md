@@ -2,7 +2,6 @@
 Dynamic shop Minecraft 1.16.x plugin with advanced capabilities, based on the real economy.
 ![Cover Art](https://op65n.tech/i/2021-01-07-00-44-58.png)
 
-<br>
 Version: `1.0-SNAPSHOT`<br>
 Native API: `Paper-1.16.4-R0.1-SNAPSHOT`<br>
 Source code: <a href="https://github.com/op65n/DynamicShop">github.com/op65n/DynamicShop</a><br>
