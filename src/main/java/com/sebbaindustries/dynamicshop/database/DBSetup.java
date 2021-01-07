@@ -2,7 +2,7 @@ package com.sebbaindustries.dynamicshop.database;
 
 import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
-import com.sebbaindustries.dynamicshop.engine.components.shop.ShopItem;
+import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -10,14 +10,14 @@ import java.util.List;
 
 public class DBSetup {
 
-    private final String CATEGORY_TABLE =
+    private static final String CATEGORY_TABLE =
             "CREATE TABLE IF NOT EXISTS `dynamic_shop`.`category` ( " +
             "  `id` INT NOT NULL AUTO_INCREMENT, " +
-            "  `name` VARCHAR(45) NULL, " +
+            "  `name` VARCHAR(45) NULL UNIQUE, " +
             "  PRIMARY KEY (`id`)) " +
             "ENGINE = InnoDB;";
 
-    private final String ITEM_TABLE =
+    private static final String ITEM_TABLE =
             "CREATE TABLE IF NOT EXISTS `dynamic_shop`.`item` ( " +
             "  `id` INT NOT NULL AUTO_INCREMENT, " +
             "  `material` VARCHAR(64) NOT NULL, " +
@@ -35,7 +35,7 @@ public class DBSetup {
             "    ON UPDATE NO ACTION) " +
             "ENGINE = InnoDB;";
 
-    private final String ITEM_META_TABLE =
+    private static final String ITEM_META_TABLE =
             "CREATE TABLE IF NOT EXISTS `dynamic_shop`.`item_meta` ( " +
             "  `id` INT NOT NULL, " +
             "  `display` VARCHAR(64) NULL DEFAULT '%item%', " +
@@ -55,7 +55,7 @@ public class DBSetup {
             "    ON UPDATE NO ACTION) " +
             "ENGINE = InnoDB;";
 
-    public void createTables() {
+    public static void createTables() {
         try {
             var connection = DataSource.connection();
 
@@ -75,29 +75,49 @@ public class DBSetup {
         }
     }
 
-    public void createCategories(List<ShopCategory> categories) {
+    public static void createCategories(List<ShopCategory> categories) {
         categories.forEach(category -> {
             try {
                 var connection = DataSource.connection();
 
-                PreparedStatement checkForExisting = connection.prepareStatement("SELECT name FROM dynamic_shop.category WHERE name = ?;");
-                checkForExisting.setString(1, category.getFileName());
-                var i = checkForExisting.executeQuery();
-                checkForExisting.close();
-                if (i.next()) return;
-
-                PreparedStatement insertCategory = connection.prepareStatement("INSERT INTO dynamic_shop.category (name) VALUES (?);");
+                PreparedStatement insertCategory = connection.prepareStatement("INSERT INTO dynamic_shop.category (name) VALUES (?) ON DUPLICATE KEY UPDATE id = id;");
                 insertCategory.setString(1, category.getFileName());
                 insertCategory.execute();
                 insertCategory.close();
-                Core.devLogger.log("Added " + category.getFileName() + " entry");
+                Core.devLogger.log("Added " + category.getFileName() + " entry to the database");
+
+                PreparedStatement checkForExisting = connection.prepareStatement("SELECT id FROM dynamic_shop.category WHERE name = ?;");
+                checkForExisting.setString(1, category.getFileName());
+                var i = checkForExisting.executeQuery();
+                checkForExisting.close();
+                if (i.next()) {
+                    Core.gCore().getEngine()._LCACHE().getIdInfo().getCategoryIDs().put(category.getFileName(), i.getInt("id"));
+                }
 
                 connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         });
+        Core.devLogger.log(ObjectUtils.deserializeObjectToString(Core.gCore().getEngine()._LCACHE().getIdInfo().getCategoryIDs()));
     }
+
+    //public static void createItems(ShopCategory category) {
+    //    category.getOrderedItemList().forEach(shopItem -> {
+    //        try {
+    //            PreparedStatement insertItem = connection.prepareStatement(
+    //                    "INSERT INTO dynamic_shop.item (material, buy_price, sell_price, category_id) VALUES (?, ?, ?, ?);"
+    //            );
+    //            insertItem.setString(1, shopItem.getMaterial().name());
+    //            insertItem.setDouble(2, shopItem.getBuyPrice());
+    //            insertItem.setDouble(3, shopItem.getSellPrice());
+    //            insertItem.setInt(4, 0);
+//
+    //        } catch (SQLException e) {
+    //            e.printStackTrace();
+    //        }
+    //    });
+    //}
 
     // TODO: Add items to the db, link them with ID system in cache
 }
