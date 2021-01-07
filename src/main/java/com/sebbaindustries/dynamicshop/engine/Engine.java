@@ -1,5 +1,6 @@
 package com.sebbaindustries.dynamicshop.engine;
 
+import com.sebbaindustries.dynamicshop.engine.cache.LocalCache;
 import com.sebbaindustries.dynamicshop.engine.container.ShopContainer;
 import com.sebbaindustries.dynamicshop.engine.ui.ShopUI;
 
@@ -18,6 +19,8 @@ public interface Engine {
     void reload();
 
     ShopContainer container();
+
+    LocalCache _LCACHE();
 
     ShopUI ui();
 
