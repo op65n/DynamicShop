@@ -49,7 +49,6 @@ public final class ObjectUtils {
      * @param fileName N/A
      * @param object   N/A
      */
-    @Deprecated
     public static void saveGsonFile(String fileName, Object object) {
         try {
             Writer writer = new FileWriter(Core.gCore().core.getDataFolder() + "/" + fileName, StandardCharsets.UTF_8);
@@ -82,7 +81,6 @@ public final class ObjectUtils {
      * @param <T>      N/A
      * @return N/A
      */
-    @Deprecated
     public static <T> T getGsonFile(String fileName, Class<T> cl) {
         JsonReader reader;
         try {
