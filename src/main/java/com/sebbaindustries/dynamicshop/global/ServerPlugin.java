@@ -58,7 +58,7 @@ public class ServerPlugin {
         Core.engineLogger.log("Engine Codename: " + EngineUtils.getCodename());
         Core.pluginLogger.log("Loaded categories: " + Core.gCore().getEngine().container().getPrioritizedCategoryList().size());
         Core.gCore().getEngine().container().getPrioritizedCategoryList().forEach(
-                category -> Core.pluginLogger.log(" - " + category.getFileName() + " with " + category.getItems().size() + " items")
+                category -> Core.pluginLogger.log(" - " + category.getFilename() + " with " + category.getItem().size() + " items")
         );
         Core.engineLogger.log(Color.format("Color: &r■&0■&1■&2■&3■&4■&5■&6■&7■&8■&9■&a■&b■&c■&d■&e■&f■"));
         Core.pluginLogger.log("=============================================");

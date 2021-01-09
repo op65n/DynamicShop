@@ -3,8 +3,8 @@ package com.sebbaindustries.dynamicshop.engine.container;
 import com.moandjiezana.toml.Toml;
 import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.engine.components.maintainer.ComponentManager;
-import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
 import com.sebbaindustries.dynamicshop.engine.structure.DirectoryStructure;
+import com.sebbaindustries.dynamicshop.engine.structure.ShopCategoryStruct;
 import com.sebbaindustries.dynamicshop.utils.FileUtils;
 
 import java.io.File;
@@ -14,14 +14,13 @@ import java.util.List;
 
 public class ShopContainer {
 
-    private final List<ShopCategory> categories = new ArrayList<>();
+    private final List<ShopCategoryStruct> categories = new ArrayList<>();
 
     public ShopContainer() {
         load();
     }
 
     public void load() {
-        ComponentManager.addComponent(this.getClass());
 
         // Check if there are files inside directory, if there are no files terminate the startup sequence
         List<String> files = FileUtils.getCategoryFilePaths();
@@ -44,10 +43,10 @@ public class ShopContainer {
             // It works okay-ish for error handling, maybe do a cleaner implementation in the future?
             try {
                 // Thanks to toml we can load classes to interfaces fairly easily.
-                ShopCategory category = new Toml().read(
+                ShopCategoryStruct category = new Toml().read(
                         new File(DirectoryStructure.Directory.CATEGORIES.path + fileName)
-                ).to(ShopCategory.class);
-                category.setFileName(fileName.replace(".toml", ""));
+                ).to(ShopCategoryStruct.class);
+                category.setFilename(fileName);
 
                 categories.add(category);
                 Core.engineLogger.log("File " + fileName + " loaded successfully!");
@@ -71,9 +70,9 @@ public class ShopContainer {
      *
      * @return Sorted ArrayList with ShopCategory component
      */
-    public List<ShopCategory> getPrioritizedCategoryList() {
-        List<ShopCategory> sorted = new ArrayList<>(categories);
-        sorted.sort(Comparator.comparing(ShopCategory::getPriority));
+    public List<ShopCategoryStruct> getPrioritizedCategoryList() {
+        List<ShopCategoryStruct> sorted = new ArrayList<>(categories);
+        sorted.sort(Comparator.comparing(ShopCategoryStruct::getPriority));
         return sorted;
     }
 
