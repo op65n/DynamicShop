@@ -6,7 +6,6 @@ import com.sebbaindustries.dynamicshop.commands.CommandManager;
 import com.sebbaindustries.dynamicshop.database.DBSetup;
 import com.sebbaindustries.dynamicshop.database.DataSource;
 import com.sebbaindustries.dynamicshop.engine.cache.LocalCache;
-import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
 import com.sebbaindustries.dynamicshop.engine.container.ShopContainer;
 import com.sebbaindustries.dynamicshop.engine.task.Task;
 import com.sebbaindustries.dynamicshop.engine.ui.ShopUI;
@@ -14,10 +13,7 @@ import com.sebbaindustries.dynamicshop.engine.ui.listeners.InventoryListeners;
 import com.sebbaindustries.dynamicshop.messages.Message;
 import com.sebbaindustries.dynamicshop.settings.Configuration;
 import com.sebbaindustries.dynamicshop.utils.FileManager;
-import com.sebbaindustries.dynamicshop.utils.FileUtils;
 import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
-
-import java.util.*;
 
 @Engine.Codename("Leptir")
 @Engine.Version("1.0.0-R0.1-Alpha")
@@ -78,7 +74,6 @@ public class DynEngine implements Engine {
     public void terminate() {
         ObjectUtils.saveGsonFile(".cache/startup_info.json", _lCache.getStartupInfo());
         ObjectUtils.saveGsonFile(".cache/category_file_info.json", _lCache.getCategoryFileInfo());
-        ObjectUtils.saveGsonFile(".cache/id_info.json", _lCache.getIdInfo());
     }
 
     @Override
