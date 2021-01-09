@@ -1,6 +1,7 @@
 package com.sebbaindustries.dynamicshop.utils;
 
-import com.sebbaindustries.dynamicshop.engine.components.shop.ShopItem;
+import com.sebbaindustries.dynamicshop.engine.components.SIcon;
+import com.sebbaindustries.dynamicshop.engine.components.SItem;
 import com.sebbaindustries.dynamicshop.engine.ui.components.ClickActions;
 import com.sebbaindustries.dynamicshop.engine.ui.components.DisplayItem;
 import com.sebbaindustries.dynamicshop.engine.ui.components.UIBackground;
@@ -105,42 +106,42 @@ public class UserInterfaceUtils {
         });
     }
 
-    public static ShopItem applyItemPlaceholders(ShopItem shopItem, DisplayItem displayItem) {
-        shopItem.setDisplay(Color.format(displayItem.getDisplay()));
-        shopItem.setLore(displayItem.getColoredLore());
-
-        String display = shopItem.getDisplay();
-        display = display.replace("%item%", shopItem.getMaterial().name());
-        shopItem.setDisplay(display);
-
-        if (shopItem.getLore() != null && !shopItem.getLore().isEmpty()) {
-            List<String> lore = shopItem.getLore().stream()
-                    .map(l4e -> l4e.replace("%buy_price%", String.valueOf(shopItem.getBuyPrice() * shopItem.amount())))
-                    .map(l4e -> l4e.replace("%buy_price_single%", String.valueOf(shopItem.getBuyPrice())))
-                    .map(l4e -> l4e.replace("%sell_price%", String.valueOf(shopItem.getSellPrice() * shopItem.amount())))
-                    .map(l4e -> l4e.replace("%sell_price_single%", String.valueOf(shopItem.getSellPrice())))
-                    .map(l4e -> l4e.replace("%currency%", "€"))
-                    .map(Color::format)
-                    .collect(Collectors.toList());
-            shopItem.setLore(lore);
-        }
+    public static SItem applyItemPlaceholders(SItem shopItem, DisplayItem displayItem) {
+        //shopItem.setDisplay(Color.format(displayItem.getDisplay()));
+        //shopItem.setLore(displayItem.getColoredLore());
+//
+        //String display = shopItem.getDisplay();
+        //display = display.replace("%item%", shopItem.getItem());
+        //shopItem.setDisplay(display);
+//
+        //if (shopItem.getLore() != null && !shopItem.getLore().isEmpty()) {
+        //    //List<String> lore = shopItem.getLore().stream()
+        //    //        .map(l4e -> l4e.replace("%buy_price%", String.valueOf(shopItem.getBuyPrice() * shopItem.amount())))
+        //    //        .map(l4e -> l4e.replace("%buy_price_single%", String.valueOf(shopItem.getBuyPrice())))
+        //    //        .map(l4e -> l4e.replace("%sell_price%", String.valueOf(shopItem.getSellPrice() * shopItem.amount())))
+        //    //        .map(l4e -> l4e.replace("%sell_price_single%", String.valueOf(shopItem.getSellPrice())))
+        //    //        .map(l4e -> l4e.replace("%currency%", "€"))
+        //    //        .map(Color::format)
+        //    //        .collect(Collectors.toList());
+        //    //shopItem.setLore(lore);
+        //}
 
         return shopItem;
     }
 
-    public static void mapButtons(Map<Integer, Object> mappedInventory, BaseUI cache, ShopItem selectedItem) {
-        cache.buttons().forEach(button -> {
-            if (button.getOnClick() == ClickActions.SET && button.getAmount() == selectedItem.getAmount()) return;
-            if (button.getOnClick() == ClickActions.ADD && button.getAmount() + selectedItem.getAmount() > selectedItem.getMaterial().getMaxStackSize())
-                return;
-            if (button.getOnClick() == ClickActions.REMOVE && selectedItem.getAmount() - button.getAmount() < 1) return;
-            mappedInventory.put(button.getSlot(), button);
-        });
-    }
+    //public static void mapButtons(Map<Integer, Object> mappedInventory, BaseUI cache, ShopItemOld selectedItem) {
+    //    cache.buttons().forEach(button -> {
+    //        if (button.getOnClick() == ClickActions.SET && button.getAmount() == selectedItem.getAmount()) return;
+    //        if (button.getOnClick() == ClickActions.ADD && button.getAmount() + selectedItem.getAmount() > selectedItem.getMaterial().getMaxStackSize())
+    //            return;
+    //        if (button.getOnClick() == ClickActions.REMOVE && selectedItem.getAmount() - button.getAmount() < 1) return;
+    //        mappedInventory.put(button.getSlot(), button);
+    //    });
+    //}
 
-    public static void mapItem(Map<Integer, Object> mappedInventory, ShopItem selectedItem, DisplayItem displayItem) {
-        applyItemPlaceholders(selectedItem, displayItem);
-        mappedInventory.put(displayItem.getSlot(), selectedItem);
-    }
+    //public static void mapItem(Map<Integer, Object> mappedInventory, ShopItemOld selectedItem, DisplayItem displayItem) {
+    //    applyItemPlaceholders(selectedItem, displayItem);
+    //    mappedInventory.put(displayItem.getSlot(), selectedItem);
+    //}
 
 }

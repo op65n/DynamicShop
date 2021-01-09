@@ -1,8 +1,8 @@
 package com.sebbaindustries.dynamicshop.engine.ui.guis;
 
 import com.sebbaindustries.dynamicshop.Core;
-import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
-import com.sebbaindustries.dynamicshop.engine.components.shop.ShopItem;
+import com.sebbaindustries.dynamicshop.engine.components.SCategory;
+import com.sebbaindustries.dynamicshop.engine.components.SItem;
 import com.sebbaindustries.dynamicshop.engine.ui.cache.InventoryHolderCache;
 import com.sebbaindustries.dynamicshop.engine.ui.cache.SellPageUICache;
 import com.sebbaindustries.dynamicshop.engine.ui.components.ClickActions;
@@ -24,12 +24,12 @@ public class SellPageUI implements UserInterface {
 
     private final Player player;
     private final BaseUI cache;
-    private final ShopCategory backPage;
+    private final SCategory backPage;
     private final Map<Integer, Object> mappedInventory = new TreeMap<>();
-    private final ShopItem selectedItem;
+    private final SItem selectedItem;
     private Inventory inventory;
 
-    public SellPageUI(Player player, ShopItem item, ShopCategory backPage) {
+    public SellPageUI(Player player, SItem item, SCategory backPage) {
         this.player = player;
         this.cache = Core.gCore().getEngine().ui().getSellPageCache();
         this.selectedItem = item;
@@ -71,12 +71,12 @@ public class SellPageUI implements UserInterface {
         /*
         buttons
          */
-        UserInterfaceUtils.mapButtons(mappedInventory, cache, selectedItem);
+        //UserInterfaceUtils.mapButtons(mappedInventory, cache, selectedItem);
 
         /*
         item
          */
-        UserInterfaceUtils.mapItem(mappedInventory, selectedItem, ((SellPageUICache) cache).getItem());
+        //UserInterfaceUtils.mapItem(mappedInventory, selectedItem, ((SellPageUICache) cache).getItem());
 
         InventoryHolderCache.cache(player, this);
 
@@ -111,27 +111,27 @@ public class SellPageUI implements UserInterface {
         switch (action) {
             case EXIT, CLOSE -> close();
             case BACK -> {
-                UserInterface ui = new StorePageUI(player, backPage);
-                ui.update();
-                ui.open();
+                //UserInterface ui = new StorePageUI(player, backPage);
+                //ui.update();
+                //ui.open();
             }
             case ADD -> {
                 UIButton button = (UIButton) mappedInventory.get(slot);
-                if (button.getAmount() + selectedItem.getAmount() <= button.getMaterial().getMaxStackSize()) {
-                    selectedItem.setAmount(selectedItem.getAmount() + button.getAmount());
-                }
+                //if (button.getAmount() + selectedItem.getAmount() <= button.getMaterial().getMaxStackSize()) {
+                //    selectedItem.setAmount(selectedItem.getAmount() + button.getAmount());
+                //}
                 updateUISlots(true);
             }
             case REMOVE -> {
                 UIButton button = (UIButton) mappedInventory.get(slot);
-                if (selectedItem.getAmount() - button.getAmount() > 0) {
-                    selectedItem.setAmount(selectedItem.getAmount() - button.getAmount());
-                }
+                //if (selectedItem.getAmount() - button.getAmount() > 0) {
+                //    selectedItem.setAmount(selectedItem.getAmount() - button.getAmount());
+                //}
                 updateUISlots(true);
             }
             case SET -> {
                 UIButton button = (UIButton) mappedInventory.get(slot);
-                selectedItem.setAmount(button.getAmount());
+                //selectedItem.setAmount(button.getAmount());
                 updateUISlots(true);
             }
             case SELL -> {

@@ -1,7 +1,7 @@
 package com.sebbaindustries.dynamicshop.engine.ui.guis;
 
 import com.sebbaindustries.dynamicshop.Core;
-import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
+import com.sebbaindustries.dynamicshop.engine.structure.ShopCategoryStruct;
 import com.sebbaindustries.dynamicshop.engine.ui.cache.InventoryHolderCache;
 import com.sebbaindustries.dynamicshop.engine.ui.cache.MainPageUICache;
 import com.sebbaindustries.dynamicshop.engine.ui.components.ClickActions;
@@ -73,10 +73,10 @@ public class MainPageUI implements UserInterface {
         /*
         Categories
          */
-        List<ShopCategory> categoryCache = Core.gCore().getEngine().container().getPrioritizedCategoryList();
+        List<ShopCategoryStruct> categoryCache = Core.gCore().getEngine().container().getPrioritizedCategoryList();
         ((MainPageUICache) cache).getCategory().forEach(uiCategory -> {
             if (categoryCache == null || categoryCache.isEmpty() || categoryCache.get(0) == null) return;
-            uiCategory.setCategory(categoryCache.get(0));
+            //uiCategory.setCategory(categoryCache.get(0));
             mappedInventory.put(uiCategory.getSlot(), uiCategory);
             categoryCache.remove(0);
         });
