@@ -40,6 +40,8 @@ dependencies {
     testImplementation 'junit:junit:4.13.1'
     testCompileOnly 'org.projectlombok:lombok:1.18.16'
 
+    compile 'org.apache.commons:commons-lang3:3.11'
+
     compileOnly 'com.mojang:authlib:1.5.21'
     compileOnly 'org.projectlombok:lombok:1.18.16'
     compileOnly 'com.destroystokyo.paper:paper-api:1.16.4-R0.1-SNAPSHOT'
