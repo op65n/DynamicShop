@@ -2,11 +2,13 @@
 Dynamic shop Minecraft 1.16.x plugin with advanced capabilities, based on the real economy.
 ![Cover Art](https://op65n.tech/i/2021-01-07-00-44-58.png)
 
-Version: `1.0-SNAPSHOT`<br>
+Version: `1.0.0-R0.1-Alpha`<br>
 Native API: `Paper-1.16.4-R0.1-SNAPSHOT`<br>
 Source code: <a href="https://github.com/op65n/DynamicShop">github.com/op65n/DynamicShop</a><br>
 Wiki: <a href="https://op65n.tech/wiki/">op65n.tech/wiki</a><br>
 Developer: `SebbaIndustries` <br>
+
+Special thanks to (Minecraft IGN): `zaraamelie` & `TeamsInsane` for helping with the project.
 
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
