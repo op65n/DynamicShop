@@ -2,7 +2,8 @@ package com.sebbaindustries.dynamicshop.engine.cache;
 
 import com.sebbaindustries.dynamicshop.Core;
 import com.sebbaindustries.dynamicshop.database.DBSetup;
-import com.sebbaindustries.dynamicshop.engine.components.shop.ShopCategory;
+import com.sebbaindustries.dynamicshop.engine.components.SCategory;
+import com.sebbaindustries.dynamicshop.engine.structure.ShopCategoryStruct;
 import com.sebbaindustries.dynamicshop.utils.FileUtils;
 import com.sebbaindustries.dynamicshop.utils.ObjectUtils;
 import lombok.Getter;
@@ -18,7 +19,6 @@ public class LocalCache {
 
     private StartupInfo startupInfo = new StartupInfo();
     private CategoryFileInfo categoryFileInfo = new CategoryFileInfo();
-    private IDInfo idInfo = new IDInfo();
 
     @Getter
     @Setter
@@ -33,15 +33,7 @@ public class LocalCache {
     @Setter
     @NoArgsConstructor
     public static class CategoryFileInfo {
-        private List<ShopCategory> categories = new ArrayList<>();
-    }
-
-    @Getter
-    @Setter
-    @NoArgsConstructor
-    public static class IDInfo {
-        private HashMap<String, Integer> categoryIDs = new HashMap<>();
-        private HashMap<String, Integer> itemIDs = new HashMap<>();
+        private List<ShopCategoryStruct> categories = new ArrayList<>();
     }
 
     public void init() {
@@ -54,23 +46,18 @@ public class LocalCache {
             ObjectUtils.saveGsonFile(".cache/category_file_info.json", categoryFileInfo);
         }
         categoryFileInfo = ObjectUtils.getGsonFile(".cache/category_file_info.json", LocalCache.CategoryFileInfo.class);
-
-        if (!FileUtils.fileExists(".cache/id_info.json")) {
-            ObjectUtils.saveGsonFile(".cache/id_info.json", idInfo);
-        }
-        idInfo = ObjectUtils.getGsonFile(".cache/id_info.json", LocalCache.IDInfo.class);
     }
 
 
     public void syncLCache() {
-        Collection<ShopCategory> cached = categoryFileInfo.getCategories();
-        Collection<ShopCategory> loaded = Core.gCore().getEngine().container().getPrioritizedCategoryList();
+        Collection<ShopCategoryStruct> cached = categoryFileInfo.getCategories();
+        Collection<ShopCategoryStruct> loaded = Core.gCore().getEngine().container().getPrioritizedCategoryList();
 
-        Collection<ShopCategory> differentCached = new HashSet<>(loaded);
-        Collection<ShopCategory> differentLoaded = new HashSet<>(cached);
+        Collection<ShopCategoryStruct> differentCached = new HashSet<>(loaded);
+        Collection<ShopCategoryStruct> differentLoaded = new HashSet<>(cached);
 
         cached.forEach(cachedEntry -> loaded.forEach(loadedEntry -> {
-            if (loadedEntry.getFileName().equals(cachedEntry.getFileName())) {
+            if (loadedEntry.getFilename().equals(cachedEntry.getFilename())) {
                 differentCached.remove(loadedEntry);
                 differentLoaded.remove(cachedEntry);
             }
@@ -78,12 +65,12 @@ public class LocalCache {
 
 
         Core.devLogger.log("Different cached");
-        differentCached.forEach(category -> Core.devLogger.log(category.getFileName()));
+        differentCached.forEach(category -> Core.devLogger.log(category.getFilename()));
         DBSetup.createCategories(new ArrayList<>(differentCached));
 
 
         Core.devLogger.logWarn("Different loaded");
-        differentLoaded.forEach(loadedCategoryName -> Core.devLogger.log(loadedCategoryName.getFileName()));
+        differentLoaded.forEach(loadedCategoryName -> Core.devLogger.log(loadedCategoryName.getFilename()));
 
         categoryFileInfo.setCategories(new ArrayList<>(Core.gCore().getEngine().container().getPrioritizedCategoryList()));
 
