@@ -1,13 +1,13 @@
 name: 'DynamicShop'
 version: ${project.version}
-main: Core
+main: tech.op65n.dynamicshop.Core
 prefix: 'DynamicShop'
 load: POSTWORLD
 api-version: '1.16'
 author: 'SebbaIndustries'
 description: ${project.description}
 database: true
-website: 'https://sebbaindustries.com'
+website: 'https://op65n.tech'
 
 commands:
   shop:
