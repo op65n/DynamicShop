@@ -65,7 +65,6 @@ public class LocalCache {
 
         Core.devLogger.log("Different cached");
         differentCached.forEach(category -> Core.devLogger.log(category.getFilename()));
-        DBSetup.createCategories(new ArrayList<>(differentCached));
 
 
         Core.devLogger.logWarn("Different loaded");
