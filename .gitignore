@@ -1,7 +1,6 @@
 DynamicShop.iml
 target
 .idea
-src/test/
 target/
 build
 .gradle
