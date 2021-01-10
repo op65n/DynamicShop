@@ -10,6 +10,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class SItem {
 
+    private int ID;
+
+    private int catID;
+
     private EItemType type = EItemType.MATERIAL;
 
     private String item = "ACACIA_BOAT";
@@ -17,30 +21,5 @@ public class SItem {
     private SItemPricing itemPricing = new SItemPricing();
 
     private SItemMeta metadata = new SItemMeta();
-
-    public SItem(ItemStruct struct) {
-        if (struct.getMaterial() != null) {
-            item = struct.getMaterial();
-            type = EItemType.MATERIAL;
-        }
-        if (struct.getTexture() != null) {
-            item = struct.getTexture();
-            type = EItemType.TEXTURE;
-        }
-        if (struct.getBase64() != null) {
-            item = struct.getBase64();
-            type = EItemType.BASE64;
-        }
-
-        itemPricing.setPriceBuy(struct.getPrice_buy());
-        itemPricing.setPriceSell(struct.getPrice_sell());
-        itemPricing.setFlatline(struct.getFlatline());
-
-        metadata.setPriority(struct.getPriority());
-        metadata.setDisplay(struct.getDisplay());
-        metadata.setLore(struct.getLore());
-        metadata.setCommand(struct.getCommand());
-
-    }
 
 }
