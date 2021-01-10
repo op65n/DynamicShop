@@ -6,7 +6,7 @@ plugins {
     id "com.github.johnrengelman.shadow" version "6.0.0"
 }
 
-group = 'com.sebbaindustries'
+group = 'tech.op65n'
 version = '1.0.0-R0.1-Alpha'
 def projectName = 'DynamicShop'
 java.sourceCompatibility = JavaVersion.VERSION_15

@@ -1,6 +1,6 @@
 name: 'DynamicShop'
 version: ${project.version}
-main: com.sebbaindustries.dynamicshop.Core
+main: Core
 prefix: 'DynamicShop'
 load: POSTWORLD
 api-version: '1.16'
