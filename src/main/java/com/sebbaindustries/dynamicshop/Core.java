@@ -8,6 +8,7 @@ import com.sebbaindustries.dynamicshop.log.ILog;
 import com.sebbaindustries.dynamicshop.log.PluginLogger;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
+import org.junit.Test;
 
 /**
  * @author <b>SebbaIndustries</b>
@@ -53,4 +54,5 @@ public final class Core extends JavaPlugin {
         super.onEnable();
         plugin.initialize();
     }
+
 }

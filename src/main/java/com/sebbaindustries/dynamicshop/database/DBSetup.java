@@ -89,18 +89,6 @@ public class DBSetup {
             try {
                 var connection = DataSource.connection();
 
-                insertNewCategory(connection, category);
-
-                PreparedStatement checkForExisting = connection.prepareStatement("SELECT id FROM dynamic_shop.category WHERE name = ?;");
-                checkForExisting.setString(1, category.getFilename());
-                var resID = checkForExisting.executeQuery();
-                checkForExisting.close();
-
-                if (resID.next()) {
-                    int id = resID.getInt("id");
-                    insertItems(connection, category.getItem(), id);
-                }
-
                 connection.close();
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -110,25 +98,9 @@ public class DBSetup {
 
     private static void insertNewCategory(Connection connection, ShopCategoryStruct category) throws SQLException {
         PreparedStatement insertCategory = connection.prepareStatement(
-                "INSERT INTO dynamic_shop.category (name, priority, icon_type, icon_item, icon_display, icon_lore) " +
-                        "VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id;"
+                "INSERT INTO dynamic_shop.category (name, priority, icon_type, icon_item, icon_display, icon_lore) VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id;"
         );
-        insertCategory.setString(1, category.getFilename());
-        insertCategory.setInt(2, category.getPriority());
 
-        var pair = ShopUtils.getTypeAndItemPair(
-                category.getIcon().getMaterial(), category.getIcon().getTexture(), category.getIcon().getBase64()
-        );
-        insertCategory.setInt(3, pair.getLeft().type);
-        insertCategory.setString(4, pair.getRight());
-
-        insertCategory.setString(5, category.getIcon().getDisplay());
-        insertCategory.setString(6, ObjectUtils.deserializeObjectToString(category.getIcon().getLore()));
-
-        insertCategory.execute();
-        insertCategory.close();
-
-        Core.devLogger.log("Added " + category.getFilename() + " entry to the database");
     }
 
     private static void insertItems(Connection connection, List<ItemStruct> shopItems, int catID) throws SQLException {
