@@ -39,14 +39,14 @@ tar \
 --exclude="${BASENAME}/build" \
 --exclude="${BASENAME}/.gradle" \
 --exclude="${BASENAME}/gradle" \
--czvf $FILENAME "${BASENAME}"/
+-czf $FILENAME "${BASENAME}"/
 
 rsync -avP $FILENAME "${REMOTE}":"${BUILD_DIR}"
 
 ssh ${REMOTE} "
 cd /tmp/ &&
 rm -rf ${BASENAME} &&
-tar -xvf $FILENAME &&
+tar -xf $FILENAME &&
 cd ${BASENAME} &&
 ./build.sh ${BUILD_FLAGS}
 "

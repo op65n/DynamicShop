@@ -1,16 +1,19 @@
 # DynamicShop (Coming soon!)
 Dynamic shop Minecraft 1.16.x plugin with advanced capabilities, based on the real economy.
-<br>
-Version: `1.0-SNAPSHOT`<br>
+![Cover Art](https://op65n.tech/i/2021-01-07-00-44-58.png)
+
+Version: `1.0.0-R0.1-Alpha`<br>
 Native API: `Paper-1.16.4-R0.1-SNAPSHOT`<br>
-Source code: <a href="https://github.com/SebbaIndustries/DynamicShop">github.com/SebbaIndustries/DynamicShop</a><br>
-Wiki: <a href="#">TODO: Plugin Wiki here</a><br>
+Source code: <a href="https://github.com/op65n/DynamicShop">github.com/op65n/DynamicShop</a><br>
+Wiki: <a href="https://op65n.tech/wiki/">op65n.tech/wiki</a><br>
 Developer: `SebbaIndustries` <br>
 
+Special thanks to (Minecraft IGN): `zaraamelie` & `TeamsInsane` for helping with the project.
 
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/mit-license.php)
-![Java CI with Maven](https://github.com/SebbaIndustries/DynamicShop/workflows/Java%20CI%20with%20Maven/badge.svg)
+
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![GitHub issues](https://img.shields.io/github/issues/SebbaIndustries/DynamicShop)](https://github.com/SebbaIndustries/DynamicShop/issues)
+![Java CI with Gradle](https://github.com/op65n/DynamicShop/workflows/Java%20CI%20with%20Gradle/badge.svg?branch=master)
 
 How To (Server Owners)
 ------
