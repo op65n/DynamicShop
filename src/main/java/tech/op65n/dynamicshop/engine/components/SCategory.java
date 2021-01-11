@@ -16,6 +16,8 @@ public class SCategory {
 
     private int priority;
 
+    private String filename;
+
     private SIcon icon = new SIcon();
 
     private Map<Integer, SItem> items = new TreeMap<>();
