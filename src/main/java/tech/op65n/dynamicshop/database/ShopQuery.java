@@ -3,19 +3,23 @@ package tech.op65n.dynamicshop.database;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import org.apache.commons.lang3.tuple.Pair;
 import tech.op65n.dynamicshop.Core;
 import tech.op65n.dynamicshop.engine.components.EItemType;
 import tech.op65n.dynamicshop.engine.components.SCategory;
 import tech.op65n.dynamicshop.engine.components.SItem;
 import tech.op65n.dynamicshop.engine.structure.ItemStruct;
 import tech.op65n.dynamicshop.engine.structure.ShopCategoryStruct;
+import tech.op65n.dynamicshop.engine.task.Task;
 import tech.op65n.dynamicshop.utils.ShopUtils;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Future;
 
 public class ShopQuery {
 
@@ -36,6 +40,7 @@ public class ShopQuery {
             "INSERT INTO " + DATABASE + ".category (name, priority, icon_type, icon_item, icon_display, icon_lore) " +
                     "VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id;"
     );
+    private final String GET_INSERTED_CATEGORY_ID = "SELECT id FROM " + DATABASE + ".category WHERE name = ?;";
 
     /**
      * Insert category query method for the database
@@ -63,6 +68,14 @@ public class ShopQuery {
         statement.execute();
         statement.close();
 
+        PreparedStatement getGeneratedID = connection.prepareStatement(GET_INSERTED_CATEGORY_ID);
+        getGeneratedID.setString(1, categoryStruct.getFilename());
+        var resSet = getGeneratedID.executeQuery();
+        getGeneratedID.close();
+        if (!resSet.next()) return;
+        int id = resSet.getInt("id");
+        for (ItemStruct itemStruct : categoryStruct.getItem()) createItem(connection, id, itemStruct);
+
         Core.devLogger.log("Added " + categoryStruct.getFilename() + " category to the database");
     }
 
@@ -80,15 +93,18 @@ public class ShopQuery {
      * @param indexedCategoryCache Category cache
      * @throws SQLException Exception from database
      */
-    public void loadCategories(Connection connection, ConcurrentHashMap<Integer, SCategory> indexedCategoryCache) throws SQLException {
+    public void loadCategories(Connection connection, ConcurrentHashMap<Integer, SCategory> indexedCategoryCache) throws SQLException, InterruptedException {
         PreparedStatement statement = connection.prepareStatement(SELECT_CATEGORIES);
         var fetch = statement.executeQuery();
+
+        List<Future<Boolean>> futures = new ArrayList<>();
 
         while (fetch.next()) {
             SCategory category = new SCategory();
             int catID = fetch.getInt("id");
             category.setID(catID);
             category.setPriority(fetch.getInt("priority"));
+            category.setFilename(fetch.getString("name"));
             category.getIcon().setItem(fetch.getString("icon_item"));
             switch (fetch.getInt("icon_type")) {
                 case 0 -> category.getIcon().setType(EItemType.MATERIAL);
@@ -96,10 +112,49 @@ public class ShopQuery {
                 case 2 -> category.getIcon().setType(EItemType.BASE64);
             }
             category.getIcon().setDisplay(fetch.getString("icon_display"));
-            category.getIcon().setLore(gson.fromJson(fetch.getString("icon_lore"), new TypeToken<List<String>>() {}.getType()));
+            category.getIcon().setLore(gson.fromJson(fetch.getString("icon_lore"), new TypeToken<List<String>>() {
+            }.getType()));
 
-            indexedCategoryCache.put(catID, category);
+            var future = Task.asyncFuture(() -> {
+                try {
+                    Thread.sleep(6666);
+                    loadItems(connection, category);
+                    indexedCategoryCache.put(catID, category);
+                    Core.devLogger.log("Loaded: " + category.getFilename());
+                } catch (SQLException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
+            futures.add(future);
         }
+
+        boolean waitForThreads = true;
+        while (waitForThreads) waitForThreads = futures.stream().anyMatch(threadFuture -> !threadFuture.isDone());
+    }
+
+    private final String REMOVE_CATEGORY_CATEGORY = "DELETE FROM " + DATABASE + ".category WHERE id = ?;";
+    private final String REMOVE_CATEGORY_ITEM = "DELETE FROM " + DATABASE + ".item_meta WHERE category_id = ?;";
+    private final String REMOVE_CATEGORY_ITEM_META = "DELETE FROM " + DATABASE + ".item_meta WHERE item_category_id = ?;";
+
+    public void removeCategory(Connection connection, ShopCategoryStruct categoryStruct) throws SQLException {
+        PreparedStatement getGeneratedID = connection.prepareStatement(GET_INSERTED_CATEGORY_ID);
+        getGeneratedID.setString(1, categoryStruct.getFilename());
+        var resSet = getGeneratedID.executeQuery();
+        getGeneratedID.close();
+        if (!resSet.next()) return;
+        int id = resSet.getInt("id");
+
+        PreparedStatement removeItemMetaE = connection.prepareStatement(REMOVE_CATEGORY_ITEM_META);
+        removeItemMetaE.setInt(1, id);
+        removeItemMetaE.execute();
+
+        PreparedStatement removeItemE = connection.prepareStatement(REMOVE_CATEGORY_ITEM);
+        removeItemE.setInt(1, id);
+        removeItemE.execute();
+
+        PreparedStatement removeCategoryE = connection.prepareStatement(REMOVE_CATEGORY_CATEGORY);
+        removeCategoryE.setInt(1, id);
+        removeCategoryE.execute();
     }
 
     /*
@@ -124,7 +179,7 @@ public class ShopQuery {
      * @param item Item Structure
      * @throws SQLException Exception from database
      */
-    public void createItem(Connection connection, int catID, ItemStruct item) throws SQLException {
+    private void createItem(Connection connection, int catID, ItemStruct item) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(INSERT_ITEM);
 
         var pair = ShopUtils.getTypeAndItemPair(item.getMaterial(), item.getTexture(), item.getBase64());
@@ -166,7 +221,7 @@ public class ShopQuery {
     -- Table `dynamic_shop`.`item`
     -- -----------------------------------------------------
      */
-    private final String SELECT_ITEMS = "SELECT * FROM " + DATABASE + ".item;";
+    private final String SELECT_ITEMS = "SELECT * FROM " + DATABASE + ".item JOIN item_meta im ON item.id = im.item_id WHERE category_id = ?;";
 
     /**
      *
@@ -174,8 +229,9 @@ public class ShopQuery {
      * @param category Shop category class
      * @throws SQLException Exception from database
      */
-    public void loadItems(Connection connection, SCategory category) throws SQLException {
+    private void loadItems(Connection connection, SCategory category) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(SELECT_ITEMS);
+        statement.setInt(1, category.getID());
         var fetch = statement.executeQuery();
 
         while (fetch.next()) {
@@ -191,6 +247,13 @@ public class ShopQuery {
             item.getItemPricing().setPriceSell(fetch.getDouble("price_buy"));
             item.getItemPricing().setBuys(fetch.getInt("buys"));
             item.getItemPricing().setSells(fetch.getInt("sells"));
+            item.getItemPricing().setFlatline(fetch.getBoolean("flatline"));
+
+            item.getMetadata().setDisplay(fetch.getString("display"));
+            item.getMetadata().setLore(gson.fromJson(fetch.getString("lore"), new TypeToken<List<String>>() {}.getType()));
+            item.getMetadata().setPriority(fetch.getInt("priority"));
+            item.getMetadata().setCommand(fetch.getString("command"));
+
             item.setCatID(fetch.getInt("category_id"));
             category.getItems().put(item.getID(), item);
         }
