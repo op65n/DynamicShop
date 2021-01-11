@@ -14,6 +14,8 @@ public abstract class DataSource {
 
     private static HikariDataSource hds;
 
+    public static String database;
+
     private DataSource() {
     }
 
@@ -41,6 +43,8 @@ public abstract class DataSource {
             config.setPassword(dbc.passwd);
 
             hds = new HikariDataSource(config);
+
+            database = dbc.database;
             return true;
         } catch (Exception e) {
             Core.engineLogger.logSevere("There was an error with database configuration, please fix the error");
