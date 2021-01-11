@@ -1,13 +1,20 @@
 package tech.op65n.dynamicshop.engine.cache;
 
+import com.google.common.collect.Multimap;
 import com.rits.cloning.Cloner;
+import org.apache.commons.lang3.tuple.Pair;
 import tech.op65n.dynamicshop.Core;
 import tech.op65n.dynamicshop.database.DataSource;
+import tech.op65n.dynamicshop.database.ShopQuery;
 import tech.op65n.dynamicshop.engine.components.EItemType;
 import tech.op65n.dynamicshop.engine.components.SCategory;
 import tech.op65n.dynamicshop.engine.components.SIcon;
+import tech.op65n.dynamicshop.engine.structure.ItemStruct;
+import tech.op65n.dynamicshop.engine.structure.ShopCategoryStruct;
 import tech.op65n.dynamicshop.engine.task.Task;
+import tech.op65n.dynamicshop.utils.ObjectUtils;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,38 +23,24 @@ public class ShopCache {
 
     private final Cloner cloner = new Cloner();
     private final ConcurrentHashMap<Integer, SCategory> indexedCategoryCache = new ConcurrentHashMap<>();
+    private ShopQuery query;
 
-    public void init() {
-        Task.async(() -> {
-            try {
-                var connection = DataSource.connection();
+    public void init(List<ShopCategoryStruct> diffCached, List<ShopCategoryStruct> diffLoaded) {
+        query = new ShopQuery(DataSource.database);
 
-                var fetch = connection.prepareStatement("SELECT * FROM category;");
-                var fetchRes = fetch.executeQuery();
-                while (fetchRes.next()) {
-                    SCategory category = new SCategory();
-                    int catID = fetchRes.getInt("id");
-                    category.setID(catID);
-                    category.setPriority(fetchRes.getInt("priority"));
+        try {
+            Connection connection = DataSource.connection();
 
-                    SIcon icon = category.getIcon();
-                    icon.setItem(fetchRes.getString("icon_item"));
-                    switch (fetchRes.getInt("icon_type")) {
-                        case 0 -> icon.setType(EItemType.MATERIAL);
-                        case 1 -> icon.setType(EItemType.TEXTURE);
-                        case 2 -> icon.setType(EItemType.BASE64);
-                    }
-                    icon.setDisplay(fetchRes.getString("icon_display"));
-                    // TODO: setup lore
+            for (ShopCategoryStruct shopCategoryStruct : diffLoaded) query.removeCategory(connection, shopCategoryStruct);
+            for (ShopCategoryStruct shopCategoryStruct : diffCached) query.createCategory(connection, shopCategoryStruct);
+            query.loadCategories(connection, indexedCategoryCache);
 
-                    category.setIcon(icon);
-                    indexedCategoryCache.put(catID, category);
-                }
+            connection.close();
 
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        });
+        } catch (SQLException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public SCategory getCategoryFromIndex(final int index) {
