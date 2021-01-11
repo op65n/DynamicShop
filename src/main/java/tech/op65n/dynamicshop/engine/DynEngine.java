@@ -47,24 +47,14 @@ public class DynEngine implements Engine {
         if (!DataSource.setup(configuration.getDatabase())) {
             return false;
         }
-        _lCache.getStartupInfo().setDbReady(true);
 
         this.container = new ShopContainer();
-
         this.shopUI = new ShopUI();
-
 
         uptime = System.currentTimeMillis();
 
-        Core.gCore().setCommandManager(
-                new CommandManager(Core.gCore().core)
-        );
-        Core.gCore().setMessage(
-                new Toml().read(Core.gCore().getFileManager().getFile(FileManager.PluginFiles.MESSAGES)).to(Message.class)
-        );
-        /*
-        GUI listeners
-         */
+        Core.gCore().setCommandManager(new CommandManager(Core.gCore().core));
+        Core.gCore().setMessage(new Toml().read(Core.gCore().getFileManager().getFile(FileManager.PluginFiles.MESSAGES)).to(Message.class));
         Core.gCore().core.getServer().getPluginManager().registerEvents(new InventoryListeners(), Core.gCore().core);
 
         return true;
@@ -79,7 +69,7 @@ public class DynEngine implements Engine {
     @Override
     public void reload() {
         Task.async(() -> {
-            if (!_lCache.getStartupInfo().isDbReady()) return;
+            //if (!_lCache.getStartupInfo().isDbReady()) return;
             DBSetup.createTables();
             _lCache.syncLCache();
         });
