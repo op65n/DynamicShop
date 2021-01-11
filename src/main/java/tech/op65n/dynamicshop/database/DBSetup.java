@@ -64,7 +64,7 @@ public class DBSetup {
             "    ON UPDATE NO ACTION) " +
             "ENGINE = InnoDB;";
 
-    public static void createTables() {
+    public static boolean createTables() {
         try {
             var connection = DataSource.connection();
 
@@ -79,8 +79,11 @@ public class DBSetup {
             imTable.close();
 
             connection.close();
+            Core.gCore().getEngine()._LCACHE().getStartupInfo().setDbReady(true);
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
         }
     }
 
