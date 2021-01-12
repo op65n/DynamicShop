@@ -13,9 +13,9 @@ import java.util.List;
 
 public class SellPageUICache implements BaseUI {
 
-    private final String name = "$NULL";
-    private final List<UIButton> button = new ArrayList<>();
-    private int size = 6;
+    private String name = "$NULL";
+    private List<UIButton> button = new ArrayList<>();
+    private int size = 1;
     @Getter
     @Setter
     private DisplayItem item;
@@ -28,7 +28,8 @@ public class SellPageUICache implements BaseUI {
 
     @Override
     public int size() {
-        return this.size;
+        if (size > 6) return 6;
+        return Math.max(size, 1);
     }
 
     @Override

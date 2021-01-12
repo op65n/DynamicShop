@@ -1,9 +1,11 @@
 package tech.op65n.dynamicshop.engine.ui.guis;
 
+import org.bukkit.inventory.ItemStack;
 import tech.op65n.dynamicshop.Core;
 import tech.op65n.dynamicshop.engine.components.SCategory;
 import tech.op65n.dynamicshop.engine.components.SItem;
 import tech.op65n.dynamicshop.engine.ui.cache.InventoryHolderCache;
+import tech.op65n.dynamicshop.engine.ui.cache.SellPageUICache;
 import tech.op65n.dynamicshop.engine.ui.components.ClickActions;
 import tech.op65n.dynamicshop.engine.ui.components.UIButton;
 import tech.op65n.dynamicshop.engine.ui.interfaces.BaseUI;
@@ -52,7 +54,11 @@ public class SellPageUI implements UserInterface {
 
         cache.setSize(UserInterfaceUtils.calculateInventorySize(mappedInventory));
 
-        inventory = Bukkit.createInventory(null, cache.size() * 9, Color.format(cache.name()));
+        ItemStack selectedItemStack = UserInterfaceUtils.getBukkitItemStack(selectedItem);
+        String guiName = cache.name();
+        guiName = guiName.replace("%item%", selectedItemStack.getItemMeta().getDisplayName());
+
+        inventory = Bukkit.createInventory(null, cache.size() * 9, Color.format(guiName));
         UserInterfaceUtils.setupInventory(inventory, mappedInventory, cache.size());
 
         InventoryHolderCache.cache(player, this);
@@ -70,12 +76,12 @@ public class SellPageUI implements UserInterface {
         /*
         buttons
          */
-        //UserInterfaceUtils.mapButtons(mappedInventory, cache, selectedItem);
+        UserInterfaceUtils.mapButtons(mappedInventory, cache, selectedItem);
 
         /*
         item
          */
-        //UserInterfaceUtils.mapItem(mappedInventory, selectedItem, ((SellPageUICache) cache).getItem());
+        UserInterfaceUtils.mapItem(mappedInventory, selectedItem, ((SellPageUICache) cache).getItem());
 
         InventoryHolderCache.cache(player, this);
 
@@ -110,27 +116,28 @@ public class SellPageUI implements UserInterface {
         switch (action) {
             case EXIT, CLOSE -> close();
             case BACK -> {
-                //UserInterface ui = new StorePageUI(player, backPage);
-                //ui.update();
-                //ui.open();
+                UserInterface ui = new StorePageUI(player, backPage);
+                ui.update();
+                ui.open();
             }
             case ADD -> {
                 UIButton button = (UIButton) mappedInventory.get(slot);
-                //if (button.getAmount() + selectedItem.getAmount() <= button.getMaterial().getMaxStackSize()) {
-                //    selectedItem.setAmount(selectedItem.getAmount() + button.getAmount());
-                //}
+                // TODO: Max stack size
+                if (button.getAmount() + selectedItem.getAmount() <= 64) {
+                    selectedItem.setAmount(selectedItem.getAmount() + button.getAmount());
+                }
                 updateUISlots(true);
             }
             case REMOVE -> {
                 UIButton button = (UIButton) mappedInventory.get(slot);
-                //if (selectedItem.getAmount() - button.getAmount() > 0) {
-                //    selectedItem.setAmount(selectedItem.getAmount() - button.getAmount());
-                //}
+                if (selectedItem.getAmount() - button.getAmount() > 0) {
+                    selectedItem.setAmount(selectedItem.getAmount() - button.getAmount());
+                }
                 updateUISlots(true);
             }
             case SET -> {
                 UIButton button = (UIButton) mappedInventory.get(slot);
-                //selectedItem.setAmount(button.getAmount());
+                selectedItem.setAmount(button.getAmount());
                 updateUISlots(true);
             }
             case SELL -> {
