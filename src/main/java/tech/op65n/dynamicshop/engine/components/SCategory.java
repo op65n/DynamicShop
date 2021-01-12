@@ -18,6 +18,8 @@ public class SCategory {
 
     private String filename;
 
+    private String name;
+
     private SIcon icon = new SIcon();
 
     private Map<Integer, SItem> items = new TreeMap<>();

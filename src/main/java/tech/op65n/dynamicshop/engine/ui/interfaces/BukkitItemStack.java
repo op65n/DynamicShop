@@ -1,6 +1,7 @@
 package tech.op65n.dynamicshop.engine.ui.interfaces;
 
-import org.bukkit.Material;
+import org.apache.commons.lang3.tuple.Pair;
+import tech.op65n.dynamicshop.engine.components.EItemType;
 
 import java.util.List;
 
@@ -8,14 +9,10 @@ public interface BukkitItemStack {
 
     int amount();
 
-    Material material();
+    Pair<EItemType, String> material();
 
     String display();
 
     List<String> lore();
-
-    String texture();
-
-    byte[] base64();
 
 }
