@@ -44,8 +44,8 @@ public class ShopCache {
     }
 
     public SCategory getCategoryFromIndex(final int index) {
-        if (indexedCategoryCache.getOrDefault(1, null) == null) {
-            Core.engineLogger.log("Missing category index (" + index + ") in the indexCache!");
+        if (indexedCategoryCache.getOrDefault(index, null) == null) {
+            Core.engineLogger.logSevere("Missing category index (" + index + ") in the indexCache!");
             return null;
         }
         return cloner.deepClone(indexedCategoryCache.get(index));

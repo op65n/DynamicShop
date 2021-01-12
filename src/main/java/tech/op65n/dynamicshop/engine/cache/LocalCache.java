@@ -58,7 +58,7 @@ public class LocalCache {
         Collection<ShopCategoryStruct> differentCached = new HashSet<>(loaded);
         Collection<ShopCategoryStruct> differentLoaded = new HashSet<>(cached);
 
-        Multimap<String, Pair<ItemStruct, ItemStruct>> changedItems = LinkedListMultimap.create();
+        //Multimap<String, Pair<ItemStruct, ItemStruct>> changedItems = LinkedListMultimap.create();
 
         cached.forEach(cachedEntry -> loaded.forEach(loadedEntry -> {
             if (loadedEntry.getFilename().equals(cachedEntry.getFilename())) {
