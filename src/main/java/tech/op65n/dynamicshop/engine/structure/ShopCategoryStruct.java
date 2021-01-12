@@ -13,6 +13,8 @@ public class ShopCategoryStruct {
 
     private String filename;
 
+    private String name;
+
     private Integer priority = 1000;
 
     private IconStruct icon = new IconStruct();
