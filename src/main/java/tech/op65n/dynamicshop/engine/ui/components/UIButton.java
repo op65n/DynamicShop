@@ -1,11 +1,14 @@
 package tech.op65n.dynamicshop.engine.ui.components;
 
+import org.apache.commons.lang3.tuple.Pair;
+import tech.op65n.dynamicshop.engine.components.EItemType;
 import tech.op65n.dynamicshop.engine.ui.interfaces.BukkitItemStack;
 import tech.op65n.dynamicshop.engine.ui.interfaces.Clickable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.bukkit.Material;
+import tech.op65n.dynamicshop.utils.ShopUtils;
 
 import java.util.ArrayList;
 import java.util.Base64;
@@ -16,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 public class UIButton implements BukkitItemStack, Clickable {
 
-    private Material material;
+    private String material;
     private String display;
     private List<String> lore = new ArrayList<>();
     private int amount = 1;
@@ -36,8 +39,8 @@ public class UIButton implements BukkitItemStack, Clickable {
     }
 
     @Override
-    public Material material() {
-        return this.material;
+    public Pair<EItemType, String> material() {
+        return ShopUtils.getTypeAndItemPair(material, texture, base64);
     }
 
     @Override
@@ -48,17 +51,6 @@ public class UIButton implements BukkitItemStack, Clickable {
     @Override
     public List<String> lore() {
         return this.lore;
-    }
-
-    @Override
-    public String texture() {
-        return this.texture;
-    }
-
-    @Override
-    public byte[] base64() {
-        if (base64 == null) return null;
-        return Base64.getDecoder().decode(this.base64);
     }
 
     @Override

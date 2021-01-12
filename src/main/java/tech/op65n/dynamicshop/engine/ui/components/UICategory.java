@@ -1,5 +1,7 @@
 package tech.op65n.dynamicshop.engine.ui.components;
 
+import org.apache.commons.lang3.tuple.Pair;
+import tech.op65n.dynamicshop.engine.components.EItemType;
 import tech.op65n.dynamicshop.engine.components.SCategory;
 import tech.op65n.dynamicshop.engine.ui.interfaces.BukkitItemStack;
 import tech.op65n.dynamicshop.engine.ui.interfaces.Clickable;
@@ -7,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.bukkit.Material;
+import tech.op65n.dynamicshop.utils.ShopUtils;
 
 import java.util.List;
 
@@ -43,39 +46,22 @@ public class UICategory implements BukkitItemStack, Clickable {
 
     @Override
     public int amount() {
-        // TODO: Fix this
-        return 0;
+        return 1;
     }
 
     @Override
-    public Material material() {
-        // TODO: Fix this
-        return null;
+    public Pair<EItemType, String> material() {
+        return Pair.of(category.getIcon().getType(), category.getIcon().getItem());
     }
 
     @Override
     public String display() {
-        // TODO: Fix this
-        return null;
+
+        return category.getIcon().getDisplay();
     }
 
     @Override
     public List<String> lore() {
-        // TODO: Fix this
-        return null;
-    }
-
-    @Override
-    public String texture() {
-        // TODO: Fix this
-        return null;
-    }
-
-    @Override
-    public byte[] base64() {
-        //if (category.base64() == null) return null;
-        //return Base64.getDecoder().decode(category.base64());
-        // TODO: Fix this
-        return null;
+        return category.getIcon().getLore();
     }
 }
