@@ -1,6 +1,7 @@
 package tech.op65n.dynamicshop.engine.ui.guis;
 
 import tech.op65n.dynamicshop.Core;
+import tech.op65n.dynamicshop.engine.components.SCategory;
 import tech.op65n.dynamicshop.engine.structure.ShopCategoryStruct;
 import tech.op65n.dynamicshop.engine.ui.cache.InventoryHolderCache;
 import tech.op65n.dynamicshop.engine.ui.cache.MainPageUICache;
@@ -73,10 +74,10 @@ public class MainPageUI implements UserInterface {
         /*
         Categories
          */
-        List<ShopCategoryStruct> categoryCache = Core.gCore().getEngine().container().getPrioritizedCategoryList();
+        List<SCategory> categoryCache = Core.gCore().getShopCache().getPrioritisedCategoryList();
         ((MainPageUICache) cache).getCategory().forEach(uiCategory -> {
             if (categoryCache == null || categoryCache.isEmpty() || categoryCache.get(0) == null) return;
-            //uiCategory.setCategory(categoryCache.get(0));
+            uiCategory.setCategory(categoryCache.get(0));
             mappedInventory.put(uiCategory.getSlot(), uiCategory);
             categoryCache.remove(0);
         });
