@@ -37,10 +37,10 @@ public class ShopQuery {
     -- -----------------------------------------------------
      */
     private final String INSERT_CATEGORY = (
-            "INSERT INTO " + DATABASE + ".category (name, priority, icon_type, icon_item, icon_display, icon_lore) " +
-                    "VALUES (?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id;"
+            "INSERT INTO " + DATABASE + ".category (filename, name, priority, icon_type, icon_item, icon_display, icon_lore) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE id = id;"
     );
-    private final String GET_INSERTED_CATEGORY_ID = "SELECT id FROM " + DATABASE + ".category WHERE name = ?;";
+    private final String GET_INSERTED_CATEGORY_ID = "SELECT id FROM " + DATABASE + ".category WHERE filename = ?;";
 
     /**
      * Insert category query method for the database
@@ -59,11 +59,12 @@ public class ShopQuery {
         );
 
         statement.setString(1, categoryStruct.getFilename());
-        statement.setInt(2, categoryStruct.getPriority());
-        statement.setInt(3, pair.getLeft().type);
-        statement.setString(4, pair.getRight());
-        statement.setString(5, categoryStruct.getIcon().getDisplay());
-        statement.setString(6, gson.toJson(categoryStruct.getIcon().getLore()));
+        statement.setString(2, categoryStruct.getName());
+        statement.setInt(3, categoryStruct.getPriority());
+        statement.setInt(4, pair.getLeft().type);
+        statement.setString(5, pair.getRight());
+        statement.setString(6, categoryStruct.getIcon().getDisplay());
+        statement.setString(7, gson.toJson(categoryStruct.getIcon().getLore()));
 
         statement.execute();
         statement.close();
@@ -104,7 +105,8 @@ public class ShopQuery {
             int catID = fetch.getInt("id");
             category.setID(catID);
             category.setPriority(fetch.getInt("priority"));
-            category.setFilename(fetch.getString("name"));
+            category.setFilename(fetch.getString("filename"));
+            category.setName(fetch.getString("name"));
             category.getIcon().setItem(fetch.getString("icon_item"));
             switch (fetch.getInt("icon_type")) {
                 case 0 -> category.getIcon().setType(EItemType.MATERIAL);
@@ -117,11 +119,10 @@ public class ShopQuery {
 
             var future = Task.asyncFuture(() -> {
                 try {
-                    Thread.sleep(6666);
                     loadItems(connection, category);
                     indexedCategoryCache.put(catID, category);
                     Core.devLogger.log("Loaded: " + category.getFilename());
-                } catch (SQLException | InterruptedException e) {
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
             });
