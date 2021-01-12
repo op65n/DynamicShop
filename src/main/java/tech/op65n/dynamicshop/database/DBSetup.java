@@ -16,12 +16,13 @@ public class DBSetup {
     private static final String CATEGORY_TABLE =
             "CREATE TABLE IF NOT EXISTS `dynamic_shop`.`category` ( " +
             "  `id` INT NOT NULL AUTO_INCREMENT, " +
-            "  `name` VARCHAR(64) NULL, " +
+            "  `filename` VARCHAR(64) NOT NULL, " +
+            "  `name` VARCHAR(64) NOT NULL, " +
             "  `priority` INT NULL DEFAULT 1000, " +
             "  `icon_type` INT NULL DEFAULT 0, " +
-            "  `icon_item` VARCHAR(512) NULL, " +
+            "  `icon_item` VARCHAR(1024) NULL, " +
             "  `icon_display` VARCHAR(45) NULL, " +
-            "  `icon_lore` VARCHAR(512) NULL, " +
+            "  `icon_lore` VARCHAR(1024) NULL, " +
             "  PRIMARY KEY (`id`), " +
             "  UNIQUE INDEX `name_UNIQUE` (`name` ASC)) " +
             "ENGINE = InnoDB;";
@@ -30,7 +31,7 @@ public class DBSetup {
             "CREATE TABLE IF NOT EXISTS `dynamic_shop`.`item` ( " +
             "  `id` INT NOT NULL AUTO_INCREMENT, " +
             "  `item_type` INT NULL DEFAULT 0, " +
-            "  `item_material` VARCHAR(64) NOT NULL, " +
+            "  `item_material` VARCHAR(1024) NOT NULL, " +
             "  `price_buy` DOUBLE NULL DEFAULT 0.00, " +
             "  `price_sell` DOUBLE NULL DEFAULT 0.00, " +
             "  `buys` INT NOT NULL DEFAULT 0, " +
@@ -49,7 +50,7 @@ public class DBSetup {
             "CREATE TABLE IF NOT EXISTS `dynamic_shop`.`item_meta` ( " +
             "  `id` INT NOT NULL, " +
             "  `display` VARCHAR(64) NULL, " +
-            "  `lore` VARCHAR(512) NULL DEFAULT NULL, " +
+            "  `lore` VARCHAR(1024) NULL DEFAULT NULL, " +
             "  `priority` INT NULL DEFAULT 1000, " +
             "  `flatline` TINYINT NULL DEFAULT 0, " +
             "  `command` VARCHAR(256) NULL DEFAULT NULL, " +
