@@ -54,12 +54,9 @@ public class BuyPageUI implements UserInterface {
 
         cache.setSize(UserInterfaceUtils.calculateInventorySize(mappedInventory));
 
-        ItemStack selectedItemStack = UserInterfaceUtils.getBukkitItemStack(selectedItem);
-        String guiName = cache.name();
-        // TODO: add display name stuff
-        guiName = guiName.replace("%item%", selectedItemStack.getItemMeta().hasDisplayName() ? selectedItemStack.getItemMeta().getDisplayName() : selectedItemStack.getType().getKey().getKey());
+        String guiName = cache.name().replace("%item%", selectedItem.getMetadata().getDisplay());
 
-        inventory = Bukkit.createInventory(null, cache.size() * 9, Color.format(guiName));
+        inventory = Bukkit.createInventory(null, cache.size() * 9, guiName);
         UserInterfaceUtils.setupInventory(inventory, mappedInventory, cache.size());
 
         InventoryHolderCache.cache(player, this);
