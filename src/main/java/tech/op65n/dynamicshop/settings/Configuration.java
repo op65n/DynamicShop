@@ -27,4 +27,12 @@ public class Configuration {
         public HashMap<String, String> properties = new HashMap<>();
     }
 
+    public static class ShopConfiguration {
+        public Integer default_stock = 300;
+        public Double stock_curve = 1.03;
+        public Double no_stock_curve = 1.2;
+        public Double golden_demand = 0.6;
+        public Integer history_length = 100;
+    }
+
 }
