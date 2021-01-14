@@ -11,6 +11,7 @@ import tech.op65n.dynamicshop.engine.ui.interfaces.Clickable;
 import tech.op65n.dynamicshop.engine.ui.interfaces.UserInterface;
 import tech.op65n.dynamicshop.utils.Color;
 import tech.op65n.dynamicshop.utils.ListUtils;
+import tech.op65n.dynamicshop.utils.ObjectUtils;
 import tech.op65n.dynamicshop.utils.UserInterfaceUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -18,8 +19,10 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 public class StorePageUI implements UserInterface {
 
@@ -114,6 +117,7 @@ public class StorePageUI implements UserInterface {
                 item.setOnRightClick(cache.getItems().getOnRightClick());
                 item.setOnMiddleClick(cache.getItems().getOnMiddleClick());
                 item.setOnClick(cache.getItems().getOnClick());
+                applyLoreHolders(item);
                 mappedInventory.put(x + (y * 9), item);
                 itemCount++;
             }
@@ -124,6 +128,32 @@ public class StorePageUI implements UserInterface {
         if (usedColumns >= columnLength) return;
         if (cache.getItems().isCollapsed()) collapseBy = (columnLength - usedColumns) * 9;
 
+    }
+
+    private void applyLoreHolders(SItem item) {
+        System.out.println(ObjectUtils.deserializeObjectToString(item));
+        if (item.getMetadata().getLore() == null || item.getMetadata().getLore().isEmpty()) {
+            if (cache.getItems().getLore() == null) return;
+            List<String> lore = cache.getItems().getLore().stream()
+                    .map(l4e -> l4e.replace("%price_buy_single%", String.valueOf(item.getItemPricing().getPriceBuy())))
+                    .map(l4e -> l4e.replace("%price_buy_stack%", String.valueOf(item.getItemPricing().getPriceBuy() * 64)))
+                    .map(l4e -> l4e.replace("%price_sell_single%", String.valueOf(item.getItemPricing().getPriceSell())))
+                    .map(l4e -> l4e.replace("%price_sell_stack%", String.valueOf(item.getItemPricing().getPriceSell() * 64)))
+                    .map(l4e -> l4e.replace("%currency%", "€"))
+                    .map(Color::format)
+                    .collect(Collectors.toList());
+            item.getMetadata().setLore(lore);
+            return;
+        }
+        List<String> lore = item.getMetadata().getLore().stream()
+                .map(l4e -> l4e.replace("%price_buy_single%", String.valueOf(item.getItemPricing().getPriceBuy())))
+                .map(l4e -> l4e.replace("%price_buy_stack%", String.valueOf(item.getItemPricing().getPriceBuy() * 64)))
+                .map(l4e -> l4e.replace("%price_sell_single%", String.valueOf(item.getItemPricing().getPriceSell())))
+                .map(l4e -> l4e.replace("%price_sell_stack%", String.valueOf(item.getItemPricing().getPriceSell() * 64)))
+                .map(l4e -> l4e.replace("%currency%", "€"))
+                .map(Color::format)
+                .collect(Collectors.toList());
+        item.getMetadata().setLore(lore);
     }
 
 
