@@ -54,9 +54,7 @@ public class SellPageUI implements UserInterface {
 
         cache.setSize(UserInterfaceUtils.calculateInventorySize(mappedInventory));
 
-        ItemStack selectedItemStack = UserInterfaceUtils.getBukkitItemStack(selectedItem);
-        String guiName = cache.name();
-        guiName = guiName.replace("%item%", selectedItemStack.getItemMeta().getDisplayName());
+        String guiName = cache.name().replace("%item%", selectedItem.getMetadata().getDisplay());
 
         inventory = Bukkit.createInventory(null, cache.size() * 9, Color.format(guiName));
         UserInterfaceUtils.setupInventory(inventory, mappedInventory, cache.size());
