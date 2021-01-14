@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -13,6 +15,7 @@ public class ItemsPanel implements Clickable {
     private int cornerA = 1;
     private int cornerB = 7;
     private boolean collapsed = false;
+    private List<String> lore;
 
     private ClickActions onClick = ClickActions.NA;
     private ClickActions onRightClick = ClickActions.NA;
