@@ -5,6 +5,7 @@ import tech.op65n.dynamicshop.Core;
 import tech.op65n.dynamicshop.commands.CommandManager;
 import tech.op65n.dynamicshop.database.DBSetup;
 import tech.op65n.dynamicshop.database.DataSource;
+import tech.op65n.dynamicshop.engine.cache.DataSourceCache;
 import tech.op65n.dynamicshop.engine.cache.LocalCache;
 import tech.op65n.dynamicshop.engine.container.ShopContainer;
 import tech.op65n.dynamicshop.engine.task.Task;
@@ -63,16 +64,11 @@ public class DynEngine implements Engine {
     @Override
     public void terminate() {
         ObjectUtils.saveGsonFile(".cache/startup_info.json", _lCache.getStartupInfo());
-        ObjectUtils.saveGsonFile(".cache/category_file_info.json", _lCache.getCategoryFileInfo());
     }
 
     @Override
     public void reload() {
-        Task.async(() -> {
-            //if (!_lCache.getStartupInfo().isDbReady()) return;
-            DBSetup.createTables();
-            _lCache.syncLCache();
-        });
+        Task.async(() -> Core.gCore().setShopCache(new DataSourceCache()));
     }
 
     @Override

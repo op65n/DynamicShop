@@ -3,7 +3,7 @@ package tech.op65n.dynamicshop.global;
 import tech.op65n.dynamicshop.Core;
 import tech.op65n.dynamicshop.commands.CommandManager;
 import tech.op65n.dynamicshop.engine.Engine;
-import tech.op65n.dynamicshop.engine.cache.ShopCache;
+import tech.op65n.dynamicshop.engine.cache.DataSourceCache;
 import tech.op65n.dynamicshop.engine.structure.DirectoryStructure;
 import tech.op65n.dynamicshop.messages.Message;
 import tech.op65n.dynamicshop.utils.FileManager;
@@ -25,7 +25,7 @@ public class GlobalCore {
     private Message message;
     private CommandManager commandManager;
     private Engine engine;
-    private ShopCache shopCache;
+    private DataSourceCache shopCache;
     private DirectoryStructure directoryStructure;
 
 
