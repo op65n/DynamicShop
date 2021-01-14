@@ -1,10 +1,10 @@
 package tech.op65n.dynamicshop.engine.components;
 
 import org.apache.commons.lang3.tuple.Pair;
-import tech.op65n.dynamicshop.engine.structure.ItemStruct;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import tech.op65n.dynamicshop.engine.structure.ItemStruct;
 import tech.op65n.dynamicshop.engine.ui.components.ClickActions;
 import tech.op65n.dynamicshop.engine.ui.interfaces.BukkitItemStack;
 import tech.op65n.dynamicshop.engine.ui.interfaces.Clickable;
@@ -23,6 +23,8 @@ public class SItem implements BukkitItemStack, Clickable {
 
     private int catID;
 
+    private String categoryFilename;
+
     private EItemType type = EItemType.MATERIAL;
 
     private String item = "ACACIA_BOAT";
@@ -35,6 +37,18 @@ public class SItem implements BukkitItemStack, Clickable {
     private ClickActions onRightClick = ClickActions.NA;
     private ClickActions onLeftClick = ClickActions.NA;
     private ClickActions onMiddleClick = ClickActions.NA;
+
+    public SItem(ItemStruct struct, String categoryFilename) {
+        var pair = ShopUtils.getTypeAndItemPair(struct.getMaterial(), struct.getTexture(), struct.getBase64());
+        this.type = pair.getLeft();
+        this.item = pair.getRight();
+        this.categoryFilename = categoryFilename;
+
+        this.metadata.setDisplay(struct.getDisplay());
+        this.metadata.setPriority(struct.getPriority());
+        this.metadata.setLore(struct.getLore());
+        this.metadata.setCommand(struct.getCommand());
+    }
 
     @Override
     public int amount() {
