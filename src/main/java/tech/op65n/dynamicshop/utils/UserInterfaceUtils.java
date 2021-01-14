@@ -50,6 +50,13 @@ public class UserInterfaceUtils {
         ItemMeta iMeta = iStack.getItemMeta();
 
         /*
+        Item display name
+         */
+        if (bukkitItemStack.display() != null) iMeta.setDisplayName(Color.format(bukkitItemStack.display()));
+        if (bukkitItemStack.display() == null) iMeta.setDisplayName(iStack.getI18NDisplayName());
+
+
+        /*
         Item lore
          */
         if (bukkitItemStack.lore() != null && !bukkitItemStack.lore().isEmpty()) {
@@ -57,11 +64,6 @@ public class UserInterfaceUtils {
             bukkitItemStack.lore().forEach(loreLine -> coloredLore.add(Color.format(loreLine)));
             iMeta.setLore(coloredLore);
         }
-
-        /*
-        Item display name
-         */
-        if (bukkitItemStack.display() != null) iMeta.setDisplayName(Color.format(bukkitItemStack.display()));
 
         iStack.setItemMeta(iMeta);
         return iStack;
@@ -114,13 +116,14 @@ public class UserInterfaceUtils {
         });
     }
 
-    public static SItem applyItemPlaceholders(SItem shopItem, DisplayItem displayItem) {
-        shopItem.getMetadata().setDisplay(Color.format(displayItem.getDisplay()));
+    public static void applyItemPlaceholders(SItem shopItem, DisplayItem displayItem) {
+
         shopItem.getMetadata().setLore(displayItem.getColoredLore());
 
-        //String display = displayItem.getDisplay();
-        //display = display.replace("%item%", shopItem.getItem());
-        //shopItem.setDisplay(display);
+        String display = displayItem.getDisplay();
+        display = display.replace("%item%", getBukkitItemStack(shopItem).getItemMeta().getDisplayName());
+        shopItem.getMetadata().setDisplay(display);
+
 
         if (shopItem.getMetadata().getLore() != null && !shopItem.getMetadata().getLore().isEmpty()) {
             List<String> lore = shopItem.getMetadata().getLore().stream()
@@ -134,7 +137,6 @@ public class UserInterfaceUtils {
             shopItem.getMetadata().setLore(lore);
         }
 
-        return shopItem;
     }
 
     public static void mapButtons(Map<Integer, Object> mappedInventory, BaseUI cache, SItem selectedItem) {
