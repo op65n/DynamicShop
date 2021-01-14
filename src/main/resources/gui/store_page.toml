@@ -9,9 +9,12 @@ display = " "
 cornerA = 10
 cornerB = 34
 collapsed = true
-onRightClick = "BUY"
-onLeftClick = "SELL"
+onRightClick = "SELL"
+onLeftClick = "BUY"
 onMiddleClick = "SELL_ALL"
+lore = [
+    "&a%price_buy_single%%currency% &f| &c%price_sell_single%%currency%"
+]
 
 [[button]]
 material = "KNOWLEDGE_BOOK"
