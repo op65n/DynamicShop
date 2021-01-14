@@ -28,12 +28,12 @@ public class SItemMeta {
     }
 
     public String getDisplay() {
-        if (display == null) return null;
+        if (display == null || display.equals("") || display.equals(" ")) return null;
         return Color.format(display);
     }
 
     public List<String> getLore() {
-        if (lore == null) return null;
+        if (lore == null || lore.isEmpty()) return null;
         return lore.stream().map(Color::format).collect(Collectors.toList());
     }
 }
