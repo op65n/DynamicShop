@@ -13,7 +13,8 @@ onRightClick = "SELL"
 onLeftClick = "BUY"
 onMiddleClick = "SELL_ALL"
 lore = [
-    "&a%price_buy_single%%currency% &f| &c%price_sell_single%%currency%"
+    "&fBuy price: &a%price_buy_single%%currency%",
+    "&fSell price: &c%price_sell_single%%currency%"
 ]
 
 [[button]]
