@@ -105,7 +105,7 @@ public class StorePageUI implements UserInterface {
         int columnLength = Math.abs(columnStart - columnEnd) + 1;
         int rowLength = Math.abs(cornerA - (cornerB - ((columnLength - 1) * 9))) + 1;
 
-        ListUtils<SItem> listUtils = new ListUtils<>(new ArrayList<>(category.getItems().values()));
+        ListUtils<SItem> listUtils = new ListUtils<>(new ArrayList<>(category.getItems()));
 
         int itemCount = 0;
 
@@ -131,7 +131,6 @@ public class StorePageUI implements UserInterface {
     }
 
     private void applyLoreHolders(SItem item) {
-        System.out.println(ObjectUtils.deserializeObjectToString(item));
         if (item.getMetadata().getLore() == null || item.getMetadata().getLore().isEmpty()) {
             if (cache.getItems().getLore() == null) return;
             List<String> lore = cache.getItems().getLore().stream()
