@@ -1,5 +1,6 @@
 package tech.op65n.dynamicshop.engine.components;
 
+import tech.op65n.dynamicshop.engine.structure.ItemStruct;
 import tech.op65n.dynamicshop.utils.Color;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,13 @@ public class SItemMeta {
 
     @Getter
     private String command;
+
+    public SItemMeta(ItemStruct struct) {
+        this.display = struct.getDisplay();
+        this.priority = struct.getPriority();
+        this.lore = struct.getLore();
+        this.command = struct.getCommand();
+    }
 
     public Integer getPriority() {
         if (priority == null) return 1000;
