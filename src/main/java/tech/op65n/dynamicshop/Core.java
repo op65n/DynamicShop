@@ -1,11 +1,7 @@
 package tech.op65n.dynamicshop;
 
 import tech.op65n.dynamicshop.global.GlobalCore;
-import tech.op65n.dynamicshop.global.ServerPlugin;
-import tech.op65n.dynamicshop.log.DevLogger;
-import tech.op65n.dynamicshop.log.EngineLogger;
-import tech.op65n.dynamicshop.log.ILog;
-import tech.op65n.dynamicshop.log.PluginLogger;
+import tech.op65n.dynamicshop.global.PluginCoreLoader;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -15,12 +11,8 @@ import org.jetbrains.annotations.NotNull;
  */
 public final class Core extends JavaPlugin {
 
-    public static ILog engineLogger = new EngineLogger("[Engine]");
-    public static ILog pluginLogger = new PluginLogger("[Plugin]");
-    public static ILog devLogger = new DevLogger("[Dev]");
-
     public static GlobalCore globalCore = null;
-    private final ServerPlugin plugin = ServerPlugin.INSTANCE();
+    private final PluginCoreLoader plugin = new PluginCoreLoader(this);
 
     /**
      * Safe way to get GlobalCore class
@@ -39,19 +31,19 @@ public final class Core extends JavaPlugin {
     @Override
     public void onLoad() {
         super.onLoad();
-        plugin.load(this);
+        plugin.load();
     }
 
     @Override
     public void onDisable() {
         super.onDisable();
-        plugin.terminate();
+        plugin.disable();
     }
 
     @Override
     public void onEnable() {
         super.onEnable();
-        plugin.initialize();
+        plugin.enable();
     }
 
 }

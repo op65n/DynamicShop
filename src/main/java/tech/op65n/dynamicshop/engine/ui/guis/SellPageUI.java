@@ -11,7 +11,10 @@ import tech.op65n.dynamicshop.engine.ui.components.UIButton;
 import tech.op65n.dynamicshop.engine.ui.interfaces.BaseUI;
 import tech.op65n.dynamicshop.engine.ui.interfaces.Clickable;
 import tech.op65n.dynamicshop.engine.ui.interfaces.UserInterface;
+import tech.op65n.dynamicshop.messages.IMessage;
+import tech.op65n.dynamicshop.messages.Message;
 import tech.op65n.dynamicshop.utils.Color;
+import tech.op65n.dynamicshop.utils.InventoryUtils;
 import tech.op65n.dynamicshop.utils.UserInterfaceUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -139,7 +142,31 @@ public class SellPageUI implements UserInterface {
                 updateUISlots(true);
             }
             case SELL -> {
-                // TODO: Add selling implementation
+                var stack = selectedItem.toItemStack();
+                if (!InventoryUtils.hasEnoughItems(player, stack)){
+                    close();
+                    IMessage.builder()
+                            .recipient(player)
+                            .message(Message.get().inv_missing_items)
+                            .placeholder("%item%", stack.getI18NDisplayName())
+                            .placeholder("%price%", String.format("%,.2f", selectedItem.getItemPricing().getPriceSell()))
+                            .send();
+                    return;
+                }
+                InventoryUtils.removeFromInventory(player, stack);
+                try {
+                    Core.gCore().getShopCache().sellItem(selectedItem);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                    player.sendMessage(e.getMessage());
+                    close();
+                }
+                IMessage.builder()
+                        .recipient(player)
+                        .message(Message.get().shop_sold)
+                        .placeholder("%item%", stack.getI18NDisplayName())
+                        .placeholder("%price%", String.format("%,.2f", selectedItem.getItemPricing().getPriceSell()))
+                        .send();
                 UserInterface ui = new StorePageUI(player, backPage);
                 ui.update();
                 ui.open();

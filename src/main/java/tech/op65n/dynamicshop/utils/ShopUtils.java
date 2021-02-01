@@ -9,6 +9,6 @@ public class ShopUtils {
         if (base64 != null) return Pair.of(EItemType.BASE64, base64);
         if (texture != null) return Pair.of(EItemType.TEXTURE, texture);
         if (material != null) return Pair.of(EItemType.MATERIAL, material.toUpperCase());
-        return Pair.of(EItemType.MATERIAL, "ACACIA_BOAT");
+        return Pair.of(EItemType.MATERIAL, "STRUCTURE_VOID");
     }
 }

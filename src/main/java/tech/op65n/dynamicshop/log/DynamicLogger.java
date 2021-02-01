@@ -3,11 +3,9 @@ package tech.op65n.dynamicshop.log;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- * @author sebba
- * @version 1.0
- */
-public interface ILog {
+public class DynamicLogger implements ILog {
+
+    private final Logger logger = Logger.getLogger("DShop");
 
     /**
      * Debug logger for DynamicMarket Plugin, it accepts an object
@@ -16,7 +14,10 @@ public interface ILog {
      *
      * @param o Object for deserialization and logging
      */
-    void debug(Object o);
+    @Override
+    public void debug(Object o) {
+        logger.log(Level.FINE, "dfsdf");
+    }
 
     /**
      * INFO style logger for DynamicMarket Plugin, it accepts a String and prints
@@ -24,7 +25,10 @@ public interface ILog {
      *
      * @param message Message for logger
      */
-    void log(String message);
+    @Override
+    public void log(String message) {
+        logger.info(message);
+    }
 
     /**
      * WARN style logger for DynamicMarket Plugin, it accepts a String and prints
@@ -32,7 +36,10 @@ public interface ILog {
      *
      * @param message Message for logger
      */
-    void warn(String message);
+    @Override
+    public void warn(String message) {
+        logger.log(Level.WARNING, message);
+    }
 
     /**
      * ERROR style logger for DynamicMarket Plugin, it accepts a String and prints
@@ -40,7 +47,10 @@ public interface ILog {
      *
      * @param message Message for logger
      */
-    void error(String message);
+    @Override
+    public void error(String message) {
+        logger.log(Level.SEVERE, message);
+    }
 
     /**
      * INFO style logger for DynamicMarket Plugin, it accepts a String and prints
@@ -49,7 +59,10 @@ public interface ILog {
      *
      * @param message Message for logger
      */
-    void permLog(String message);
+    @Override
+    public void permLog(String message) {
+        // TODO: Add permanent logging
+    }
 
     /**
      * WARN style logger for DynamicMarket Plugin, it accepts a String and prints
@@ -58,7 +71,10 @@ public interface ILog {
      *
      * @param message Message for logger
      */
-    void permWarn(String message);
+    @Override
+    public void permWarn(String message) {
+        // TODO: Add permanent logging
+    }
 
     /**
      * ERROR style logger for DynamicMarket Plugin, it accepts a String and prints
@@ -67,7 +83,10 @@ public interface ILog {
      *
      * @param message Message for logger
      */
-    void permError(String message);
+    @Override
+    public void permError(String message) {
+        // TODO: Add permanent logging
+    }
 
     /**
      * TODO: Add transaction component here
@@ -77,6 +96,9 @@ public interface ILog {
      *
      * @param transaction Transaction for logger
      */
-    void transactionLog(String transaction);
+    @Override
+    public void transactionLog(String transaction) {
+        // TODO: Add permanent logging
+    }
 
 }

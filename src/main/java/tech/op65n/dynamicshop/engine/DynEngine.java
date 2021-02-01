@@ -3,7 +3,6 @@ package tech.op65n.dynamicshop.engine;
 import com.moandjiezana.toml.Toml;
 import tech.op65n.dynamicshop.Core;
 import tech.op65n.dynamicshop.commands.CommandManager;
-import tech.op65n.dynamicshop.database.DBSetup;
 import tech.op65n.dynamicshop.database.DataSource;
 import tech.op65n.dynamicshop.engine.cache.DataSourceCache;
 import tech.op65n.dynamicshop.engine.cache.LocalCache;
@@ -25,7 +24,6 @@ public class DynEngine implements Engine {
     private ShopContainer container;
     private ShopUI shopUI;
 
-    private Configuration configuration;
     private long uptime = -1L;
 
     @Override
@@ -44,8 +42,9 @@ public class DynEngine implements Engine {
             return false;
         }
 
-        this.configuration = new Toml().read(Core.gCore().getFileManager().getFile(FileManager.PluginFiles.CONFIGURATION)).to(Configuration.class);
-        if (!DataSource.setup(configuration.getDatabase())) {
+        Core.gCore().setConfiguration(new Toml().read(Core.gCore().getFileManager().getFile(FileManager.PluginFiles.CONFIGURATION)).to(Configuration.class));
+
+        if (!DataSource.setup(Core.gCore().getConfiguration().getDatabase())) {
             return false;
         }
 

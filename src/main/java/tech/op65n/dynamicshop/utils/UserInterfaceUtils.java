@@ -20,52 +20,16 @@ import java.util.stream.Collectors;
 
 public class UserInterfaceUtils {
 
-    public static ItemStack fallback() {
+    /**
+     * Fallback material when serialized material from database or configuration does not exists
+     *
+     * @see Material
+     * @return Fallback material Material.STRUCTURE_VOID with modified display name and lore.
+     */
+    public static ItemStack fallbackItem() {
         ItemStack iStack = new ItemStack(Material.STRUCTURE_VOID);
-        iStack.getItemMeta().setDisplayName(Color.format("&4&lError"));
-        iStack.getItemMeta().setLore(Collections.singletonList(Color.format("&cPlease check the configuration!")));
-        return iStack;
-    }
-
-    public static ItemStack getBukkitItemStack(BukkitItemStack bukkitItemStack) {
-        ItemStack iStack = null;
-
-        if (bukkitItemStack.material().getKey() == EItemType.BASE64) {
-            iStack = new ItemStack(ItemStack.deserializeBytes(Base64.getDecoder().decode(bukkitItemStack.material().getRight())));
-        }
-
-        if (bukkitItemStack.material().getKey() == EItemType.TEXTURE) {
-            iStack = SkullHelper.getCustomSkull64(bukkitItemStack.material().getRight());
-        }
-
-        if (bukkitItemStack.material().getKey() == EItemType.MATERIAL) {
-            Material material = Material.matchMaterial(bukkitItemStack.material().getRight());
-            if (material == null) return fallback();
-            iStack = new ItemStack(material);
-        }
-
-        if (iStack == null) return fallback();
-
-        iStack.setAmount(bukkitItemStack.amount());
-        ItemMeta iMeta = iStack.getItemMeta();
-
-        /*
-        Item display name
-         */
-        if (bukkitItemStack.display() != null) iMeta.setDisplayName(Color.format(bukkitItemStack.display()));
-        if (bukkitItemStack.display() == null) iMeta.setDisplayName(iStack.getI18NDisplayName());
-
-
-        /*
-        Item lore
-         */
-        if (bukkitItemStack.lore() != null && !bukkitItemStack.lore().isEmpty()) {
-            List<String> coloredLore = new ArrayList<>();
-            bukkitItemStack.lore().forEach(loreLine -> coloredLore.add(Color.format(loreLine)));
-            iMeta.setLore(coloredLore);
-        }
-
-        iStack.setItemMeta(iMeta);
+        iStack.getItemMeta().setDisplayName(Color.format("&4&lError while loading item"));
+        iStack.getItemMeta().setLore(Collections.singletonList(Color.format("&cGreat, you fucked up, now please check the configuration!")));
         return iStack;
     }
 
@@ -101,7 +65,7 @@ public class UserInterfaceUtils {
             if (slot > cache * 9 - 1) return;
             if (item instanceof BukkitItemStack) {
                 BukkitItemStack bukkitItemStack = (BukkitItemStack) item;
-                player.getOpenInventory().setItem(slot, getBukkitItemStack(bukkitItemStack));
+                player.getOpenInventory().setItem(slot, bukkitItemStack.toItemStack());
             }
         });
         player.updateInventory();
@@ -111,7 +75,7 @@ public class UserInterfaceUtils {
         mappedInventory.forEach((slot, item) -> {
             if (slot > cache * 9 - 1) return;
             if (item instanceof BukkitItemStack) {
-                inventory.setItem(slot, UserInterfaceUtils.getBukkitItemStack((BukkitItemStack) item));
+                inventory.setItem(slot, ((BukkitItemStack) item).toItemStack());
             }
         });
     }
@@ -121,7 +85,7 @@ public class UserInterfaceUtils {
         shopItem.getMetadata().setLore(displayItem.getColoredLore());
 
         String display = displayItem.getDisplay();
-        display = display.replace("%item%", getBukkitItemStack(shopItem).getItemMeta().getDisplayName());
+        display = display.replace("%item%", shopItem.toItemStack().getItemMeta().getDisplayName());
         shopItem.getMetadata().setDisplay(display);
 
 
@@ -132,6 +96,7 @@ public class UserInterfaceUtils {
                     .map(l4e -> l4e.replace("%sell_price%", String.valueOf(shopItem.getItemPricing().getPriceSell() * shopItem.amount())))
                     .map(l4e -> l4e.replace("%sell_price_single%", String.valueOf(shopItem.getItemPricing().getPriceSell())))
                     .map(l4e -> l4e.replace("%currency%", "€"))
+                    .map(l4e -> l4e.replace("%base%", String.valueOf(shopItem.getItemPricing().calcBuyBase(shopItem.amount()))))
                     .map(Color::format)
                     .collect(Collectors.toList());
             shopItem.getMetadata().setLore(lore);
@@ -142,9 +107,7 @@ public class UserInterfaceUtils {
     public static void mapButtons(Map<Integer, Object> mappedInventory, BaseUI cache, SItem selectedItem) {
         cache.buttons().forEach(button -> {
             if (button.getOnClick() == ClickActions.SET && button.getAmount() == selectedItem.getAmount()) return;
-            // TODO: Max stack size
-            if (button.getOnClick() == ClickActions.ADD && button.getAmount() + selectedItem.getAmount() > 64)
-                return;
+            if (button.getOnClick() == ClickActions.ADD && button.getAmount() + selectedItem.getAmount() > 64) return;
             if (button.getOnClick() == ClickActions.REMOVE && selectedItem.getAmount() - button.getAmount() < 1) return;
             mappedInventory.put(button.getSlot(), button);
         });

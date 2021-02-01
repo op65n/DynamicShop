@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ItemStruct {
 
-    private Integer priority = 1000;
+    private int priority = 1000;
 
     private String material = "ACACIA_BOAT";
 
@@ -19,15 +19,15 @@ public class ItemStruct {
 
     private String base64;
 
-    private Double price_buy = 0.00;
+    private Double price_buy = null;
 
-    private Double price_sell = 0.00;
+    private Double price_sell = null;
 
     private String display;
 
     private List<String> lore;
 
-    private Boolean flatline = false;
+    private boolean flatline = false;
 
     private String command;
 

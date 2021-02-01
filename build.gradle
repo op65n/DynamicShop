@@ -33,25 +33,22 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.zaxxer:HikariCP:3.4.5'
+    implementation 'com.zaxxer:HikariCP:4.0.1'
     implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.1'
     implementation 'io.github.kostaskougios:cloning:1.10.3'
     implementation 'org.jetbrains:annotations:20.1.0'
     implementation 'com.moandjiezana.toml:toml4j:0.7.2'
     implementation 'commons-io:commons-io:2.8.0'
 
-    annotationProcessor 'org.projectlombok:lombok:1.18.16'
-    testAnnotationProcessor 'org.projectlombok:lombok:1.18.16'
-
     testCompile("org.junit.jupiter:junit-jupiter-api:5.7.0")
     testRuntime("org.junit.jupiter:junit-jupiter-engine:5.7.0")
-    testCompileOnly 'org.projectlombok:lombok:1.18.16'
 
     compile 'org.apache.commons:commons-lang3:3.11'
+    compile 'org.apache.commons:commons-math3:3.6.1'
+    compile 'com.mitchtalmadge:ascii-data:1.4.0'
 
     compileOnly 'com.mojang:authlib:1.5.25'
-    compileOnly 'org.projectlombok:lombok:1.18.16'
-    compileOnly 'com.destroystokyo.paper:paper-api:1.16.4-R0.1-SNAPSHOT'
+    compileOnly 'com.destroystokyo.paper:paper-api:1.16.5-R0.1-SNAPSHOT'
 }
 
 test {
@@ -63,6 +60,23 @@ test {
 
 shadowJar {
     archiveFileName.set("${projectName}-${project.version}.jar")
+}
+
+println("group=${group}")
+println("version=${version}")
+println("artifactId=${name}")
+
+publishing {
+    publications {
+        Anton(MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url "$buildDir/maven/"
+        }
+    }
 }
 
 processResources {

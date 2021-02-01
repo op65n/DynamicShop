@@ -3,8 +3,8 @@
 PLUGIN="DynamicShop"
 PLUGIN_DESTINATION="/home/work/minecraft/latest-paper/plugins"
 
-/opt/gradle/gradle-6.7.1/bin/gradle build
-/opt/gradle/gradle-6.7.1/bin/gradle shadowJar
+./gradlew build
+./gradlew shadowJar
 
 cd build/libs || exit
 

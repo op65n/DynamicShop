@@ -10,12 +10,12 @@ import tech.op65n.dynamicshop.utils.EngineUtils;
  * @author SebbaIndustries
  * @version 1.0
  */
-public class ServerPlugin {
+public final class PluginCoreLoader {
 
-    private Core core;
+    private final Core core;
 
-    public static ServerPlugin INSTANCE() {
-        return new ServerPlugin();
+    public PluginCoreLoader(Core core) {
+        this.core = core;
     }
 
     private void coreDump() {
@@ -28,8 +28,7 @@ public class ServerPlugin {
      *
      * @param core Manin plugin class
      */
-    public final void load(Core core) {
-        this.core = core;
+    public final void load() {
         Core.globalCore = new GlobalCore(core);
         Core.pluginLogger.log("GlobalCore class instance created, initializing plugin modules!");
     }
@@ -37,7 +36,7 @@ public class ServerPlugin {
     /**
      * Initializes global core and setups static link
      */
-    public final void initialize() {
+    public final void enable() {
         if (Core.globalCore == null) {
             coreDump();
             return;
@@ -69,7 +68,7 @@ public class ServerPlugin {
     /**
      * Terminates the plugin instance
      */
-    public final void terminate() {
+    public final void disable() {
         if (core == null) {
             coreDump();
             return;

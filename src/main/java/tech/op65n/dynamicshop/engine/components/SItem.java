@@ -4,7 +4,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import tech.op65n.dynamicshop.engine.cache.holders.ItemTableEntryHolder;
+import tech.op65n.dynamicshop.database.tables.TableItem;
 import tech.op65n.dynamicshop.engine.structure.ItemStruct;
 import tech.op65n.dynamicshop.engine.ui.components.ClickActions;
 import tech.op65n.dynamicshop.engine.ui.interfaces.BukkitItemStack;
@@ -12,10 +12,8 @@ import tech.op65n.dynamicshop.engine.ui.interfaces.Clickable;
 import tech.op65n.dynamicshop.utils.ShopUtils;
 
 import java.util.List;
+import java.util.Objects;
 
-@Getter
-@Setter
-@NoArgsConstructor
 public class SItem implements BukkitItemStack, Clickable {
 
     private int amount = 1;
@@ -34,9 +32,9 @@ public class SItem implements BukkitItemStack, Clickable {
 
     private SItemPrice itemPricing = new SItemPrice();
 
-    private SItemMeta metadata = new SItemMeta();
+    private SItemHistory itemHistory = new SItemHistory(null);
 
-    private SItemHistory history;
+    private SItemMeta metadata = new SItemMeta();
 
     private ClickActions onClick = ClickActions.NA;
     private ClickActions onRightClick = ClickActions.NA;
@@ -53,27 +51,27 @@ public class SItem implements BukkitItemStack, Clickable {
         this.itemPricing = new SItemPrice(struct);
     }
 
-    public void applyDBWrapper(ItemTableEntryHolder holder) {
+    public void applyDBWrapper(TableItem.Holder holder) {
         this.ID = holder.getId();
         this.catID = holder.getCategoryID();
         this.itemPricing.setBuys(holder.getBuys());
         this.itemPricing.setSells(holder.getSells());
 
         // Buy price
-        if (itemPricing.getCnfPriceBuy() != holder.getCnfPriceBuy()) {
+        if (!Objects.equals(itemPricing.getCnfPriceBuy(), holder.getCnfPriceBuy())) {
             itemPricing.setPriceBuy(itemPricing.getCnfPriceBuy());
             this.needsDBUpdate = true;
         }
-        if (itemPricing.getCnfPriceBuy() == holder.getCnfPriceBuy()) {
+        if (Objects.equals(itemPricing.getCnfPriceBuy(), holder.getCnfPriceBuy())) {
             itemPricing.setPriceBuy(holder.getPriceBuy());
         }
 
         // Sell price
-        if (itemPricing.getCnfPriceSell() != holder.getCnfPriceSell()) {
+        if (!Objects.equals(itemPricing.getCnfPriceSell(), holder.getCnfPriceSell())) {
             itemPricing.setPriceSell(itemPricing.getCnfPriceSell());
             this.needsDBUpdate = true;
         }
-        if (itemPricing.getCnfPriceSell() == holder.getCnfPriceSell()) {
+        if (Objects.equals(itemPricing.getCnfPriceSell(), holder.getCnfPriceSell())) {
             itemPricing.setPriceSell(holder.getPriceSell());
         }
     }

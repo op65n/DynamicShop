@@ -38,7 +38,6 @@ tar \
 --exclude="${BASENAME}/*.bat" \
 --exclude="${BASENAME}/build" \
 --exclude="${BASENAME}/.gradle" \
---exclude="${BASENAME}/gradle" \
 -czf $FILENAME "${BASENAME}"/
 
 rsync -avP $FILENAME "${REMOTE}":"${BUILD_DIR}"

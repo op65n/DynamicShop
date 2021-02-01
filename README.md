@@ -12,7 +12,7 @@ Special thanks to (Minecraft IGN): `zaraamelie` & `TeamsInsane` for helping with
 
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
-[![GitHub issues](https://img.shields.io/github/issues/SebbaIndustries/DynamicShop)](https://github.com/SebbaIndustries/DynamicShop/issues)
+[![GitHub issues](https://img.shields.io/github/issues/op65n/DynamicShop)](https://github.com/op65n/DynamicShop/issues)
 ![Java CI with Gradle](https://github.com/op65n/DynamicShop/workflows/Java%20CI%20with%20Gradle/badge.svg?branch=master)
 
 How To (Server Owners)

@@ -24,10 +24,14 @@ cacheServerConfiguration = true
 elideSetAutoCommits = true
 maintainTimeStats = false
 
+[cache]
+ttl = 500
+max_size = 20
+
 [shop]
 default_stock = 300
-stock_curve = 1.03
-no_stock_curve = 1.2
+stock_curve = 1.003
+no_stock_curve = 1.04
 golden_demand = 0.6
 history_length = 100
 

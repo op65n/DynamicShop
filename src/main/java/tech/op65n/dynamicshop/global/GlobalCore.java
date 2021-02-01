@@ -6,6 +6,7 @@ import tech.op65n.dynamicshop.engine.Engine;
 import tech.op65n.dynamicshop.engine.cache.DataSourceCache;
 import tech.op65n.dynamicshop.engine.structure.DirectoryStructure;
 import tech.op65n.dynamicshop.messages.Message;
+import tech.op65n.dynamicshop.settings.Configuration;
 import tech.op65n.dynamicshop.utils.FileManager;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,7 +22,7 @@ public class GlobalCore {
     public final Core core;
 
     private FileManager fileManager;
-    //public Configuration configuration;
+    public Configuration configuration;
     private Message message;
     private CommandManager commandManager;
     private Engine engine;

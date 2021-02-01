@@ -15,6 +15,7 @@ import java.util.HashMap;
 public class Configuration {
 
     private DB database;
+    private ShopConfiguration shop;
 
     public static class DB {
         public String ip;
@@ -28,11 +29,11 @@ public class Configuration {
     }
 
     public static class ShopConfiguration {
-        public Integer default_stock = 300;
-        public Double stock_curve = 1.03;
-        public Double no_stock_curve = 1.2;
-        public Double golden_demand = 0.6;
-        public Integer history_length = 100;
+        public int default_stock = 300;
+        public double stock_curve = 1.03;
+        public double no_stock_curve = 1.2;
+        public double golden_demand = 0.6;
+        public int history_length = 100;
     }
 
 }

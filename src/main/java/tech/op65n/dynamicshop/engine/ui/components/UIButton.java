@@ -7,11 +7,9 @@ import tech.op65n.dynamicshop.engine.ui.interfaces.Clickable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.bukkit.Material;
 import tech.op65n.dynamicshop.utils.ShopUtils;
 
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 
 @Getter
