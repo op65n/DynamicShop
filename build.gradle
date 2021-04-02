@@ -40,7 +40,7 @@ dependencies {
     implementation 'com.moandjiezana.toml:toml4j:0.7.2'
     implementation 'commons-io:commons-io:2.8.0'
 
-    annotationProcessor 'org.projectlombok:lombok:1.18.16'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.16'
 
     testCompile("org.junit.jupiter:junit-jupiter-api:5.7.0")
