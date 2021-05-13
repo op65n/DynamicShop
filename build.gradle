@@ -34,7 +34,7 @@ repositories {
 
 dependencies {
     implementation 'com.zaxxer:HikariCP:3.4.5'
-    implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.1'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.3'
     implementation 'io.github.kostaskougios:cloning:1.10.3'
     implementation 'org.jetbrains:annotations:20.1.0'
     implementation 'com.moandjiezana.toml:toml4j:0.7.2'
