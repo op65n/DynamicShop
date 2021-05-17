@@ -44,7 +44,7 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.16'
 
     testCompile("org.junit.jupiter:junit-jupiter-api:5.7.0")
-    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.7.0")
+    testRuntime("org.junit.jupiter:junit-jupiter-engine:5.7.2")
     testCompileOnly 'org.projectlombok:lombok:1.18.16'
 
     compile 'org.apache.commons:commons-lang3:3.11'
